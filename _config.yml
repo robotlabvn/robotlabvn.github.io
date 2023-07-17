@@ -1,14 +1,14 @@
-title: Xuning Yang
-author: Xuning Yang
+title: Tri Bien Minh
+author: Tri Bien 
 subtitle: PhD Candidate in Robotics
 
-google_analytics: G-ZEFRYNXSX4
+google_analytics:
 
 url:
 baseurl:
 
 footer_url:
-footer_text: "Copyright © 2021 Xuning Yang"
+footer_text: "Copyright © 2023 Tri Bien"
 
 profile-picture: assets/profile.jpg
 favicon_location:
@@ -20,14 +20,15 @@ sass:
 
 navbar:
  - name: "cv"
-   link: "/Xuning_Yang_CV.pdf"
+   link: ""
  - name: "blog"
    link: "/blog"
  - name: "github"
-   link: "https://github.com/xuningy"
+   link: "https://github.com/Triknight"
  - name: "google scholar"
-   link: "https://scholar.google.com/citations?hl=en&user=hM9EtNwAAAAJ"
+   link: ""
 
 markdown: kramdown
 kramdown:
   math_engine: katex
+
