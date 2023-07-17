@@ -1,6 +1,9 @@
 ---
 layout: post
-title: KaTeX with Jekyll
+category: blog
+title: Testing KaTeX
+snippet: An ultra simplified guide without requiring a MathJax to KaTeX conversion
+tags: [website, latex]
 katex: True
 ---
 inline: $$f(x) = \int_{-\infty}^\infty \hat f(\xi)\,e^{2 \pi i \xi x} \,d\xi$$

@@ -1,3 +1,12 @@
+---
+layout: post
+category: blog
+title: Manipulator
+snippet: An ultra simplified guide without requiring a MathJax to KaTeX conversion
+tags: [website, latex]
+katex: True
+---
+
 ```python
 try:
   # We must install required packages if we are in Google Colab

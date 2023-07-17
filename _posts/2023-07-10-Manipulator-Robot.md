@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Render LaTeX in Jekyll pages
-date: 2020-06-11 08:24
-published: yes
-katex: yes
-tags:
-- Jekyll
-- LaTeX
+category: blog
+title: Manipulator
+snippet: An ultra simplified guide without requiring a MathJax to KaTeX conversion
+tags: [website, latex]
+katex: True
 ---
 
 ```python
