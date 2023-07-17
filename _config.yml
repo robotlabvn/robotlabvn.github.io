@@ -1,0 +1,34 @@
+title: Tri Bien Minh
+author: Tri Bien 
+subtitle: PhD Candidate in Robotics
+
+google_analytics:
+
+url:
+baseurl:
+
+footer_url:
+footer_text: "Copyright © 2023 Tri Bien"
+
+profile-picture: assets/profile.jpg
+favicon_location:
+
+permalink: /:categories/:year-:month-:day-:title/
+sass:
+    style: compressed
+    sass_dir: css
+
+navbar:
+ - name: "cv"
+   link: ""
+ - name: "blog"
+   link: "/blog"
+ - name: "github"
+   link: "https://github.com/Triknight"
+ - name: "google scholar"
+   link: ""
+
+markdown: kramdown
+kramdown:
+  math_engine: katex
+

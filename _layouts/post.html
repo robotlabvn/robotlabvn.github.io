@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<div class="page-subtitle">
+    {{ page.date | date_to_long_string }}
+    <br>
+    {% for tag in page.tags %}
+        {% if page.tags.first == tag %}
+             [
+        {% endif %}
+        <a href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
+        {% if page.tags.last == tag %}
+            ]
+        {% else %}
+            ,
+        {% endif %}
+    {% endfor %}
+</div>
+<br>
+{{content}}
