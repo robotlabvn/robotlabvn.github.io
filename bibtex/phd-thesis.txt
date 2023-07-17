@@ -1,0 +1,11 @@
+BibTeX
+@phdthesis{Yang-2022-131020,
+author = {Xuning Yang},
+title = {Human-in-the-loop Planning of Mobile Robots},
+year = {2022},
+month = {January},
+school = {Carnegie Mellon University},
+address = {Pittsburgh, PA},
+number = {CMU-RI-TR-22-04},
+keywords = {Human robot interaction, planning, control, aerial robotics, field robotics, prediction},
+}

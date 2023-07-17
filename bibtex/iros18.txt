@@ -1,0 +1,7 @@
+@article{Dhawale2018iros,
+  title={Reactive Collision Avoidance Using Real-Time Local Gaussian Mixture Model Maps},
+  author={Aditya Dhawale and Xuning Yang and Nathan Michael},
+  journal={2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year={2018},
+  pages={3545-3550}
+}

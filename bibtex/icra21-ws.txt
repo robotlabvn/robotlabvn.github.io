@@ -1,0 +1,6 @@
+@article{Cheng2021icra,
+  title={An imminent collision monitoring system with safe stopping interventions for autonomous aerial flights},
+  author={Jasmine Cheng, Xuning Yang, and Nathan Michael},
+  journal={ICRA 2021 Workshop on "Resilient and Long-Term Autonomy for Aerial Robotic Systems"},
+  year={2021}
+}

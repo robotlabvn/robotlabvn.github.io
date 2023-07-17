@@ -1,0 +1,6 @@
+@article{Yang2020iros,
+  title={Assisted Mobile Robot Teleoperation with Intent-aligned Trajectories via Biased Incremental Action Sampling},
+  author={Xuning Yang and Nathan Michael},
+  journal={2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year={2020}
+}

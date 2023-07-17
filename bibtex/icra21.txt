@@ -1,0 +1,6 @@
+@article{Yang2021icra,
+  title={An Intention Guided Hierarchical Framework for Trajectory-based Teleoperation of Mobile Robots},
+  author={Xuning Yang, Jasmine Cheng, and Nathan Michael},
+  journal={2021 IEEE/RSJ International Conference on Robotics and Automation (ICRA)},
+  year={2021}
+}

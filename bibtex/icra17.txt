@@ -1,0 +1,9 @@
+
+@inproceedings{Yang2017icra,
+author       = {Xuning Yang and Koushil Sreenath and Nathan Michael},
+title        = {A Framework for Efficient Teleoperation via Online Adaptation},
+booktitle    = {Proceedings of the 2017 IEEE International Conference on Robotics and Automation (ICRA)},
+year         = {2017},
+location     = {Singapore}
+}
+

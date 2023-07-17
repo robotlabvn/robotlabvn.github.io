@@ -1,0 +1,7 @@
+@article{Yang2018auro,
+  title={{Online adaptive teleoperation via motion primitives for mobile robots}},
+  author={Yang, Xuning and Agrawal, Ayush and Sreenath, Koushil and Michael, Nathan},
+  journal={Special Issue on Learning for Human-Robot Collaboration, Autonomous Robots},
+  year={2018},
+  publisher={Springer}
+}

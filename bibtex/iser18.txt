@@ -1,0 +1,9 @@
+@inproceedings{Spitzer2018iser,
+ author = {Alex Spitzer and Xuning Yang and John Yao and Aditya Dhawale and Kshitij Goel and Mosam Dabhi and Matt Collins and Curt Boirum and Nathan Michael},
+ title = {{Fast and agile vision-based flight with teleoperation and collision avoidance on a multirotor}},
+ booktitle = {Proceedings of the International Symposium on Experimental Robotics (ISER)},
+ year = {2018},
+ location = {Buenos Aires, Argentina},
+ publisher = {Springer}
+}
+

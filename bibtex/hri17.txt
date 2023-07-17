@@ -1,0 +1,11 @@
+@inproceedings{Yang2017hri,
+ author = {Yang, Xuning and Sreenath, Koushil and Michael, Nathan},
+ title = {{Online Adaptive Teleoperation via Incremental Intent Modeling}},
+ booktitle = {Proceedings of the Companion of the 2017 ACM/IEEE International Conference on Human-Robot Interaction},
+ series = {HRI '17},
+ year = {2017},
+ location = {Vienna, Austria},
+ pages = {329--330},
+ publisher = {ACM}
+}
+
