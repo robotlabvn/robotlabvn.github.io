@@ -3,9 +3,9 @@ layout: post
 category: blog
 title: Motion Planning in Robotics 
 snippet: Some good resources for learning motion planning in robotic manipulators.
-tags: [books, robotics]
+tags: [papers, robotics]
 ---
-There are many books for robotics control and many method for robotics motion planning. Please dive deep with some questions below.
+There are many books and papers on robotics motion planning. Please dive deep into motion planning by some questions below.
 
 ### Q1. What is motion planning? 
 
@@ -36,8 +36,13 @@ generate motion and force for contact tasks. This approach is useful because it 
 ---
 # Resources:
 ## Opimization-Based Method:
-- CHOMP: Covariant Hamiltonian Optimization for Motion Planning [pdf](https://www.ri.cmu.edu/pub_files/2013/5/CHOMP_IJRR.pdf)
-(Matt Zucker, Nathan Ratliff, https://www.nathanratliff.com/pedagogy/mathematics-for-intelligent-systems)
+> **_NOTE:_**  These motion planning algorithms are available in [Moveit](https://ros-planning.github.io/moveit_tutorials/doc/chomp_planner/chomp_planner_tutorial.html) 
+- **CHOMP**: Covariant Hamiltonian Optimization for Motion Planning, which is a gradient-based trajectory optimization procedure for robotic motion planning. It uses functional gradient techniques to iteratively improve the quality of an initial trajectory, optimizing a functional that trades off between a smoothness cost and a collision cost [pdf](https://www.ri.cmu.edu/pub_files/2013/5/CHOMP_IJRR.pdf)
+(Matt Zucker, Nathan Ratliff, https://www.nathanratliff.com/pedagogy/mathematics-for-intelligent-systems) 
+
+- **STOMP**: Stochastic Trajectory Optimization for Motion Planning, which is an approach to motion planning that utilizes a stochastic trajectory optimization framework. The goal of STOMP is to find a smooth trajectory that minimizes costs associated with collisions and constraints. Unlike deterministic optimization methods, STOMP generates noisy trajectories and uses them to explore the search space. By incorporating randomness into the trajectory generation process, STOMP can efficiently find solutions for motion planning problems, even for robots with a high degree of freedom. [pdf](http://ros.fei.edu.br/roswiki/attachments/Papers(2f)ICRA2011_Kalakrishnan/kalakrishnan_icra2011.pdf)
+
+- **TrajOpt**: TrajOpt planning is a trajectory optimization framework for generating robot trajectories by local optimization. It models the path planning problem as an optimization problem and uses Sequential Quadratic Programming (SQP) to find the optimal trajectory. TrajOpt is a sequential convex optimization algorithm for motion planning problems where the non-convex, non-affine equality, and non-equality constraints are handled by linearizing them around the current trajectory [pdf](http://joschu.net/docs/trajopt-paper.pdf)
 
 
 ----------------

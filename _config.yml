@@ -1,6 +1,6 @@
-title: RobotLab Blog
+title: Just a simple Robotics blog
 author: Tri Bien 
-subtitle: Robotics Blog
+subtitle: Robotics Lab Blog for everyone
 
 google_analytics:
 
@@ -23,7 +23,7 @@ navbar:
    link: "https://robotlab.vn"
  - name: "blog"
    link: "/blog"
- - name: "author"
+ - name: "about me"
    link: "https://triknight.github.io"
  - name: "github"
    link: "https://github.com/triknight"
