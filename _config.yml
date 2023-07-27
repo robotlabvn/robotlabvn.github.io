@@ -1,6 +1,6 @@
-title: Tri Bien Minh
+title: RobotLab.vn
 author: Tri Bien 
-subtitle: PhD Candidate in Robotics
+subtitle: Robotics Blog
 
 google_analytics:
 
@@ -19,14 +19,14 @@ sass:
     sass_dir: css
 
 navbar:
- - name: "cv"
+ - name: "home"
    link: ""
  - name: "blog"
    link: "/blog"
+ - name: "author"
+   link: "https://triknight.github.io"
  - name: "github"
-   link: "https://github.com/Triknight"
- - name: "google scholar"
-   link: ""
+   link: "https://github.com/triknight"
 
 markdown: kramdown
 kramdown:
