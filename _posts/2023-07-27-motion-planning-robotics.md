@@ -35,15 +35,21 @@ generate motion and force for contact tasks. This approach is useful because it 
 
 ---
 # Resources
+## Rapidly-Exploring Random Tree (RRT):
+- **RRT**: Rapidly-Exploring Random Tree, which is an algorithm designed to efficiently search nonconvex, high-dimensional spaces by randomly building a space-filling tree. The tree is constructed incrementally from samples drawn randomly from the search space and is inherently biased to grow towards large unsearched areas of the problem. RRTs were developed by Steven M. LaValle and James J. Kuffner Jr [pdf](http://msl.cs.uiuc.edu/~lavalle/papers/Lav98c.pdf)
+
+- **RRT-Connect**:  a variation of the Rapidly-Exploring Random Tree (RRT) algorithm that is used for single-query path planning in high-dimensional configuration spaces. It is an efficient approach that aims to find a path from a start configuration to a goal configuration by growing two trees simultaneously, one from the start and one from the goal, until they meet [pdf](https://www.cs.cmu.edu/afs/cs/academic/class/15494-s12/readings/kuffner_icra2000.pdf)
+
 ## Opimization-Based Method:
-> **_NOTE:_**  These motion planning algorithms are available in [Moveit](https://ros-planning.github.io/moveit_tutorials/doc/chomp_planner/chomp_planner_tutorial.html) 
 
 - **CHOMP**: Covariant Hamiltonian Optimization for Motion Planning, which is a gradient-based trajectory optimization procedure for robotic motion planning. It uses functional gradient techniques to iteratively improve the quality of an initial trajectory, optimizing a functional that trades off between a smoothness cost and a collision cost. 
-[7, pdf](https://www.ri.cmu.edu/pub_files/2013/5/CHOMP_IJRR.pdf)
+[pdf](https://www.ri.cmu.edu/pub_files/2013/5/CHOMP_IJRR.pdf)
 
 - **STOMP**: Stochastic Trajectory Optimization for Motion Planning, which is an approach to motion planning that utilizes a stochastic trajectory optimization framework. The goal of STOMP is to find a smooth trajectory that minimizes costs associated with collisions and constraints. Unlike deterministic optimization methods, STOMP generates noisy trajectories and uses them to explore the search space. By incorporating randomness into the trajectory generation process, STOMP can efficiently find solutions for motion planning problems, even for robots with a high degree of freedom. [pdf](http://ros.fei.edu.br/roswiki/attachments/Papers(2f)ICRA2011_Kalakrishnan/kalakrishnan_icra2011.pdf)
 
 - **TrajOpt**: TrajOpt planning is a trajectory optimization framework for generating robot trajectories by local optimization. It models the path planning problem as an optimization problem and uses Sequential Quadratic Programming (SQP) to find the optimal trajectory. TrajOpt is a sequential convex optimization algorithm for motion planning problems where the non-convex, non-affine equality, and non-equality constraints are handled by linearizing them around the current trajectory [pdf](http://joschu.net/docs/trajopt-paper.pdf)
+
+- **NEO**: Novel Expeditious Optimisation Algorithm is a reactive motion controller for manipulators that can avoid static and dynamic obstacles while moving toward the desired goal. It is a fast and purely reactive motion controller that uses optimization techniques to generate smooth and collision-free trajectories in real-time. NEO is designed to be used as a local controller in conjunction with a global motion planner for more complex scenes [pdf](https://arxiv.org/pdf/2010.08686.pdf)
 
 
 ----------------
