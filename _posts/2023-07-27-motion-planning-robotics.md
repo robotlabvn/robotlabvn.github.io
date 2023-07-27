@@ -34,11 +34,12 @@ A dynamic system approach to motion planning is a  framework that uses dynamical
 generate motion and force for contact tasks. This approach is useful because it allows robots to react to changes in their environment and adjust their trajectories accordingly. For example, if a robot is moving towards an object and the object moves, the robot can use a dynamic system approach to re-plan  its trajectory and still reach the object [6](https://www.roboticsproceedings.org/rss15/p21.pdf)
 
 ---
-# Resources:
+# Resources
 ## Opimization-Based Method:
 > **_NOTE:_**  These motion planning algorithms are available in [Moveit](https://ros-planning.github.io/moveit_tutorials/doc/chomp_planner/chomp_planner_tutorial.html) 
-- **CHOMP**: Covariant Hamiltonian Optimization for Motion Planning, which is a gradient-based trajectory optimization procedure for robotic motion planning. It uses functional gradient techniques to iteratively improve the quality of an initial trajectory, optimizing a functional that trades off between a smoothness cost and a collision cost [pdf](https://www.ri.cmu.edu/pub_files/2013/5/CHOMP_IJRR.pdf)
-(Matt Zucker, Nathan Ratliff, https://www.nathanratliff.com/pedagogy/mathematics-for-intelligent-systems) 
+
+- **CHOMP**: Covariant Hamiltonian Optimization for Motion Planning, which is a gradient-based trajectory optimization procedure for robotic motion planning. It uses functional gradient techniques to iteratively improve the quality of an initial trajectory, optimizing a functional that trades off between a smoothness cost and a collision cost. 
+[7, pdf](https://www.ri.cmu.edu/pub_files/2013/5/CHOMP_IJRR.pdf)
 
 - **STOMP**: Stochastic Trajectory Optimization for Motion Planning, which is an approach to motion planning that utilizes a stochastic trajectory optimization framework. The goal of STOMP is to find a smooth trajectory that minimizes costs associated with collisions and constraints. Unlike deterministic optimization methods, STOMP generates noisy trajectories and uses them to explore the search space. By incorporating randomness into the trajectory generation process, STOMP can efficiently find solutions for motion planning problems, even for robots with a high degree of freedom. [pdf](http://ros.fei.edu.br/roswiki/attachments/Papers(2f)ICRA2011_Kalakrishnan/kalakrishnan_icra2011.pdf)
 
@@ -61,3 +62,5 @@ Volume 122,2023,106099,ISSN 0952-1976,
 https://doi.org/10.1016/j.engappai.2023.106099.
 
 6. Amanhoud, Walid, Mahdi Khoramshahi and Aude Billard. “A Dynamical System Approach to Motion and Force Generation in Contact Tasks.” Robotics: Science and Systems XV (2019)
+
+7. Matt Zucker, [Nathan Ratliff](https://www.nathanratliff.com/pedagogy/mathematics-for-intelligent-systems) , Dragan AD, et al. "CHOMP: Covariant Hamiltonian optimization for motion planning." The International Journal of Robotics Research. 2013;32(9-10):1164-1193. doi:10.1177/0278364913488805
