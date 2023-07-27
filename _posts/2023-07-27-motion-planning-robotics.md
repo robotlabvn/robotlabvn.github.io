@@ -35,10 +35,10 @@ generate motion and force for contact tasks. This approach is useful because it 
 
 ---
 # Resources:
-## 1. Opimization-Based Method:
-CHOMP: Covariant Hamiltonian Optimization for Motion Planning [pdf](https://www.ri.cmu.edu/pub_files/2013/5/CHOMP_IJRR.pdf)
+## Opimization-Based Method:
+- CHOMP: Covariant Hamiltonian Optimization for Motion Planning [pdf](https://www.ri.cmu.edu/pub_files/2013/5/CHOMP_IJRR.pdf)
+(Matt Zucker, Nathan Ratliff, https://www.nathanratliff.com/pedagogy/mathematics-for-intelligent-systems)
 
-https://www.nathanratliff.com/pedagogy/mathematics-for-intelligent-systems
 
 ----------------
 # References

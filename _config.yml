@@ -1,4 +1,4 @@
-title: RobotLab.vn
+title: RobotLab Blog
 author: Tri Bien 
 subtitle: Robotics Blog
 
@@ -20,7 +20,7 @@ sass:
 
 navbar:
  - name: "home"
-   link: ""
+   link: "https://robotlab.vn"
  - name: "blog"
    link: "/blog"
  - name: "author"
