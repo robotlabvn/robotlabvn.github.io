@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: Motion Planning Robotics Resources 
+title: Motion Planning in Robotics 
 snippet: Some good resources for learning motion planning in robotic manipulators.
 tags: [books, robotics]
 ---
