@@ -23,18 +23,22 @@ sudo ldconfig
 ## 2.1 Rotation Matrix
 ### 2.2.1 Points, vectors, and coordinate systems.
 - Definition of **Trace**: 
-If A a square matrix, we can obtain $A^T$ by interchanging the entries that are symmetriically positions about the main diagonal. Example
+If A a square matrix, we can obtain $$A^T$$ by interchanging the entries that are symmetriically positions about the main diagonal. Example
 
-$$A= \begin{aligned}
+$$A= \begin{vmatrix}
 -1 && 2 && 4\\
 3 && 7 && 0 \\
 5 && 8 && -6
-\end{aligned}\space 
-A^T = \begin{aligned}
+\end{vmatrix}\space 
+$$
+$$
+\begin{equation}
+A^T = \begin{bmatrix}
 -1 && 3 && 5\\
 2 && 7 && 8 \\
 4 && 0 && -6
-\end{aligned}$$
+\end{bmatrix}
+\end{equation}$$
 
  trace of A is: 
  $$tr(A) = tr(A^T)= -1 +7+(-6)=0$$
