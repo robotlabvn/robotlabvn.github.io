@@ -20,8 +20,8 @@ make
 sudo ldconfig
 ```
 
-## 2.1 Rotation Matrix
-### 2.2.1 Points, vectors, and coordinate systems.
+## 1 Rotation Matrix
+### 1.1 Points, vectors, and coordinate systems.
 - Definition of **Trace**: 
 If A a square matrix, we can obtain $$A^T$$ by interchanging the entries that are symmetriically positions about the main diagonal. Example
 
@@ -41,7 +41,7 @@ $$
  trace of A is: 
  $$tr(A) = tr(A^T)= -1 +7+(-6)=0$$
  
-- Inner and Outer Product: If $$u$$ and $v$ are column vectors with the same size, then $$u^Tv$$ is the inner product of $$u$$ and $$v$$; if $u$ and $$v$$ are column vectors of **any size**, the $$uv^T$$ is the outer product of $$u$$ and $$v$$.
+- Inner and Outer Product: If $$u$$ and $$v$$ are column vectors with the same size, then $$u^Tv$$ is the inner product of $$u$$ and $$v$$; if $$u$$ and $$v$$ are column vectors of **any size**, the $$uv^T$$ is the outer product of $$u$$ and $$v$$.
 
 Example inner product
 
@@ -79,7 +79,7 @@ $$uv^T =\begin{vmatrix}
  6 && 15
 \end{vmatrix}.$$
 
-- Cross product: In mathematics, the cross product or vector product (occasionally directed area product, to emphasize its geometric significance) is a binary operation on two vectors in a three-dimensional oriented Euclidean vector space , and is denoted by the symbol × . Given two linearly independent vectors a and b, the cross product, a × b (read "a cross b"), is a vector that is perpendicular to both a and b, and thus normal to the plane containing them. (wiki). Where $[a]_{\times}$ is skew-symmetric matrix 
+- Cross product: In mathematics, the cross product or vector product (occasionally directed area product, to emphasize its geometric significance) is a binary operation on two vectors in a three-dimensional oriented Euclidean vector space , and is denoted by the symbol × . Given two linearly independent vectors a and b, the cross product, a × b (read "a cross b"), is a vector that is perpendicular to both a and b, and thus normal to the plane containing them. (wiki). Where $$[a]_{\times}$$ is skew-symmetric matrix 
 
 $$a \times b = [a]_{\times} b =
 \begin{vmatrix}
@@ -100,10 +100,10 @@ R && t  \\
 
 This set of transform matrices is also known as the special Euclidean group:
 
-$$SE(3) = \{ T = \begin{vmatrix}
+$$SE(3) = \bigg\{ T = \begin{vmatrix}
 R && t  \\
 0^T && 1
-\end{vmatrix}\in R^{4\times4} | R \in SO(3),  t \in R^3\}$$
+\end{vmatrix}\in R^{4\times4} | R \in SO(3),  t \in R^3 \bigg\} $$
 
 Practice: Use Eigen, Install Eigen
 ```
