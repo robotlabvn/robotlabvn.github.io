@@ -2,8 +2,9 @@
 layout: post
 category: blog
 title: 3D Rigid Body Motion by using Eigen in C++
-snippet: Learn the rigid body geometry in 3D including, rotational matrix, transformation matrix, quaternion and Euler angle, and learn Eigen library matrix and geometry module.
-tags: [C++, robotics]
+snippet: Learn the rigid body geometry in 3D and Eigen library in matrix and geometry module.
+tags: [C++, robotics, math]
+katex: True
 ---
 
 # 3D Rigid Body Motion by using Eigen in C++
