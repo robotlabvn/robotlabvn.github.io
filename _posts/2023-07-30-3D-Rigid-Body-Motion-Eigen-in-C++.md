@@ -21,7 +21,8 @@ sudo ldconfig
 ```
 
 ## 1 Rotation Matrix
-### 1.1 Points, vectors, and coordinate systems.
+### 1.1 Properties of Matrix
+
 - Definition of **Trace**: 
 If A a square matrix, we can obtain $$A^T$$ by interchanging the entries that are symmetriically positions about the main diagonal. Example
 
@@ -43,7 +44,7 @@ $$
  
 - Inner and Outer Product: If $$u$$ and $$v$$ are column vectors with the same size, then $$u^Tv$$ is the inner product of $$u$$ and $$v$$; if $$u$$ and $$v$$ are column vectors of **any size**, the $$uv^T$$ is the outer product of $$u$$ and $$v$$.
 
-Example inner product
+__Example inner product:__
 
 $$u = \begin{vmatrix}
 -1\\
@@ -62,7 +63,7 @@ $$u = \begin{vmatrix}
 \end{vmatrix}
 = -1.2 + 3.5 =13$$
 
-Example outer product
+__Example outer product__
 
 $$uv^T =\begin{vmatrix}
 -1 \\ 3\\
@@ -90,6 +91,14 @@ a_3 && 0 && -a_1 \\
 b_1 \\ b_2 \\ b_3
 \end{vmatrix}$$
 
+### 1.2 Points, vectors, and coordinate systems.
+The most fundamental elements in space are points and vectors. Points have no length or volume, and connecting two points creates a vector, which can be thought of as an arrow pointing from one point to another. It's important to note that a vector should not be confused with its coordinates, as a vector is one thing in space, such as "a," and does not need to be associated with several real numbers. We can naturally talk about the plus or minus operation of two vectors without relating to any real numbers. Only when we specify a coordinate system in this 3D space can we talk about the vector's coordinates in this system, finding several real numbers corresponding to this vector.
+
+
+
+--- 
+
+### 1.3 Rotation Vectors and Euler Angles
 
 Homogeneous coordinates are a 4D vector with $$R$$ as a rotation matrix, and $$t$$ as translation.
 
@@ -105,15 +114,6 @@ R && t  \\
 0^T && 1
 \end{vmatrix}\in R^{4\times4} | R \in SO(3),  t \in R^3 \bigg\} $$
 
-Practice: Use Eigen, Install Eigen
-```
-sudo apt−get install libeigen3−dev
-sudo locate eigen3
-```
-Basic working with matrix and matrix operation by run an example `eigenMatrix.cpp`
-
-### 2.1.2 Rotation Vectors and Euler Angles
-- Rotation vectors
 
 **Rodrigues' rotation** formula: In the theory of three-dimensional rotation, Rodrigues' rotation formula, named after Olinde Rodrigues, is an efficient algorithm for rotating a vector in space, given an axis and angle of rotation. By extension, this can be used to transform all three basis vectors to compute a rotation matrix in SO(3), the group of all rotation matrices, from an axis–angle representation. (Wiki)
 
@@ -125,7 +125,7 @@ $$R = cos\theta I + (1-cos\theta)nn^T + sin\theta [n]_\times$$
 Where $$[n]_\times$$ is vector to skew-symmetric conversion, $$I$$ is the identiy matrix
 
 - Euler Angles and Quaternions
-## Eigen summarized ([more infor](http://eigen.tuxfamily.org/dox/group__TutorialGeometry.html) )
+## Eigen summarized ([more detail](http://eigen.tuxfamily.org/dox/group__TutorialGeometry.html) )
 - Rotation matrix (3x3): `Eigen::Matrix3d`
 - Rotation vector (3x1): `Eigen::AngleAxisd`
 - Euler angle (3x1): `Eigen::Vector3d`
@@ -134,7 +134,13 @@ Where $$[n]_\times$$ is vector to skew-symmetric conversion, $$I$$ is the identi
 - Affine transform (4x4): `Eigen::Affine3d`
 - Perspective transformation(4x4): `Eigen::Projective3d`
 
-## 2.2 Visualization Demo
+Practice: Use Eigen, Install Eigen
+```
+sudo apt−get install libeigen3−dev
+sudo locate eigen3
+```
+Basic working with matrix and matrix operation by run an example `eigenMatrix.cpp`
+## 2.2 Visualization Demo (Optional)
 ### 2.2.1 Ploting the Trajectory
  The trajectory file called "trajectory.txt" has each line format:  $$time, t_x, t_y, t_z, q_x, q_y, q_z, q_w$$  with $$t$$ is translatition, $$q$$ is quaternion.
 
