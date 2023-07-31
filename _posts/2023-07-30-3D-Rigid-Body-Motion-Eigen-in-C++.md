@@ -12,15 +12,8 @@ katex: True
 - Learn the rigid body geometry in 3D: rotational matrix, transformation matrix, quaternion and Euler angle.
 - Learn *Eigen* library matrix and geometry module
 
-**To run the code**
-```
-mkdir build && cd build
-cmake ..
-make
-sudo ldconfig
-```
-
-## 1 Rotation Matrix
+## I.  3D RIGID BODY MOTION
+In the context of matrices, 3D rigid body motion refers to representing the movement of a solid object in three-dimensional space using transformation matrices. A rigid body motion is a transformation that preserves the shape and size of the object. It involves both translation and rotation. In this representation, a 3D rigid body motion can be described by a 4x4 transformation matrix. The upper-left 3x3 submatrix represents the rotation of the object, while the rightmost column represents the translation. By multiplying this transformation matrix with the coordinates of points or vectors in the object's local coordinate system, the new coordinates in the global coordinate system can be obtained.
 ### 1.1 Properties of Matrix
 
 - Definition of **Trace**: 
@@ -125,41 +118,20 @@ $$R = cos\theta I + (1-cos\theta)nn^T + sin\theta [n]_\times$$
 Where $$[n]_\times$$ is vector to skew-symmetric conversion, $$I$$ is the identiy matrix
 
 - Euler Angles and Quaternions
-## Eigen summarized ([more detail](http://eigen.tuxfamily.org/dox/group__TutorialGeometry.html) )
-- Rotation matrix (3x3): `Eigen::Matrix3d`
-- Rotation vector (3x1): `Eigen::AngleAxisd`
-- Euler angle (3x1): `Eigen::Vector3d`
-- Quaternion (4x1): `Eigen::Quaterniond`
-- Euclidean transformation matrix (4x4): `Eigen::Isometry3d`
-- Affine transform (4x4): `Eigen::Affine3d`
-- Perspective transformation(4x4): `Eigen::Projective3d`
 
-Practice: Use Eigen, Install Eigen
-```
-sudo apt−get install libeigen3−dev
-sudo locate eigen3
-```
-Basic working with matrix and matrix operation by run an example `eigenMatrix.cpp`
-## 2.2 Visualization Demo (Optional)
-### 2.2.1 Ploting the Trajectory
- The trajectory file called "trajectory.txt" has each line format:  $$time, t_x, t_y, t_z, q_x, q_y, q_z, q_w$$  with $$t$$ is translatition, $$q$$ is quaternion.
+---
+## II. What is Eigen 3?
+Eigen3 is a C++ template library for linear algebra, providing functionality for matrices, vectors, numerical solvers, and related algorithms. It offers a simple and intuitive interface for performing basic matrix and vector operations. Eigen3 utilizes expression templates, a technique that optimizes the evaluation of mathematical expressions
+### 2.1 Install Eigen3
 
-### Install Pangolin
-* use pangolin: slambook/3rdpart/Pangolin or download it from github: https://github.com/stevenlovegrove/Pangolin
+To install Eigen3 on Ubuntu, you can follow these general steps:
 
-* install dependency for pangolin (mainly the OpenGL): 
-```sudo apt-get install libglew-dev```
+1. **Open a terminal**: Open a terminal on your Ubuntu system.
+2. **Update the package list**: Run the command `sudo apt update` to update the package list.
+3. **Install Eigen3**: Run the command `sudo apt install libeigen3-dev` to install the Eigen3 library.
+4. **Verify installation**: To verify that Eigen3 has been installed correctly, you can run a simple C++ program that includes the Eigen3 header file and performs a
+basic linear algebra operation.
 
-* compile and install pangolin
-
-```
-cd [path-to-pangolin]
-mkdir build
-cd build
-cmake ..
-make 
-sudo make install 
-```
 
 * Add to the ```CMakeLists.txt```
 
@@ -167,13 +139,11 @@ CMakeLists.txt
 {:.filename}
 ```
 ....
-find_package(Pangolin REQUIRED)
-include_directories(${Pangolin_INCLUDE_DIRS})
-target_link_libraries(plotTrajectory ${Pangolin_LIBRARIES})
+include_directories("/usr/include/eigen3")
 ....
 ```
 
-* Config c_pp_propertive in VSCode
+* Config ```c_pp_propertive``` in VSCode
 ```
 {
     "configurations": [
@@ -192,4 +162,30 @@ target_link_libraries(plotTrajectory ${Pangolin_LIBRARIES})
     ],
     "version": 4
 }
+```
+
+### 2.2 Eigen summarized ([more detail](http://eigen.tuxfamily.org/dox/group__TutorialGeometry.html) )
+- Rotation matrix (3x3): `Eigen::Matrix3d`
+- Rotation vector (3x1): `Eigen::AngleAxisd`
+- Euler angle (3x1): `Eigen::Vector3d`
+- Quaternion (4x1): `Eigen::Quaterniond`
+- Euclidean transformation matrix (4x4): `Eigen::Isometry3d`
+- Affine transform (4x4): `Eigen::Affine3d`
+- Perspective transformation(4x4): `Eigen::Projective3d`
+
+Practice: Use Eigen, Install Eigen
+```
+sudo apt−get install libeigen3−dev
+sudo locate eigen3
+```
+Basic working with matrix and matrix operation by run an example `eigenMatrix.cpp`
+
+### III. Practice with Eigen
+
+**To run the code**
+```
+mkdir build && cd build
+cmake ..
+make
+sudo ldconfig
 ```
