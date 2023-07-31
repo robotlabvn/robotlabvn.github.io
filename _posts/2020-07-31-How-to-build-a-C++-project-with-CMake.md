@@ -97,12 +97,37 @@ In the context of Windows, executable files typically have the ".exe" extension.
 > **_NOTE:_** The main differences between .so and .dylib on macOS are:
 > - File extension: .so is the shared object file extension used on Unix-based systems, while .dylib is the dynamic library extension used on macOS.
 > - Object file format: The Mach-O object file format used by macOS for executables and libraries distinguishes between shared libraries and dynamically loaded modules.
-
-> Both .so and .dylib are interchangeable as dynamic library files and either have a type as DYLIB or BUNDLE. However, it is recommended to use .dylib on macOS since it is the native dynamic library extension
+> - Both .so and .dylib are interchangeable as dynamic library files and either have a type as DYLIB or BUNDLE. However, it is recommended to use .dylib on macOS since it is the native dynamic library extension
 
 ---
 ###  Q1. What is ```#pragma once```?
 ```#pragma once``` is a preprocessor directive in C++ that ensures a header file is included only once in a single compilation. It serves the same purpose as include guards, but with several advantages, including less code, avoidance of name clashes, and sometimes improvement in compilation speed [1](https://en.wikipedia.org/wiki/Pragma_once)
+
+___Example```#pragma once``` with structure below:___ 
+
+grandparent.h
+{:.filename}
+```c++
+#pragma once
+
+struct foo 
+{
+    int member;
+};
+
+```
+parent.h
+{:.filename}
+```c++
+#include "grandparent.h"
+```
+child.cpp
+{:.filename}
+```c++
+#include "grandparent.h"
+#include "parent.h"
+```
+In this example, the inclusion of ```grandparent.h``` in both ``parent.h`` and ``child.c`` would ordinarily cause a compilation error, because a struct with a given name can only be defined a single time in a given compilation. The ``#pragma once`` directive serves to avoid this by ignoring subsequent inclusions of ``grandparent.h``.
 
 ###  Q2. What is ```#include guards```?
 Include guards are a technique used in C++ to avoid compiler errors that occur when a header file is included multiple times in a program. They are also known as macro guards, header guards, or file guards. The technique involves wrapping the entire contents of a header file in preprocessor directives that check whether a particular macro has been defined. If the macro has not been defined, the header file is included, and the macro is defined. If the macro has already been defined, the header file is skipped [2](https://en.wikipedia.org/wiki/Include_guard)
@@ -190,4 +215,6 @@ int main(int argc, char **argv){
 }
 ```
 
-
+# References
+1. https://en.wikipedia.org/wiki/Pragma_once
+2. https://en.wikipedia.org/wiki/Include_guard
