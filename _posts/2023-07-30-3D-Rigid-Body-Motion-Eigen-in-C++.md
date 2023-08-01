@@ -149,9 +149,14 @@ Normally, the Eigen3 package installed in this directory: ```/usr/include/eigen3
 
 Basic working with matrix and matrix operation by run an example `eigenMatrix.cpp`
 
-### III. Practice with Eigen
+--- 
+## III. Practice with Eigen
+### 3.1 Code structure
 This tutorial shows how to build a simple C++ project with Eigen.
-We start with the ```eigenMatrix.cpp``` and ```useGeometry.cpp```
+We start with some simple code snipsets:
+-  ```eigenMatrix.cpp``` The basic code snipset for using matrix operator in Eigen.
+-  ```useGeometry.cpp``` This code snipset demonstrates how to use the Eigen geometry module.
+- ```coordinateTransform.cpp``` ....
 
 ```
 ├── helloworld
@@ -182,9 +187,6 @@ add_executable(useGeometry useGeometry.cpp)
 add_executable(coordinateTransform coordinateTransform.cpp)
 
 ```
-
-* Example code using Eigen to perform some basic matrix operation
-
 * Config ```c_pp_propertive``` in VSCode
 ```
 {
@@ -205,10 +207,62 @@ add_executable(coordinateTransform coordinateTransform.cpp)
     "version": 4
 }
 ```
-**To run the code**
+* To run the code, following these command
 ```
 mkdir build && cd build
 cmake ..
 make
 sudo ldconfig
 ```
+
+### 3.2 Example Eigen with matrix definition
+
+eigenMatrix.cpp
+{:.filename}
+```c++
+//Eigen core
+#include <Eigen/Core>
+//Algebraic operations of dense matrices (inverse, eigenvalues, etc)
+#include <Eigen/Dense>
+using namespace Eigen;
+int main(int argc , char **argv){
+    //---------Declare Matrix Type-----------
+    // All vector and matrices in Eigen are Eigen::Matrix, 
+    // Its first 3 parameters are: data type, row, collum. 
+    // Example Declare a 2*3 float matrix
+    Matrix<float, 2, 3> matrix_23;
+    // 3D vector the same with matrix 3x1
+    Vector3d v_3d;
+    // This is the same
+    Matrix<float , 3, 1> vd_3d;
+
+    // Define 3x3 zeros matrix
+    Matrix3d matrix_33 = Matrix3d::Zero();
+
+    // If you are not sure about the size of the matrix, 
+    // you can use the dynamic size
+    Matrix<double, Dynamic, Dynamic> matrix_dynamic;
+    //Or simpler way
+    MatrixXd matrix_x;
+
+    //---------In/Out Matrix data -----------
+    //Input data
+    cout << "Input matrix 2x3 from 1 to 6: " << endl;
+    for(int i=0; i <2; i++){
+        for(int j=0; j<3; j++)
+        cin >> matrix_23(i,j);
+    }
+    
+    //Output
+    cout << "matrix 2x3 from 1 to 6: \n" << matrix_23 << endl;
+    // Use () to access elements in the matrix
+    cout << "print matrix 2x3: " << endl;
+    for(int i=0; i <2; i++){
+        for(int j=0; j<3; j++)
+        cout << matrix_23(i,j) << "\t";
+        cout << endl;
+    }
+    
+}
+```
+
