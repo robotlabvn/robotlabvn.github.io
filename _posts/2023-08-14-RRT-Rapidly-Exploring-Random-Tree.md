@@ -3,26 +3,26 @@ layout: post
 category: blog
 title: Rapidly-Exploring Random Tree (RRT)
 snippet: Explain the RRT and some its variation.
-tags: [motion planing, robotics]
+tags: [robotics]
 ---
 
 The Rapidly Exploring Random Tree (RRT) algorithm is a popular path planning algorithm used in robotics. It efficiently searches nonconvex, high-dimensional spaces by randomly building a space-filling tree. 
 
 <div class="row">
   <div class="col">
-    {% include image.html url="../assets/RRT/RRT.png" description="RRT Algorithms" width="100%" %}
+    {% include image.html url="/assets/RRT/RRT.png" description="RRT Algorithms" width="100%" %}
   </div>
   <div class="col">
-     {% include image.html url="../assets/RRT/RRT_star.png" description="RRT* Algorithms" width="100%" %}
+     {% include image.html url="/assets/RRT/RRT_star.png" description="RRT* Algorithms" width="100%" %}
   </div>
 </div>
 
 <div class="row">
   <div class="col">
-    {% include image.html url="../assets/RRT/RRT_dark.gif" description="RRT Algorithms in 3D" width="100%" %}
+    {% include image.html url="/assets/RRT/RRT_dark.gif" description="RRT Algorithms in 3D" width="100%" %}
   </div>
   <div class="col">
-     {% include image.html url="../assets/RRT/RRT_star_dark.gif description="RRT* Algorithms in 3D" width="100%" %}
+     {% include image.html url="/assets/RRT/RRT_star_dark.gif description="RRT* Algorithms in 3D" width="100%" %}
   </div>
 </div>
 
