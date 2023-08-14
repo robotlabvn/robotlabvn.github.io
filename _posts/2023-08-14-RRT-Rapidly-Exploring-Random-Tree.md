@@ -10,19 +10,19 @@ The Rapidly Exploring Random Tree (RRT) algorithm is a popular path planning alg
 
 <div class="row">
   <div class="col">
-    {% include image.html url="/assets/RRT/RRT.png" description="RRT Algorithms, blue point is the goal position, grey points are the vertices, edges are showed with green color and red line is the shortest path," width="50%" %}
+    {% include image.html url="/assets/RRT/RRT.png" description="RRT Algorithms, blue point is the goal position, grey points are the vertices, edges are showed with green color and red line is the shortest path," width="80%" %}
   </div>
   <div class="col">
-     {% include image.html url="/assets/RRT/RRT_star.png" description="RRT* Algorithms, blue point is the goal position, grey points are the vertices, edges are showed with green color and red line is the shortest path," width="50%" %}
+     {% include image.html url="/assets/RRT/RRT_star.png" description="RRT* Algorithms, blue point is the goal position, grey points are the vertices, edges are showed with green color and red line is the shortest path," width="80%" %}
   </div>
 </div>
 
 <div class="row">
   <div class="col">
-    {% include image.html url="/assets/RRT/RRT_dark.gif" description="RRT Algorithms in 3D, with random points in the spaces" width="50%" %}
+    {% include image.html url="/assets/RRT/RRT_dark.gif" description="RRT Algorithms in 3D, with random points in the spaces" width="80%" %}
   </div>
   <div class="col">
-    {% include image.html url="/assets/RRT/RRT_star_dark.gif" description="RRT* Algorithms in 3D, with less points and more optimimal path" width="50%" %}
+    {% include image.html url="/assets/RRT/RRT_star_dark.gif" description="RRT* Algorithms in 3D, with less points and more optimimal path" width="80%" %}
   </div>
 </div>
 
