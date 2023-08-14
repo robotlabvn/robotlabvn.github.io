@@ -8,11 +8,25 @@ tags: [motion planing, robotics]
 
 The Rapidly Exploring Random Tree (RRT) algorithm is a popular path planning algorithm used in robotics. It efficiently searches nonconvex, high-dimensional spaces by randomly building a space-filling tree. 
 
-![RRT](../assets/RRT/RRT.png)
-![RRT* Algorithms](../assets/RRT/RRT_star.png)
-![RRT in 3D](../assets/RRT/RRT_dark.gif)
-![RRT* in 3D](../assets/RRT/RRT_star_dark.gif)
-The basic premise of the RRT algorithm is as follows:
+<div class="row">
+  <div class="col">
+    {% include image.html url="/assets/RRT/RRT.png" description="RRT Algorithms" width="100%" %}
+  </div>
+  <div class="col">
+     {% include image.html url="/assets/RRT/RRT_star.png" description="RRT* Algorithms" width="100%" %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    {% include image.html url="/assets/RRT/RRT_dark.gif" description="RRT Algorithms in 3D" width="100%" %}
+  </div>
+  <div class="col">
+     {% include image.html url="/assets/RRT/RRT_star_dark.gif description="RRT* Algorithms in 3D" width="100%" %}
+  </div>
+</div>
+
+
 
 0. Intialize a __Graph(Vertex, Edge)__  with containing edges and vertices, initialized as (start_pos, end_pos).
 1. Randomly generate points (vertex) in the space.
