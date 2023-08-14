@@ -1,5 +1,5 @@
-title: A minimalism Robotics blog
-author: Tri Bien 
+title: A minimalism robotics blog
+email: robotlabvn[AT]gmail.com 
 subtitle: Robotics Lab Blog for everyone
 
 google_analytics:
@@ -8,7 +8,7 @@ url:
 baseurl:
 
 footer_url:
-footer_text: "Copyright © 2023 Tri Bien"
+footer_text: "Copyright © 2023 Robotlab.vn | Contact: robotlabvn@gmail.com"
 
 profile-picture: assets/profile.jpg
 favicon_location:
@@ -23,10 +23,8 @@ navbar:
    link: "https://robotlab.vn"
  - name: "blog"
    link: "/blog"
- - name: "about me"
-   link: "https://triknight.github.io"
- - name: "github"
-   link: "https://github.com/triknight"
+ - books: "books"
+   link: "https://robotlab.vn"
 
 markdown: kramdown
 kramdown:
