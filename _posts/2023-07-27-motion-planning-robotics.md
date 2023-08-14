@@ -91,7 +91,7 @@ and control space[1](https://books.google.com/books?dq=rrt+in+ompl+can+be+used+i
 space, depending on the specific planning problem and the user's 
 preference.
 
-### Q3. What are the advantages and disadvantages of using RRT for planning in joint space versus cartesian space in OMPL
+### Q3. RRT for planning in joint space versus cartesian space in OMPL
 Advantages and disadvantages of using RRT for planning in joint space versus Cartesian space in OMPL are:
 Advantages of using RRT in joint space:
 
