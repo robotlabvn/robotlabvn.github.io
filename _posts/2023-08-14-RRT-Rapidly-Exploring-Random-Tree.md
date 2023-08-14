@@ -22,7 +22,7 @@ The Rapidly Exploring Random Tree (RRT) algorithm is a popular path planning alg
     {% include image.html url="/assets/RRT/RRT_dark.gif" description="RRT Algorithms in 3D" width="100%" %}
   </div>
   <div class="col">
-     {% include image.html url="/assets/RRT/RRT_star_dark.gif description="RRT* Algorithms in 3D" width="100%" %}
+    {% include image.html url="/assets/RRT/RRT_star_dark.gif" description="RRT Star Algorithms in 3D" width="100%" %}
   </div>
 </div>
 
