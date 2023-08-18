@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: What is the PiLZ Industrial Motion Planner
+title: What is the Pilz Industrial Motion Planner?
 snippet: Explain the PiLZ Industrial Motion Planner and use cases.
 tags: [robotics]
 ---
@@ -26,7 +26,7 @@ It is worth noting that the Pilz Industrial Motion
 Planner is implemented by Pilz GmbH & Co. KG and is part of the 
 ROSIN FTP (ROS-Industrial Quality-Assured Robot Software Components). It is used in conjunction with the Robot Operating System (ROS), an open-source framework for robotics applications
 
-### Some potential advantages of using the Pilz Industrial Motion Planner:
+## Advantages of using the Pilz Industrial Motion Planner:
 
 - Rapid and predictable trajectory generation: The Pilz Industrial Motion Planner is designed to support solving for circular
 or linear motions in a rapid and predictable way. This can be advantageous for applications that require quick and reliable trajectory planning.
@@ -50,8 +50,11 @@ Planner, are compatible with the hardware of various manufacturers. This can pro
  {% include image.html url="/assets/2023-08-17-pilz-motion-planner/Pilz_Architecture.png" description="Architecture of Pilz Industrial Motion Planner" width="80%" %}
 
  Block digram in ROS code:
- 
 
+## Install the Pilz
+```
+git clone https://github.com/TriKnight/pilz_industrial_motion/tree/noetic-devel
+```
  ## Example code Pilz Motion planner with ROS
 Pilz_demo.py
 {:.filename}
@@ -133,6 +136,21 @@ if __name__ == "__main__":
     start_program()
  ```
 
+## Troubleshouting
+### Error 1. ModuleNotFoundError: No module named 'PyKDL'
+1. Install PyKDL ```sudo apt install python3-pykdl```. This installs a library to```/usr/lib/python3/dist-packages/PyKDLcpython-38-x86_64-linux-gnu.so``` 
+2. Copy this file to Anaconda environment
+```
+cp ./build/devel/lib/python3/dist-packages/PyKDL.so ~/miniconda3/envs/[your_env]/lib/python3.8/lib-dynload
+```
+3. Check PyKDL is available.
+```
+python -c "import PyKDL"
+```
+4. Install SIP
+```
+sudo apt-get install python-sip
+```
 # References
 
 1. [ROS Planning Pilz Motion planner](https://ros-planning.github.io/moveit_tutorials/doc/pilz_industrial_motion_planner/pilz_industrial_motion_planner.html)
