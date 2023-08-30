@@ -19,9 +19,9 @@ sass:
     sass_dir: css
 
 navbar:
- - name: "home"
+ - name: "Home"
    link: "https://robotlab.vn"
- - name: "blog"
+ - name: " Blog"
    link: "/blog"
  - books: "books"
    link: "https://robotlab.vn"
