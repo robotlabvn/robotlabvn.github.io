@@ -151,3 +151,4 @@ q_f^{\prime}
 \end{array}\right]
 $$
 # References
+1. Reza N. Jazar. 2007. Theory of Applied Robotics: Kinematics, Dynamics, and Control. Springer Publishing Company, Incorporated.
