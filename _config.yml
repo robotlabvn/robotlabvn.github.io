@@ -23,7 +23,7 @@ navbar:
    link: "https://robotlab.vn"
  - name: " Blog"
    link: "/blog"
- - books: "books"
+ - books: "Tutorial"
    link: "https://robotlab.vn"
 
 markdown: kramdown
