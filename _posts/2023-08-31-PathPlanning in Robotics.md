@@ -22,26 +22,72 @@ specification of the robot's position as a function of time is called a **trajec
 3. **Minimum-time trajectories** along specified paths, taking actuator limits into consideration
 
 ### Definition
+A path $$\theta(s)$$ maps a scalar path parameter $$s$$, assumed to be 0 at the start
+of the path and 1 at the end, to a point in the robot’s configuration space $$\Theta$$, 
 
-A path $\theta(s)$ maps a scalar path parameter $s$, assumed to be 0 at the start
-of the path and 1 at the end, to a point in the robot’s configuration space $\Theta$,
-$\theta : [0, 1] \rightarrow \Theta$. As $s$ increases from 0 to 1, the robot moves along the path.
+$$\theta: [0, 1] \rightarrow \Theta$$ 
 
-Sometimes $s$ is taken to be time and is allowed to vary from time $s = 0$ to
-the total motion time $s = T$, but it is often useful to separate the role of the geometric path parameter $s$ from the time parameter $t$. A time scaling $s(t)$
-assigns a value $s$ to each time $t \in [0, T]$, $s : [0, T] \rightarrow [0, 1]$.
+As $$s$$ increases from 0 to 1, the robot moves along the path.
+Sometimes $$s$$ is taken to be time and is allowed to vary from time $$s = 0$$ to
+the total motion time $$s = T$$, but it is often useful to separate the role of the
+geometric path parameter $$s$$ from the time parameter $$t$$. A time scaling $$s(t)$$
+assigns a value $$s$$ to each time $$t \in [0, T]$$, $$s : [0, T] \rightarrow [0, 1]$$.
 
-Together, a path and a time scaling define a trajectory $\theta(s(t))$, or $\theta(t)$ for
-short. Using the chain rule, the velocity and acceleration along the trajectory
-can be written as
+
+Together, a path and a time scaling define a trajectory $$\theta(s(t))$$, or $$\theta(t)$$ for short. Using the chain rule, the velocity and acceleration along the trajectory can be written as
 
 $$
 \dot{\theta} = \frac{d\theta}{ds}\dot{s}, \quad \ddot{\theta} = \frac{d^2\theta}{ds^2}\dot{s}^2 + 2\frac{d\theta}{ds}\ddot{s}.
 $$
 
 
-To ensure that the robot’s acceleration (and therefore dynamics) is well defined,
-each of $\theta(s)$ and $s(t)$ must be twice differentiable.
+To ensure that the robot’s acceleration (and therefore dynamics) is well defined, each of $$\theta(s)$$ and $$s(t)$$ must be twice differentiable.
+
+
+---
+## 1 Point-to-Point Trajectories
+The simplest type of motion is from rest at one configuration to rest at another, which is called point-to-point motion. For point-to-point motion, the simplest type of path is a straight line
+
+## 1.1 Straight-Line Paths
+A “straight line” from a start configuration $$\theta_{\text{start}}$$ to an end configuration $$\theta_{\text{end}}$$ could be defined in joint space or in task space. The advantage of a straight-line path from $$\theta_{\text{start}}$$ to $$\theta_{\text{end}}$$ in joint space is simplicity: since joint limits typically take the form $$\theta_{i,\text{min}} \leq \theta_i \leq \theta_{i,\text{max}}$$ for each joint $$i$$, the allowable joint configurations form a convex set $$\Theta_{\text{free}}$$ in joint space, so the straight line between any two endpoints in $$\Theta_{\text{free}}$$ also lies in $$\Theta_{\text{free}}$$. The straight line can be written as:
+
+$$
+\theta(s) = \theta_{\text{start}} + s(\theta_{\text{end}} - \theta_{\text{start}})
+$$ ,
+$$
+s \in [0, 1]
+$$
+
+with derivatives:
+
+$$
+\frac{d\theta}{ds} = \theta_{\text{end}} - \theta_{\text{start}}
+$$
+
+
+$$
+\frac{d^2\theta}{ds^2} = 0
+$$
+
+
+Straight lines in joint space generally do not yield straight-line motion of the end-effector in task space. If task-space straight-line motions are desired, the start and end configurations can be specified by $$X_{\text{start}}$$ and $$X_{\text{end}}$$ in task space. If $$X_{\text{start}}$$ and $$X_{\text{end}}$$ are represented by a minimum set of coordinates, then a straight line is defined as:
+
+$$
+X(s) = X_{\text{start}} + s(X_{\text{end}} - X_{\text{start}})
+$$
+
+
+$$
+s \in [0, 1]
+$$
+
+
+Compared with the case when joint coordinates are used, the following issues must be addressed:
+
+- If the path passes near a kinematic singularity, the joint velocities may become unreasonably large for almost all time scalings of the path.
+- Since the robot’s reachable task space may not be convex in $$X$$ coordinates, some points on a straight line between two reachable endpoints may not be reachable.
+
+
 
 ---
 
