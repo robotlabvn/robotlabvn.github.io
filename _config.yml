@@ -19,13 +19,14 @@ sass:
     sass_dir: css
 
 navbar:
- - name: "Home"
+ - name: " Home "
    link: "https://robotlab.vn"
- - name: " Blog"
+ - name: " Blog "
    link: "/blog"
- - name: "Tutorial"
+ - name: " Tutorial "
    link: "/tutorial"
-
+- name: " ☕️ Buy me a coffee "
+   link: "/buy_coffee"
 markdown: kramdown
 kramdown:
   math_engine: katex
