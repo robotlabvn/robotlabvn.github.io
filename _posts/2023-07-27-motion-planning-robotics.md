@@ -11,7 +11,18 @@ There are many books and papers on robotics motion planning. Please dive deep in
 
 Motion planning robotics arm is the process of finding a collision-free path for a robotic arm to move from its starting configuration to its goal configuration while avoiding obstacles. It is an essential component of robotics that enables robots to perform tasks autonomously and safely. Motion planning robotics arm involves finding the optimal path for the robot arm to move from its starting configuration to its goal configuration while avoiding obstacles and minimizing some objective function. The objective function can be related to energy consumption, time, or other performance metrics.
 
-### Q2. What are some common motion planning algorithms used for robotic arms?
+### Q2. Path planning versus motion planning? 
+The path planning problem is a
+subproblem of the general motion planning problem. Path planning is the
+purely geometric problem of finding a collision-free path q(s), s ∈ [0, 1],
+from a start configuration q(0) = q(start) to a goal configuration q(1) = q(goal) ,
+without concern for the dynamics, the duration of motion, or constraints
+on the motion or on the control inputs. It is assumed that the path
+returned by the path planner can be time scaled to create a feasible tra-
+jectory. This problem is sometimes called the piano mover’s
+problem, emphasizing the focus on the geometry of cluttered spaces. [Modern Robotics](http://modernrobotics.org)
+
+### Q3. What are some common motion planning algorithms used for robotic arms?
 
 Some common motion planning algorithms used for robotic arms include:
 
@@ -149,6 +160,7 @@ https://doi.org/10.1016/j.engappai.2023.106099.
 6. Amanhoud, Walid, Mahdi Khoramshahi and Aude Billard. “A Dynamical System Approach to Motion and Force Generation in Contact Tasks.” Robotics: Science and Systems XV (2019)
 
 7. Matt Zucker, [Nathan Ratliff](https://www.nathanratliff.com/pedagogy/mathematics-for-intelligent-systems) , Dragan AD, et al. "CHOMP: Covariant Hamiltonian optimization for motion planning." The International Journal of Robotics Research. 2013;32(9-10):1164-1193. doi:10.1177/0278364913488805
+
 
 ### OMPL Tutorial
 8. https://theairlab.org/summer2020/,  [Motion Planning Tutorial](https://bitbucket.org/castacks/core_planning_tutorial/raw/c8da578242cf8313aafbb986e5f265a9823ad6c1/doc/planning_presentation.pdf)

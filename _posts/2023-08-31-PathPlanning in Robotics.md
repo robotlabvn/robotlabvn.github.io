@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: Path Planning in Robotics
+title: Trajectory Generation in Robotics
 snippet: Learn Path Planning in robotics
 tags: [robotics, math]
 katex: True
@@ -9,15 +9,43 @@ katex: True
 
 **Main Goal:**
 
-- Learn the fundamental knownledge and mathmatical theory of Path Planning in manipulator.
+- Learn the fundamental knownledge and mathmatical theory of Trajectory Generation in manipulator.
 - Demo Python code of path planning.
 
-## I. What is Path Planning
-Path planning is a crucial aspect of robotics that involves planning the path of a robot from its current position to a desired position. The purpose of path planning is to create smooth and continuous paths for the robot to follow, while avoiding obstacles and ensuring that the robot reaches its destination in the most efficient way possible.
+## I. What is Trajectory Generation
+During robot motion, the robot controller receives a 
+continuous stream of goal positions and velocities to track. This 
+specification of the robot's position as a function of time is called a **trajectory**. In some cases, the trajectory is completely determined by the task, such as when the end-effector needs to track a known moving object. In other cases, when the task is simply to move from one position to another in a given time, we have the freedom to design the trajectory to meet these constraints. This is the domain of **trajectory planning**. A trajectory should be a sufficiently smooth function of time and should respect any given limits on joint velocities, accelerations, or torques. We can consider a **trajectory** as the combination of a **path**, which is a purely geometric description of the sequence of configurations achieved by the robot, and a **time scaling** , which specifies the times when those configurations are reached. There are three cases to consider in trajectory planning:
 
- Path planning involves defining a geometric curve for the end-effector between two points, defining a rotational motion between two orientations, and defining a time function for variation of a coordinate between two given values. There are several methods used in path planning, including cubic path, polynomial path, and non-polynomial path planning.  Additionally, there are methods for controlling the motion of a robot, including forward path robot motion and inverse path robot motion. The overall goal of path planning is to create a safe and efficient path for the robot to follow, while ensuring that it avoids obstacles and reaches its destination in the most efficient way possible.
+1. **Point-to-point straight-line trajectories** in both joint space and task space.
+2. **Trajectories passing through a sequence of timed via points**.
+3. **Minimum-time trajectories** along specified paths, taking actuator limits into consideration
+
+### Definition
+
+A path $\theta(s)$ maps a scalar path parameter $s$, assumed to be 0 at the start
+of the path and 1 at the end, to a point in the robot’s configuration space $\Theta$,
+$\theta : [0, 1] \rightarrow \Theta$. As $s$ increases from 0 to 1, the robot moves along the path.
+
+Sometimes $s$ is taken to be time and is allowed to vary from time $s = 0$ to
+the total motion time $s = T$, but it is often useful to separate the role of the geometric path parameter $s$ from the time parameter $t$. A time scaling $s(t)$
+assigns a value $s$ to each time $t \in [0, T]$, $s : [0, T] \rightarrow [0, 1]$.
+
+Together, a path and a time scaling define a trajectory $\theta(s(t))$, or $\theta(t)$ for
+short. Using the chain rule, the velocity and acceleration along the trajectory
+can be written as
+
+$$
+\dot{\theta} = \frac{d\theta}{ds}\dot{s}, \quad \ddot{\theta} = \frac{d^2\theta}{ds^2}\dot{s}^2 + 2\frac{d\theta}{ds}\ddot{s}.
+$$
 
 
+To ensure that the robot’s acceleration (and therefore dynamics) is well defined,
+each of $\theta(s)$ and $s(t)$ must be twice differentiable.
+
+---
+
+- **Cubic Path**: A method of defining a geometric curve for the end-effector between two points using a cubic polynomial
 
 - **Polynomial Path**: A method of defining a geometric curve for the end-effector between two points using a polynomial. This method is also used to create smooth and continuous curves for robot motion.
 
@@ -169,3 +197,4 @@ $$
 
 # References
 1. Reza N. Jazar. 2007. Theory of Applied Robotics: Kinematics, Dynamics, and Control. Springer Publishing Company, Incorporated.
+2. Kevin M. Lynch and Frank C. Park. 2017. Modern Robotics: Mechanics, Planning, and Control (1st. ed.). Cambridge University Press, USA.
