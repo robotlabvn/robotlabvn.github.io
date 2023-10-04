@@ -63,7 +63,7 @@ q_f^{\prime}
 $$
 
 Their solutions are given in (12.2)-(12.5).
-In case that $t_0=0$, the coefficients simplify.
+In case that $$t_0=0$$, the coefficients simplify.
 
 $$
 \begin{aligned}
@@ -101,7 +101,7 @@ q_f^{\prime}
 \end{array}\right]
 $$
 
-In this equation, $p(t)$ represents the position of the end-effector at time $t$, $a_0$ represents the initial position of the end-effector, $a_1$ represents the initial velocity of the end-effector, and $a_2$ and $a_3$ are the coefficients of the cubic polynomial. These coefficients are calculated using the initial and final conditions of the path, including the position, velocity, and acceleration. The Cubic Path method is used to generate smooth and continuous curves for robot motion.
+In this equation, $$p(t)$$ represents the position of the end-effector at time $$t$$, $$a_0$$ represents the initial position of the end-effector, $a_1$ represents the initial velocity of the end-effector, and $$a_2$$ and $$a_3$$ are the coefficients of the cubic polynomial. These coefficients are calculated using the initial and final conditions of the path, including the position, velocity, and acceleration. The Cubic Path method is used to generate smooth and continuous curves for robot motion.
 
 $$
 \begin{aligned}
@@ -130,7 +130,7 @@ q_f^{\prime}
 $$
 
 Their solutions are given in (12.2)-(12.5).
-In case that $t_0=0$, the coefficients simplify.
+In case that $$t_0=0$$, the coefficients simplify.
 
 $$
 \begin{aligned}
