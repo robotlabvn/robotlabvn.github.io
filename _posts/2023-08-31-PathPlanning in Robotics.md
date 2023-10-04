@@ -78,11 +78,11 @@ Straight lines in joint space generally do not yield straight-line motion of the
 ### Straight-line path in cartesian space
 If task-space straight-line motions are desired, the start and end configurations can be specified by $$X_{\text{start}}$$ and $$X_{\text{end}}$$ in task space. If $$X_{\text{start}}$$ and $$X_{\text{end}}$$ are represented by a minimum set of coordinates, then a straight line is defined as:
 
-~
+<s>
 $$
 X(s) = X_{\text{start}} + s(X_{\text{end}} - X_{\text{start}})
 $$
-~
+</s>
 
 $$
 s \in [0, 1]
