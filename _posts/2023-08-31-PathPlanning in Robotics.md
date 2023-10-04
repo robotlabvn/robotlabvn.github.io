@@ -78,11 +78,9 @@ Straight lines in joint space generally do not yield straight-line motion of the
 ### Straight-line path in cartesian space
 If task-space straight-line motions are desired, the start and end configurations can be specified by $$X_{\text{start}}$$ and $$X_{\text{end}}$$ in task space. If $$X_{\text{start}}$$ and $$X_{\text{end}}$$ are represented by a minimum set of coordinates, then a straight line is defined as:
 
-<s>
 $$
 X(s) = X_{\text{start}} + s(X_{\text{end}} - X_{\text{start}})
 $$
-</s>
 
 $$
 s \in [0, 1]
@@ -94,18 +92,60 @@ Compared with the case when joint coordinates are used, the following issues mus
 - If the path passes near a kinematic singularity, the joint velocities may become unreasonably large for almost all time scalings of the path.
 - Since the robot’s reachable task space may not be convex in $$X$$ coordinates, some points on a straight line between two reachable endpoints may not be reachable.
 
-A configuration of the form $
-$$
-X_{\text{start}} + s(X_{\text{end}} - X_{\text{start}})
-$$
+So a configuration of the form 
+
+$$\cancel{X_{\text{start}} + s(X_{\text{end}} - X_{\text{start}})}$$
+
  does not generally lie in SE(3) -> Solution by using **screw motion** (simultaneous rotation about and
 translation along a fixed screw axis)
+
+To derive this $$X(s)$$, we can write the start and
+end configurations explicitly in the {s} frame as $$X_{s,\text{start}}$$ and $$X_{s,\text{end}}$$ and use our
+subscript cancellation rule to express the end configuration in the start frame:
+$$
+X_{\text{start},\text{end}} = X_{\text{start},s} X_{s,\text{end}} = X_{s,\text{start}}^{-1}
+X_{s,\text{end}}.
+$$
+
+Then $$\log(X_{s,\text{start}}^{-1} X_{s,\text{end}})$$ is the matrix representation of the twist, expressed in
+the {start} frame, that takes $$X_{\text{start}}$$ to $$X_{\text{end}}$$ in unit time. The path can therefore
+be written as
+$$
+X(s) = X_{\text{start}} \exp(\log(X_{\text{start}}^{-1} X_{\text{end}})s),
+$$
+
+where $$X_{\text{start}}$$ is post-multiplied by the matrix exponential since the twist is
+represented in the {start} frame, not the fixed world frame {s}.
+
+This screw motion provides a "straight-line" motion in the sense that the
+screw axis is constant. The origin of the end-effector does not generally follow
+a straight line in Cartesian space, since it is following a screw motion. It may
+be preferable to decouple the rotational motion from the translational motion.
+Writing $$X = (R, p)$$, we can define the path
+$$
+p(s) = p_{\text{start}} + s(p_{\text{end}} - p_{\text{start}}),
+$$
+
+$$
+R(s) = R_{\text{start}} \exp(\log(R_{\text{start}}^T R_{\text{end}})s)
+$$
+
+where the frame origin follows a straight line while the axis of rotation is constant
+in the body frame. Figure bellow 
+
+ {% include image.html url="/assets/2023-08-31-Trajectory-Generation/screw.png" description="A path following a constant screw motion versus a decoupled path where
+the frame origin follows a straight line and the angular velocity is constant" width="80%" %}
+
+
+illustrates a screw path and a decoupled path for
+the same $$X_{\text{start}}$$ and $$X_{\text{end}}$$.
 
 ### Example
 
  {% include image.html url="/assets/2023-08-31-Trajectory-Generation/2R_robot_trajectory.png" description="A straight-line path in joint space and (top right) the corresponding motion of the end-effector in task space (dashed line)" width="80%" %}
 
 (Left) A 2R robot with joint limits $$0^\circ \leq \theta_1 \leq 180^\circ$$, $$0^\circ \leq \theta_2 \leq 150^\circ$$. (Top center) A straight-line path in joint space and (top right) the corresponding motion of the end-effector in task space (dashed line). The reachable endpoint configurations, subject to joint limits, are indicated in gray. (Bottom center) This curved line in joint space and (bottom right) the corresponding straight-line path in task space (dashed line) would violate the joint limits.
+
 
 
 ---
