@@ -78,10 +78,11 @@ Straight lines in joint space generally do not yield straight-line motion of the
 ### Straight-line path in cartesian space
 If task-space straight-line motions are desired, the start and end configurations can be specified by $$X_{\text{start}}$$ and $$X_{\text{end}}$$ in task space. If $$X_{\text{start}}$$ and $$X_{\text{end}}$$ are represented by a minimum set of coordinates, then a straight line is defined as:
 
+~
 $$
 X(s) = X_{\text{start}} + s(X_{\text{end}} - X_{\text{start}})
 $$
-
+~
 
 $$
 s \in [0, 1]
@@ -92,6 +93,13 @@ Compared with the case when joint coordinates are used, the following issues mus
 
 - If the path passes near a kinematic singularity, the joint velocities may become unreasonably large for almost all time scalings of the path.
 - Since the robot’s reachable task space may not be convex in $$X$$ coordinates, some points on a straight line between two reachable endpoints may not be reachable.
+
+A configuration of the form $
+$$
+X_{\text{start}} + s(X_{\text{end}} - X_{\text{start}})
+$$
+ does not generally lie in SE(3) -> Solution by using **screw motion** (simultaneous rotation about and
+translation along a fixed screw axis)
 
 ### Example
 
