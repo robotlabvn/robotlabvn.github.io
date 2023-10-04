@@ -13,6 +13,10 @@ katex: True
 - Demo Python code of Trajectory Generation.
 
 ## I. What is Trajectory Generation
+
+ {% include image.html url="/assets/2023-08-31-Trajectory-Generation/pathvstrajectory.png" description="There is an important distinction between a path and a trajectory. A path is a spatial construct and tells us how we get from A to B through the world. A trajectory is a path plus a schedule. It tells us how quickly we should move along the path, at what time we should be at what point along the path. It’s important with trajectories that the position and orientation vary smoothly with time. We do this for a number of reasons. We want to reduce the maximum acceleration on the robot, allows us to reduce the size of the motors, and it perhaps reduces vibrations induced in the structure of the robot. What the smooth mean would mean that the position is continuous as a function of time and velocity is continuous as a function of time. And, we would hope that the acceleration is continuous and perhaps the jerk is continuous and so on up through higher-order derivatives." width="60%" %}
+
+
 During robot motion, the robot controller receives a 
 continuous stream of goal positions and velocities to track. This 
 specification of the robot's position as a function of time is called a **trajectory**. In some cases, the trajectory is completely determined by the task, such as when the end-effector needs to track a known moving object. In other cases, when the task is simply to move from one position to another in a given time, we have the freedom to design the trajectory to meet these constraints. This is the domain of **trajectory planning**. A trajectory should be a sufficiently smooth function of time and should respect any given limits on joint velocities, accelerations, or torques. We can consider a **trajectory** as the combination of a **path**, which is a purely geometric description of the sequence of configurations achieved by the robot, and a **time scaling** , which specifies the times when those configurations are reached. There are three cases to consider in trajectory planning:
@@ -57,6 +61,7 @@ A “straight line” from a start configuration $$\theta_{\text{start}}$$ to an
 $$
 \theta(s) = \theta_{\text{start}} + s(\theta_{\text{end}} - \theta_{\text{start}})
 $$ ,
+
 $$
 s \in [0, 1]
 $$
@@ -66,7 +71,6 @@ with derivatives:
 $$
 \frac{d\theta}{ds} = \theta_{\text{end}} - \theta_{\text{start}}
 $$
-
 
 $$
 \frac{d^2\theta}{ds^2} = 0
@@ -122,6 +126,7 @@ screw axis is constant. The origin of the end-effector does not generally follow
 a straight line in Cartesian space, since it is following a screw motion. It may
 be preferable to decouple the rotational motion from the translational motion.
 Writing $$X = (R, p)$$, we can define the path
+
 $$
 p(s) = p_{\text{start}} + s(p_{\text{end}} - p_{\text{start}}),
 $$
@@ -303,3 +308,4 @@ $$
 # References
 1. Reza N. Jazar. 2007. Theory of Applied Robotics: Kinematics, Dynamics, and Control. Springer Publishing Company, Incorporated.
 2. Kevin M. Lynch and Frank C. Park. 2017. Modern Robotics: Mechanics, Planning, and Control (1st. ed.). Cambridge University Press, USA.
+3. Professor Peter Corke, Robot Academy, https://robotacademy.net.au/lesson/summary-of-paths-and-trajectories/
