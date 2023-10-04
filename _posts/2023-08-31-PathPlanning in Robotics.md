@@ -37,7 +37,7 @@ assigns a value $$s$$ to each time $$t \in [0, T]$$, $$s : [0, T] \rightarrow [0
 Together, a path and a time scaling define a trajectory $$\theta(s(t))$$, or $$\theta(t)$$ for short. Using the chain rule, the velocity and acceleration along the trajectory can be written as
 
 $$
-\dot{\theta} = \frac{d\theta}{ds}\dot{s}, \quad \ddot{\theta} = \frac{d^2\theta}{ds^2}\dot{s}^2 + 2\frac{d\theta}{ds}\ddot{s}.
+\dot{\theta} = \frac{d\theta}{ds}\dot{s}, \quad \ddot{\theta} = \frac{d\theta}{ds}\ddot{s} + \frac{d^2\theta}{ds^2}\dot{s^2}.
 $$
 
 
@@ -45,7 +45,7 @@ To ensure that the robot’s acceleration (and therefore dynamics) is well defin
 
 
 ---
-## 1 Point-to-Point Trajectories
+## 1. Point-to-Point Trajectories
 The simplest type of motion is from rest at one configuration to rest at another, which is called point-to-point motion. For point-to-point motion, the simplest type of path is a straight line
 
 ## 1.1 Straight-Line Paths
