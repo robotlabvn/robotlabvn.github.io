@@ -25,8 +25,6 @@ navbar:
    link: "/blog"
  - name: "Tutorial"
    link: "/tutorial"
-- name: "Buy me a coffee"
-   link: "/buy_coffee"
 markdown: kramdown
 kramdown:
   math_engine: katex

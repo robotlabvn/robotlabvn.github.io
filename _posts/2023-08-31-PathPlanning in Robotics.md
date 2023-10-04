@@ -147,8 +147,8 @@ $$
 q(t)=a_0+a_1\left(t-t_0\right)+a_2\left(t-t_0\right)^2+a_3\left(t-t_0\right)^3
 $$
 Now, the boundary conditions (12.6) generate a set of equations
-$$
 
+$$
 \left[\begin{array}{cccc}
 1 & 0 & 0 & 0 \\
 0 & 1 & 0 & 0 \\
