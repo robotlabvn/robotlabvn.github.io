@@ -2,7 +2,7 @@
 layout: post
 category: blog
 title: Trajectory Generation in Robotics
-snippet: Learn Path Planning in robotics
+snippet: Learn Trajectory Generation in robotics
 tags: [robotics, math]
 katex: True
 ---
@@ -10,7 +10,7 @@ katex: True
 **Main Goal:**
 
 - Learn the fundamental knownledge and mathmatical theory of Trajectory Generation in manipulator.
-- Demo Python code of path planning.
+- Demo Python code of Trajectory Generation.
 
 ## I. What is Trajectory Generation
 During robot motion, the robot controller receives a 
@@ -49,6 +49,9 @@ To ensure that the robot’s acceleration (and therefore dynamics) is well defin
 The simplest type of motion is from rest at one configuration to rest at another, which is called point-to-point motion. For point-to-point motion, the simplest type of path is a straight line
 
 ## 1.1 Straight-Line Paths
+
+### Straight-line path in configuration space
+
 A “straight line” from a start configuration $$\theta_{\text{start}}$$ to an end configuration $$\theta_{\text{end}}$$ could be defined in joint space or in task space. The advantage of a straight-line path from $$\theta_{\text{start}}$$ to $$\theta_{\text{end}}$$ in joint space is simplicity: since joint limits typically take the form $$\theta_{i,\text{min}} \leq \theta_i \leq \theta_{i,\text{max}}$$ for each joint $$i$$, the allowable joint configurations form a convex set $$\Theta_{\text{free}}$$ in joint space, so the straight line between any two endpoints in $$\Theta_{\text{free}}$$ also lies in $$\Theta_{\text{free}}$$. The straight line can be written as:
 
 $$
@@ -70,7 +73,10 @@ $$
 $$
 
 
-Straight lines in joint space generally do not yield straight-line motion of the end-effector in task space. If task-space straight-line motions are desired, the start and end configurations can be specified by $$X_{\text{start}}$$ and $$X_{\text{end}}$$ in task space. If $$X_{\text{start}}$$ and $$X_{\text{end}}$$ are represented by a minimum set of coordinates, then a straight line is defined as:
+Straight lines in joint space generally do not yield straight-line motion of the end-effector in task space. 
+
+### Straight-line path in cartesian space
+If task-space straight-line motions are desired, the start and end configurations can be specified by $$X_{\text{start}}$$ and $$X_{\text{end}}$$ in task space. If $$X_{\text{start}}$$ and $$X_{\text{end}}$$ are represented by a minimum set of coordinates, then a straight line is defined as:
 
 $$
 X(s) = X_{\text{start}} + s(X_{\text{end}} - X_{\text{start}})
@@ -87,6 +93,11 @@ Compared with the case when joint coordinates are used, the following issues mus
 - If the path passes near a kinematic singularity, the joint velocities may become unreasonably large for almost all time scalings of the path.
 - Since the robot’s reachable task space may not be convex in $$X$$ coordinates, some points on a straight line between two reachable endpoints may not be reachable.
 
+### Example
+
+ {% include image.html url="/assets/2023-08-31-Trajectory-Generation/2R_robot_trajectory.png" description="A straight-line path in joint space and (top right) the corresponding motion of the end-effector in task space (dashed line)" width="80%" %}
+
+(Left) A 2R robot with joint limits $$0^\circ \leq \theta_1 \leq 180^\circ$$, $$0^\circ \leq \theta_2 \leq 150^\circ$$. (Top center) A straight-line path in joint space and (top right) the corresponding motion of the end-effector in task space (dashed line). The reachable endpoint configurations, subject to joint limits, are indicated in gray. (Bottom center) This curved line in joint space and (bottom right) the corresponding straight-line path in task space (dashed line) would violate the joint limits.
 
 
 ---
