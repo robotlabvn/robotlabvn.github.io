@@ -103,7 +103,7 @@ print(circle2.area)     # Output: None (due to the assertion error in the setter
 ```
 In this example, we have a Circle class with a radius property that uses the @property decorator to define a getter and a setter method. The setter method includes an assert statement to check if the provided radius value is greater than 0. If the condition is true, the radius is set to the given value. If the condition is false, an AssertionError is raised with the specified error message. When we create a Circle object with a valid radius (e.g., Circle(5)), the getter and the other properties (diameter and area) work as expected, returning the calculated values. However, when we create a Circle object with an invalid radius (e.g., Circle(-2)), the assert statement in the setter method raises an AssertionError, and the getter and the other properties return None due to the exception being caught in the try-except block.
 
-We can use google pystyle: https://google.github.io/styleguide/pyguide.html
+We can use google pystyle: [https://google.github.io/styleguide/pyguide.html](https://google.github.io/styleguide/pyguide.html)
 
 Make use of built-in exception classes when it makes sense. For example, raise a ValueError to indicate a programming mistake like a violated precondition (such as if you were passed a negative number but required a positive one). Do not use assert statements for validating argument values of a public API. assert is used to ensure internal correctness, not to enforce correct usage nor to indicate that some unexpected event occurred. If an exception is desired in the latter cases, use a raise statement. For example: 
 
