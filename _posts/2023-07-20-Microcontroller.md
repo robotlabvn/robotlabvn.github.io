@@ -5,7 +5,9 @@ title: Microcontroller Lab Experiments with AVR STK600 Kit
 snippet: 
 tags: [microcontroller]
 ---
- {% include image.html url="/assets/2023-07-20-Microcontroller/STK600.jpg" description="STK 600" width="80%" %}
+ {% include image.html url="/assets/2023-07-20-Microcontroller/stk600-2.png" description="A complete starter kit and development system for the 8-bit and 32-bit AVR® microcontrollers that gives designers a quick start to develop code on the AVR, with advanced features for prototyping and testing new designs.
+
+The AVR device connects to the STK600 using an innovative routing and socketcard sandwich system, which routes the signals from the device to the appropriate hardware." width="80%" %}
 
 The document and tutorial for Microcontroller Lab Experiment with AVR STK600 Kit in theses links below and [Youtube Video](https://www.youtube.com/playlist?list=PL4HTCVF4_l6CuZ46mLDJ6uVdWO8ZjD5U8).
 
