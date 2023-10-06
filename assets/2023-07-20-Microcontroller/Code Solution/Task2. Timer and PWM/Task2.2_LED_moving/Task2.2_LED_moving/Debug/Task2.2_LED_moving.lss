@@ -1,0 +1,322 @@
+
+Task2.2_LED_moving.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800200  00800200  000001c4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000170  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  000001c4  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001f4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000234  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000c7a  00000000  00000000  00000254  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000b8c  00000000  00000000  00000ece  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000031a  00000000  00000000  00001a5a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00001d74  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000005cd  00000000  00000000  00001d98  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000077  00000000  00000000  00002365  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  000023dc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	71 c0       	rjmp	.+226    	; 0xe4 <__ctors_end>
+   2:	00 00       	nop
+   4:	79 c0       	rjmp	.+242    	; 0xf8 <__bad_interrupt>
+   6:	00 00       	nop
+   8:	77 c0       	rjmp	.+238    	; 0xf8 <__bad_interrupt>
+   a:	00 00       	nop
+   c:	75 c0       	rjmp	.+234    	; 0xf8 <__bad_interrupt>
+   e:	00 00       	nop
+  10:	73 c0       	rjmp	.+230    	; 0xf8 <__bad_interrupt>
+  12:	00 00       	nop
+  14:	71 c0       	rjmp	.+226    	; 0xf8 <__bad_interrupt>
+  16:	00 00       	nop
+  18:	6f c0       	rjmp	.+222    	; 0xf8 <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	6d c0       	rjmp	.+218    	; 0xf8 <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	6b c0       	rjmp	.+214    	; 0xf8 <__bad_interrupt>
+  22:	00 00       	nop
+  24:	69 c0       	rjmp	.+210    	; 0xf8 <__bad_interrupt>
+  26:	00 00       	nop
+  28:	67 c0       	rjmp	.+206    	; 0xf8 <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	65 c0       	rjmp	.+202    	; 0xf8 <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	63 c0       	rjmp	.+198    	; 0xf8 <__bad_interrupt>
+  32:	00 00       	nop
+  34:	61 c0       	rjmp	.+194    	; 0xf8 <__bad_interrupt>
+  36:	00 00       	nop
+  38:	5f c0       	rjmp	.+190    	; 0xf8 <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	5d c0       	rjmp	.+186    	; 0xf8 <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	5b c0       	rjmp	.+182    	; 0xf8 <__bad_interrupt>
+  42:	00 00       	nop
+  44:	59 c0       	rjmp	.+178    	; 0xf8 <__bad_interrupt>
+  46:	00 00       	nop
+  48:	57 c0       	rjmp	.+174    	; 0xf8 <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	55 c0       	rjmp	.+170    	; 0xf8 <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	53 c0       	rjmp	.+166    	; 0xf8 <__bad_interrupt>
+  52:	00 00       	nop
+  54:	51 c0       	rjmp	.+162    	; 0xf8 <__bad_interrupt>
+  56:	00 00       	nop
+  58:	4f c0       	rjmp	.+158    	; 0xf8 <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	4d c0       	rjmp	.+154    	; 0xf8 <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	4b c0       	rjmp	.+150    	; 0xf8 <__bad_interrupt>
+  62:	00 00       	nop
+  64:	49 c0       	rjmp	.+146    	; 0xf8 <__bad_interrupt>
+  66:	00 00       	nop
+  68:	47 c0       	rjmp	.+142    	; 0xf8 <__bad_interrupt>
+  6a:	00 00       	nop
+  6c:	45 c0       	rjmp	.+138    	; 0xf8 <__bad_interrupt>
+  6e:	00 00       	nop
+  70:	43 c0       	rjmp	.+134    	; 0xf8 <__bad_interrupt>
+  72:	00 00       	nop
+  74:	41 c0       	rjmp	.+130    	; 0xf8 <__bad_interrupt>
+  76:	00 00       	nop
+  78:	3f c0       	rjmp	.+126    	; 0xf8 <__bad_interrupt>
+  7a:	00 00       	nop
+  7c:	3d c0       	rjmp	.+122    	; 0xf8 <__bad_interrupt>
+  7e:	00 00       	nop
+  80:	3b c0       	rjmp	.+118    	; 0xf8 <__bad_interrupt>
+  82:	00 00       	nop
+  84:	39 c0       	rjmp	.+114    	; 0xf8 <__bad_interrupt>
+  86:	00 00       	nop
+  88:	37 c0       	rjmp	.+110    	; 0xf8 <__bad_interrupt>
+  8a:	00 00       	nop
+  8c:	35 c0       	rjmp	.+106    	; 0xf8 <__bad_interrupt>
+  8e:	00 00       	nop
+  90:	33 c0       	rjmp	.+102    	; 0xf8 <__bad_interrupt>
+  92:	00 00       	nop
+  94:	31 c0       	rjmp	.+98     	; 0xf8 <__bad_interrupt>
+  96:	00 00       	nop
+  98:	2f c0       	rjmp	.+94     	; 0xf8 <__bad_interrupt>
+  9a:	00 00       	nop
+  9c:	2d c0       	rjmp	.+90     	; 0xf8 <__bad_interrupt>
+  9e:	00 00       	nop
+  a0:	2b c0       	rjmp	.+86     	; 0xf8 <__bad_interrupt>
+  a2:	00 00       	nop
+  a4:	29 c0       	rjmp	.+82     	; 0xf8 <__bad_interrupt>
+  a6:	00 00       	nop
+  a8:	27 c0       	rjmp	.+78     	; 0xf8 <__bad_interrupt>
+  aa:	00 00       	nop
+  ac:	25 c0       	rjmp	.+74     	; 0xf8 <__bad_interrupt>
+  ae:	00 00       	nop
+  b0:	23 c0       	rjmp	.+70     	; 0xf8 <__bad_interrupt>
+  b2:	00 00       	nop
+  b4:	21 c0       	rjmp	.+66     	; 0xf8 <__bad_interrupt>
+  b6:	00 00       	nop
+  b8:	1f c0       	rjmp	.+62     	; 0xf8 <__bad_interrupt>
+  ba:	00 00       	nop
+  bc:	1d c0       	rjmp	.+58     	; 0xf8 <__bad_interrupt>
+  be:	00 00       	nop
+  c0:	1b c0       	rjmp	.+54     	; 0xf8 <__bad_interrupt>
+  c2:	00 00       	nop
+  c4:	19 c0       	rjmp	.+50     	; 0xf8 <__bad_interrupt>
+  c6:	00 00       	nop
+  c8:	17 c0       	rjmp	.+46     	; 0xf8 <__bad_interrupt>
+  ca:	00 00       	nop
+  cc:	15 c0       	rjmp	.+42     	; 0xf8 <__bad_interrupt>
+  ce:	00 00       	nop
+  d0:	13 c0       	rjmp	.+38     	; 0xf8 <__bad_interrupt>
+  d2:	00 00       	nop
+  d4:	11 c0       	rjmp	.+34     	; 0xf8 <__bad_interrupt>
+  d6:	00 00       	nop
+  d8:	0f c0       	rjmp	.+30     	; 0xf8 <__bad_interrupt>
+  da:	00 00       	nop
+  dc:	0d c0       	rjmp	.+26     	; 0xf8 <__bad_interrupt>
+  de:	00 00       	nop
+  e0:	0b c0       	rjmp	.+22     	; 0xf8 <__bad_interrupt>
+	...
+
+000000e4 <__ctors_end>:
+  e4:	11 24       	eor	r1, r1
+  e6:	1f be       	out	0x3f, r1	; 63
+  e8:	cf ef       	ldi	r28, 0xFF	; 255
+  ea:	d1 e2       	ldi	r29, 0x21	; 33
+  ec:	de bf       	out	0x3e, r29	; 62
+  ee:	cd bf       	out	0x3d, r28	; 61
+  f0:	00 e0       	ldi	r16, 0x00	; 0
+  f2:	0c bf       	out	0x3c, r16	; 60
+  f4:	02 d0       	rcall	.+4      	; 0xfa <main>
+  f6:	3a c0       	rjmp	.+116    	; 0x16c <_exit>
+
+000000f8 <__bad_interrupt>:
+  f8:	83 cf       	rjmp	.-250    	; 0x0 <__vectors>
+
+000000fa <main>:
+
+int main(void)
+{
+    /* Hardware Configuration
+	PORTB = LED */
+	DDRB = 0xFF;	//PORTB defines as output
+  fa:	8f ef       	ldi	r24, 0xFF	; 255
+  fc:	84 b9       	out	0x04, r24	; 4
+	uint8_t running = 0x01;	//variable stores the state of the running light
+	uint8_t direction = LEFT;	//0 = running light to the left, 1 = running light to the right
+	
+	uint16_t mark=6250;
+	
+	TCCR1B |=(1<<CS12); //Set up timer 1: CS12 (clock/256)
+  fe:	e1 e8       	ldi	r30, 0x81	; 129
+ 100:	f0 e0       	ldi	r31, 0x00	; 0
+ 102:	80 81       	ld	r24, Z
+ 104:	84 60       	ori	r24, 0x04	; 4
+ 106:	80 83       	st	Z, r24
+{
+    /* Hardware Configuration
+	PORTB = LED */
+	DDRB = 0xFF;	//PORTB defines as output
+	uint8_t running = 0x01;	//variable stores the state of the running light
+	uint8_t direction = LEFT;	//0 = running light to the left, 1 = running light to the right
+ 108:	20 e0       	ldi	r18, 0x00	; 0
+int main(void)
+{
+    /* Hardware Configuration
+	PORTB = LED */
+	DDRB = 0xFF;	//PORTB defines as output
+	uint8_t running = 0x01;	//variable stores the state of the running light
+ 10a:	31 e0       	ldi	r19, 0x01	; 1
+	while(1)	{
+		while(direction == LEFT)	{	//running light to the left
+			running = (running<<1);	//Variable is shifted 1 bit to the left
+			PORTB = ~running;		//output on the LED
+			if(running == 0x80)	{//When bit 8th reached, the direction switched to the RIGHT
+				direction = RIGHT;
+ 10c:	41 e0       	ldi	r20, 0x01	; 1
+			}
+			//_delay_ms(200);		// using delay function OR
+			while(TCNT1 <= mark); //While loop compare with value
+ 10e:	e4 e8       	ldi	r30, 0x84	; 132
+ 110:	f0 e0       	ldi	r31, 0x00	; 0
+	while(1)	{
+		while(direction == LEFT)	{	//running light to the left
+			running = (running<<1);	//Variable is shifted 1 bit to the left
+			PORTB = ~running;		//output on the LED
+			if(running == 0x80)	{//When bit 8th reached, the direction switched to the RIGHT
+				direction = RIGHT;
+ 112:	50 e0       	ldi	r21, 0x00	; 0
+		}
+		while(direction == RIGHT)	{	// running light to the right
+			running = (running>>1);
+			PORTB = ~running;
+			if(running == 0x01)	{
+				direction = LEFT;
+ 114:	64 2f       	mov	r22, r20
+ 116:	75 2f       	mov	r23, r21
+	uint16_t mark=6250;
+	
+	TCCR1B |=(1<<CS12); //Set up timer 1: CS12 (clock/256)
+	
+	while(1)	{
+		while(direction == LEFT)	{	//running light to the left
+ 118:	22 23       	and	r18, r18
+ 11a:	19 f0       	breq	.+6      	; 0x122 <main+0x28>
+			//_delay_ms(200);		// using delay function OR
+			while(TCNT1 <= mark); //While loop compare with value
+			TCNT1 = 0;
+
+		}
+		while(direction == RIGHT)	{	// running light to the right
+ 11c:	21 30       	cpi	r18, 0x01	; 1
+ 11e:	e1 f7       	brne	.-8      	; 0x118 <main+0x1e>
+ 120:	10 c0       	rjmp	.+32     	; 0x142 <main+0x48>
+	
+	TCCR1B |=(1<<CS12); //Set up timer 1: CS12 (clock/256)
+	
+	while(1)	{
+		while(direction == LEFT)	{	//running light to the left
+			running = (running<<1);	//Variable is shifted 1 bit to the left
+ 122:	33 0f       	add	r19, r19
+			PORTB = ~running;		//output on the LED
+ 124:	83 2f       	mov	r24, r19
+ 126:	80 95       	com	r24
+ 128:	85 b9       	out	0x05, r24	; 5
+			if(running == 0x80)	{//When bit 8th reached, the direction switched to the RIGHT
+				direction = RIGHT;
+ 12a:	24 2f       	mov	r18, r20
+ 12c:	30 38       	cpi	r19, 0x80	; 128
+ 12e:	09 f0       	breq	.+2      	; 0x132 <main+0x38>
+ 130:	25 2f       	mov	r18, r21
+			}
+			//_delay_ms(200);		// using delay function OR
+			while(TCNT1 <= mark); //While loop compare with value
+ 132:	80 81       	ld	r24, Z
+ 134:	91 81       	ldd	r25, Z+1	; 0x01
+ 136:	8b 36       	cpi	r24, 0x6B	; 107
+ 138:	98 41       	sbci	r25, 0x18	; 24
+ 13a:	d8 f3       	brcs	.-10     	; 0x132 <main+0x38>
+			TCNT1 = 0;
+ 13c:	11 82       	std	Z+1, r1	; 0x01
+ 13e:	10 82       	st	Z, r1
+	uint16_t mark=6250;
+	
+	TCCR1B |=(1<<CS12); //Set up timer 1: CS12 (clock/256)
+	
+	while(1)	{
+		while(direction == LEFT)	{	//running light to the left
+ 140:	eb cf       	rjmp	.-42     	; 0x118 <main+0x1e>
+			while(TCNT1 <= mark); //While loop compare with value
+			TCNT1 = 0;
+
+		}
+		while(direction == RIGHT)	{	// running light to the right
+			running = (running>>1);
+ 142:	83 2f       	mov	r24, r19
+ 144:	90 e0       	ldi	r25, 0x00	; 0
+ 146:	95 95       	asr	r25
+ 148:	87 95       	ror	r24
+ 14a:	38 2f       	mov	r19, r24
+			PORTB = ~running;
+ 14c:	80 95       	com	r24
+ 14e:	85 b9       	out	0x05, r24	; 5
+			if(running == 0x01)	{
+				direction = LEFT;
+ 150:	26 2f       	mov	r18, r22
+ 152:	31 30       	cpi	r19, 0x01	; 1
+ 154:	09 f4       	brne	.+2      	; 0x158 <main+0x5e>
+ 156:	27 2f       	mov	r18, r23
+			}
+			//_delay_ms(200);           // using delay function OR
+			while(TCNT1 <= mark); //While loop compare with value
+ 158:	80 81       	ld	r24, Z
+ 15a:	91 81       	ldd	r25, Z+1	; 0x01
+ 15c:	8b 36       	cpi	r24, 0x6B	; 107
+ 15e:	98 41       	sbci	r25, 0x18	; 24
+ 160:	d8 f3       	brcs	.-10     	; 0x158 <main+0x5e>
+			TCNT1 = 0;
+ 162:	11 82       	std	Z+1, r1	; 0x01
+ 164:	10 82       	st	Z, r1
+			//_delay_ms(200);		// using delay function OR
+			while(TCNT1 <= mark); //While loop compare with value
+			TCNT1 = 0;
+
+		}
+		while(direction == RIGHT)	{	// running light to the right
+ 166:	21 30       	cpi	r18, 0x01	; 1
+ 168:	b9 f6       	brne	.-82     	; 0x118 <main+0x1e>
+ 16a:	eb cf       	rjmp	.-42     	; 0x142 <main+0x48>
+
+0000016c <_exit>:
+ 16c:	f8 94       	cli
+
+0000016e <__stop_program>:
+ 16e:	ff cf       	rjmp	.-2      	; 0x16e <__stop_program>
