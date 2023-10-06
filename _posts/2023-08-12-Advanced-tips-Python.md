@@ -5,6 +5,8 @@ title: Advanced tips for Python
 snippet: This tutorials will show some advanced tips when using python, which includes,  @property in Python , assert, and try-except in Python, The -> symbol in python,..
 tags: [python]
 ---
+This tutorials will show some advanced tips when using python, which includes, @property in Python , assert, and try-except in Python, The -> symbol in python,.. 
+
 # @property in Python 
 In Python, the __@property__  decorator is used to define managed attributes, also known as 
 properties, in classes. It allows you to access, set, and delete class 
@@ -103,6 +105,76 @@ print(circle2.area)     # Output: None (due to the assertion error in the setter
 ```
 In this example, we have a Circle class with a radius property that uses the @property decorator to define a getter and a setter method. The setter method includes an assert statement to check if the provided radius value is greater than 0. If the condition is true, the radius is set to the given value. If the condition is false, an AssertionError is raised with the specified error message. When we create a Circle object with a valid radius (e.g., Circle(5)), the getter and the other properties (diameter and area) work as expected, returning the calculated values. However, when we create a Circle object with an invalid radius (e.g., Circle(-2)), the assert statement in the setter method raises an AssertionError, and the getter and the other properties return None due to the exception being caught in the try-except block.
 
+Another way to check the input data
+Output.py
+{:.filename}
+```python
+    @radius.setter
+    def radius(self, value):
+        if not isinstance(value, int | float) or value <= 0:
+            raise ValueError("positive number expected")
+        self._radius = value
+```
+<div class="tip">
+<b>A note:</b> The actual ``radius`` value is stored in the protected ``_radius`` variable. The ``radius`` attribute is a property object which provides an interface to this protected variable.
+</div>
+---
+Derived class Cylinder that inherits from the Circle class:
+
+Derived_class.py
+{:.filename}
+```python
+import math
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    @property
+    def radius(self):
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        try:
+            assert value > 0, "Radius must be a positive number"
+            self._radius = value
+        except AssertionError as error:
+            print("AssertionError:", error)
+
+    @property
+    def diameter(self):
+        return 2 * self.radius
+
+    @property
+    def area(self):
+        return math.pi * self.radius ** 2
+
+    def __str__(self):
+        return f"Circle with radius {self.radius}"
+
+class Cylinder(Circle):
+    def __init__(self, radius, height):
+        super().__init__(radius)
+        self.height = height
+
+    def volume(self):
+        return self.area * self.height
+
+    def __str__(self):
+        return f"Cylinder with radius {self.radius} and height {self.height}"
+```
+In this example, the Cylinder class is derived from the Circle class using the super() function. The Cylinder class has its own __init__ method that takes two arguments, radius and height, and calls the __init__ method of the Circle class to set the radius attribute. The Cylinder class also has a volume method that calculates the volume of the cylinder using the area method of the Circle class and the height attribute of the Cylinder class. The Cylinder class also overrides the __str__ method of the Circle class to include the height attribute in the string representation of the object. Here's an example of using the Cylinder class:
+Output.py
+{:.filename}
+```python
+cylinder = Cylinder(5, 10)
+print(cylinder)  # Output: Cylinder with radius 5 and height 10
+print(cylinder.volume())  # Output: 785.3981633974483
+```
+In this example, we create a Cylinder object with a radius of 5 and a height of 10. We can access the radius, diameter, area, and height attributes as if they were regular attributes of the Cylinder object. We can also call the volume method to calculate the volume of the cylinder. When we print the Cylinder object, it calls the __str__ method of the Cylinder class to return a string representation of the object that includes both the radius and height attributes.
+
+---
 We can use google pystyle: [https://google.github.io/styleguide/pyguide.html](https://google.github.io/styleguide/pyguide.html)
 
 Make use of built-in exception classes when it makes sense. For example, raise a ValueError to indicate a programming mistake like a violated precondition (such as if you were passed a negative number but required a positive one). Do not use assert statements for validating argument values of a public API. assert is used to ensure internal correctness, not to enforce correct usage nor to indicate that some unexpected event occurred. If an exception is desired in the latter cases, use a raise statement. For example: 
