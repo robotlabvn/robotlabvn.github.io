@@ -1,11 +1,11 @@
 ---
 layout: post
 category: blog
-title: 1. How to pass arguments to functions in C++ 
+title: [Basic C++] 1. How to pass arguments to functions in C++ 
 snippet: This tutorial following the basic C++ course
 tags: [Basic C++]
 ---
-# 1. How to pass arguments to functions [Basic C++]
+
 In C++, there are several ways to pass arguments to functions, each with its own characteristics and use cases:
 
 - **Pass by Value:** When an object or built-in type is passed by value, a local copy of the argument is created within the function. Any modifications made to the copy do not affect the original object. This method is suitable for small objects that are cheap to copy and when the function does not need to modify the original object.
