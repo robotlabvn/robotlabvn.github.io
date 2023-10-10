@@ -155,9 +155,9 @@ the same $$X_{\text{start}}$$ and $$X_{\text{end}}$$.
 
 ---
 
-- **Cubic Path**: A method of defining a geometric curve for the end-effector between two points using a cubic polynomial
+- **Cubic Path**: A method of defining a geometric curve for the end-effector between two points using a cubic polynomial (3rd orders)
 
-- **Polynomial Path**: A method of defining a geometric curve for the end-effector between two points using a polynomial. This method is also used to create smooth and continuous curves for robot motion.
+- **Polynomial Path**: A method of defining a geometric curve for the end-effector between two points using a polynomial, example Quintic path (5th orders). This method is also used to create smooth and continuous curves for robot motion. 
 
 - **Non-polynomial Path Planning**: A method of defining a geometric curve for the end-effector between two points using non-polynomial equations. This method is used to create smooth and continuous curves for robot motion.
 
@@ -218,7 +218,7 @@ $$
 q(t)=a_0+a_1\left(t-t_0\right)+a_2\left(t-t_0\right)^2+a_3\left(t-t_0\right)^3
 $$
 
-Now, the boundary conditions (12.6) generate a set of equations
+Now, the boundary conditions $$t_0 =0$$ generate a set of equations
 
 $$
 \left[\begin{array}{cccc}
@@ -239,71 +239,93 @@ q_f^{\prime}
 \end{array}\right]
 $$
 
-In this equation, $$p(t)$$ represents the position of the end-effector at time $$t$$, $$a_0$$ represents the initial position of the end-effector, $a_1$ represents the initial velocity of the end-effector, and $$a_2$$ and $$a_3$$ are the coefficients of the cubic polynomial. These coefficients are calculated using the initial and final conditions of the path, including the position, velocity, and acceleration. The Cubic Path method is used to generate smooth and continuous curves for robot motion.
+In this equation, $$p(t)$$ represents the position of the end-effector at time $$t$$, $$a_0$$ represents the initial position of the end-effector, $a_1$ represents the initial velocity of the end-effector, and $$a_2$$ and $$a_3$$ are the coefficients of the cubic polynomial. These coefficients are calculated using the initial and final conditions of the path, including the position, velocity, and acceleration. 
 
-$$
-\begin{aligned}
-& q(t)=a_0+a_1 t+a_2 t^2+a_3 t^3 \\
-& \dot{q}(t)=a_1+2 a_2 t+3 a_3 t^2
-\end{aligned}
-$$
-generates four equations for the coefficients of the path.
-$$
-\left[\begin{array}{cccc}
-1 & t_0 & t_0^2 & t_0^3 \\
-0 & 1 & 2 t_0 & 3 t_0^2 \\
-1 & t_f & t_f^2 & t_f^3 \\
-0 & 1 & 2 t_f & 3 t_f^2
-\end{array}\right]\left[\begin{array}{l}
-a_0 \\
-a_1 \\
-a_2 \\
-a_3
-\end{array}\right]=\left[\begin{array}{c}
-q_0 \\
-q_0^{\prime} \\
-q_f \\
-q_f^{\prime}
-\end{array}\right]
-$$
+Snippet code of __Cubic_Path__ in Python:
 
-Their solutions are given in (12.2)-(12.5).
-In case that $$t_0=0$$, the coefficients simplify.
+Cubic_Path.py
+{:.filename}
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import scienceplots
 
-$$
-\begin{aligned}
-& a_0=q_0 \\
-& a_1=q_0^{\prime} \\
-& a_2=\frac{3\left(q_f-q_0\right)-\left(2 q_0^{\prime}+q_f^{\prime}\right) t_f}{t_f^2} \\
-& a_3=\frac{-2\left(q_f-q_0\right)+\left(q_0^{\prime}+q_f^{\prime}\right) t_f}{t_f^3}
-\end{aligned}
-$$
 
-It is also possible to employ a time shift and search for a cubic polynomial of $\left(t-t_0\right)$.
+class Trajectory:
+    """
+    Trajectory class
+    """
+    def __init__(self, t,  q, qd, qdd):
+        self.t = t
+        self.q = q
+        self.qd = qd
+        self.qdd = qdd
 
-$$
-q(t)=a_0+a_1\left(t-t_0\right)+a_2\left(t-t_0\right)^2+a_3\left(t-t_0\right)^3
-$$
-Now, the boundary conditions (12.6) generate a set of equations
+    def plot(self):
+        with plt.style.context(['science', 'no-latex', 'high-vis']):
+            ax = plt.subplot(3, 1, 1)
+            ax.grid(True)
+            ax.plot(self.t, self.q, 'r')
+            print("q: ", self.q)
+            ax.set_ylabel("${{q}}(t)$")
+            ax = plt.subplot(3, 1, 2)
+            ax.grid(True)
+            ax.plot(self.t, self.qd, 'g')
+            ax.set_ylabel("$\dot{{q}}(t)$")
+            ax = plt.subplot(3, 1, 3)
+            ax.grid(True)
+            ax.plot(self.t, self.qdd, 'b')
+            ax.set_ylabel(f"$\ddot{{q}}(t)$")
+            ax.set_xlabel("t (seconds)")
+            plt.show()
 
-$$
-\left[\begin{array}{cccc}
-1 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 \\
-1\left(t_f-t_0\right) & \left(t_f-t_0\right)^2 & \left(t_f-t_0\right)^3 \\
-0 & 1 & 2\left(t_f-t_0\right) & 3\left(t_f-t_0\right)^2
-\end{array}\right]\left[\begin{array}{l}
-a_0 \\
-a_1 \\
-a_2 \\
-a_3
-\end{array}\right]=\left[\begin{array}{l}
-q_0 \\
-q_0^{\prime} \\
-q_f \\
-q_f^{\prime}
-\end{array}\right]
-$$
+def cubic(q0, qf, t, qd0=0, qdf=0):
+    """
+    cubic funtion 
+    """
+    if isinstance(t, int):
+        t = np.arange(0, t)
+        print("t: ", t)
+    tf = max(t)
+    polyfunc = cubic_func(q0, qf, tf, qd0, qdf)
+    trajec = polyfunc(t)
+    p   = trajec[0]
+    pd  = trajec[1]
+    pdd = trajec[2]
+    return Trajectory(t, p , pd, pdd)
+
+def cubic_func(q0, qf, T, qd0=0, qdf =0):
+    """
+    cubic function
+    """
+    A = [
+        [ 0.0,      0.0,        0.0,      1.0],
+        [ T**3,     T**2,       T,        1.0], 
+        [ 0.0,      0.0,        1,        0.0],
+        [3*T**2,    2*T,        1.0,      0.0],
+    ]
+    b = np.r_[q0, qf, qd0, qdf]
+    # calculate coefficients by using  
+    # least-squares solution to a linear matrix equation
+    # A @ x = b -> find x 
+    coeffs, resid, rank, s = np.linalg.lstsq(A, b , rcond=None)
+
+    # coefficients of derivatives
+    coeffs_d = coeffs[0:3] * np.arange(3, 0, -1)
+    coeffs_dd = coeffs_d[0:2] * np.arange(2, 0, -1)
+
+    return lambda t: (
+        np.polyval(coeffs, t),
+        np.polyval(coeffs_d, t),
+        np.polyval(coeffs_dd, t),
+    )
+
+cubic_1 = cubic(1, 2, 100)
+cubic_1.plot()
+```
+
+ {% include image.html url="/assets/2023-08-31-Trajectory-Generation/cubic.png" description="A cubic path="80%" %}
+
 
 # References
 1. Reza N. Jazar. 2007. Theory of Applied Robotics: Kinematics, Dynamics, and Control. Springer Publishing Company, Incorporated.

@@ -106,6 +106,7 @@ print(circle2.area)     # Output: None (due to the assertion error in the setter
 In this example, we have a Circle class with a radius property that uses the @property decorator to define a getter and a setter method. The setter method includes an assert statement to check if the provided radius value is greater than 0. If the condition is true, the radius is set to the given value. If the condition is false, an AssertionError is raised with the specified error message. When we create a Circle object with a valid radius (e.g., Circle(5)), the getter and the other properties (diameter and area) work as expected, returning the calculated values. However, when we create a Circle object with an invalid radius (e.g., Circle(-2)), the assert statement in the setter method raises an AssertionError, and the getter and the other properties return None due to the exception being caught in the try-except block.
 
 Another way to check the input data
+
 Output.py
 {:.filename}
 ```python
@@ -118,6 +119,7 @@ Output.py
 <div class="tip">
 <b>A note:</b> The actual ``radius`` value is stored in the protected ``_radius`` variable. The ``radius`` attribute is a property object which provides an interface to this protected variable.
 </div>
+
 ---
 Derived class Cylinder that inherits from the Circle class:
 
@@ -165,6 +167,7 @@ class Cylinder(Circle):
         return f"Cylinder with radius {self.radius} and height {self.height}"
 ```
 In this example, the Cylinder class is derived from the Circle class using the super() function. The Cylinder class has its own __init__ method that takes two arguments, radius and height, and calls the __init__ method of the Circle class to set the radius attribute. The Cylinder class also has a volume method that calculates the volume of the cylinder using the area method of the Circle class and the height attribute of the Cylinder class. The Cylinder class also overrides the __str__ method of the Circle class to include the height attribute in the string representation of the object. Here's an example of using the Cylinder class:
+
 Output.py
 {:.filename}
 ```python
