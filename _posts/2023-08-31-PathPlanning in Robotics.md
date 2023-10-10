@@ -323,8 +323,7 @@ def cubic_func(q0, qf, T, qd0=0, qdf =0):
 cubic_1 = cubic(1, 2, 100)
 cubic_1.plot()
 ```
-
- {% include image.html url="/assets/2023-08-31-Trajectory-Generation/cubic.png" description="A cubic path="80%" %}
+ {% include image.html url="/assets/2023-08-31-Trajectory-Generation/cubic.png" description="A cubic path plot with position(top), velocity (middle) and acceleration (bottom)" width="80%" %}
 
 
 # References
