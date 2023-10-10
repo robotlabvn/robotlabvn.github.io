@@ -200,7 +200,6 @@ q_f^{\prime}
 \end{array}\right]
 $$
 
-Their solutions are given in (12.2)-(12.5).
 In case that $$t_0=0$$, the coefficients simplify.
 
 $$
@@ -212,7 +211,7 @@ $$
 \end{aligned}
 $$
 
-It is also possible to employ a time shift and search for a cubic polynomial of $\left(t-t_0\right)$.
+It is also possible to employ a time shift and search for a cubic polynomial of $$\left(t-t_0\right)$$.
 
 $$
 q(t)=a_0+a_1\left(t-t_0\right)+a_2\left(t-t_0\right)^2+a_3\left(t-t_0\right)^3
@@ -239,7 +238,7 @@ q_f^{\prime}
 \end{array}\right]
 $$
 
-In this equation, $$p(t)$$ represents the position of the end-effector at time $$t$$, $$a_0$$ represents the initial position of the end-effector, $a_1$ represents the initial velocity of the end-effector, and $$a_2$$ and $$a_3$$ are the coefficients of the cubic polynomial. These coefficients are calculated using the initial and final conditions of the path, including the position, velocity, and acceleration. 
+In this equation, $$p(t)$$ represents the position of the end-effector at time $$t$$, $$a_0$$ represents the initial position of the end-effector, $$a_1$$ represents the initial velocity of the end-effector, and $$a_2$$ and $$a_3$$ are the coefficients of the cubic polynomial. These coefficients are calculated using the initial and final conditions of the path, including the position, velocity, and acceleration. 
 
 Snippet code of __Cubic_Path__ in Python:
 
