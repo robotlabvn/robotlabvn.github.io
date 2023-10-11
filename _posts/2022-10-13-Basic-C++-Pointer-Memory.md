@@ -98,7 +98,7 @@ A memory leak occurs in C++ when a programmer dynamically allocates memory using
 
 Here are some tips:
 
-- **Use smart pointers:** Smart pointers, such as std::unique_ptr and std::shared_ptr, automatically deallocate memory when they go out of scope, reducing the chances of memory leaks.
+- **Use smart pointers:** Smart pointers, such as ```std::unique_ptr``` and ```std::shared_ptr```, automatically deallocate memory when they go out of scope, reducing the chances of memory leaks.
 
 - **Follow the RAII** (Resource Acquisition Is Initialization) principle: Allocate memory in the constructor of an object and deallocate it in the destructor. This way, memory is guaranteed to be released when the object goes out of scope.
 
@@ -107,6 +107,53 @@ Here are some tips:
 - **Avoid using raw pointers:** Raw pointers require manual memory management and are more prone to memory leaks. Instead, use smart pointers or container classes like ```std::vector``` whenever possible.
 
 - **Use memory leak detection tools:** Tools like Valgrind, AddressSanitizer, and the CRT library in Visual Studio can help you identify and fix memory leaks in your C++ code
+
+# Release Memory
+
+To release memory in C++, you need to use the appropriate method depending on how the memory was allocated. Here are the methods for releasing memory in C++:
+- **delete operator:** This is used to deallocate memory that was allocated using the new operator. The syntax is: ```delete pointer;```
+where pointer is a pointer to the memory block that you want to deallocate. If the memory was allocated using the new[] operator to create an array, you should use the delete[] operator to deallocate the memory:
+```delete[] pointer;```
+
+- **free() function:** This function is used to deallocate memory that was allocated using the ```malloc(), calloc(), realloc()``` functions. In C++, it is generally recommended to use the ```delete``` operator instead of ```free()``` for deallocating memory, as the delete operator also calls the destructor of the object, ensuring proper cleanup and resource deallocation. The syntax for using the free() function is:
+```
+free(pointer);
+```
+Here's an example that demonstrates the correct usage of the delete operator and the free() function:
+
+```
+int* p = new int; // allocate memory using new
+int* q = (int*)malloc(sizeof(int)); // allocate memory using malloc
+
+delete p; // deallocate memory using delete
+free(q); // deallocate memory using free
+```
+Example of ```delete``` function
+Rectangle.cpp
+{:.filename}
+```c++
+#include <iostream>
+
+using namespace std;
+
+void badfunc() {
+	int *p4 = new int{42};                    // Allocate memory in function
+	delete p4;                                // Release memory
+	return;                                   
+}                                             // No memory leak
+
+int main() {
+	int i{1};                                 // i is a stack variable
+	int *p1 = &i;                             // p1 is a pointer to int. Its value is the address of i
+	cout << "p1 = " << p1 << endl;            // Displays the address of i
+	cout << "*p1 = " << *p1 << endl;          // Displays the value of i
+
+	int *p2 = new int;                        // p2 points to memory allocated from the heap
+	int *p3 = new int{36};                    // p3 points to int with initial value 36 (C++11)
+	//int *p3 = new int(36);                    // older versions of C++
+	badfunc();
+}
+```
 
 # References
 1. https://www.w3schools.com/cpp/cpp_pointers.asp
