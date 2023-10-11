@@ -1,9 +1,9 @@
 ---
 layout: post
 category: blog
-title: (Basic C++) 2. Value and Reference Semantic in C++ 
+title: (Modern C++) 2. Value and Reference Semantic in C++ 
 snippet: This tutorial following the basic C++ course
-tags: [Basic C++]
+tags: [Modern C++]
 ---
 
 In C++, there are two main approaches to handling data and objects: value semantics and reference semantics. These approaches determine how objects are accessed, copied, and modified.

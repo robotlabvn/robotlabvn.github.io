@@ -1,9 +1,9 @@
 ---
 layout: post
 category: blog
-title: (Basic C++) 1. How to pass arguments to functions in C++ 
+title: (Modern C++) 1. How to pass arguments to functions in C++ 
 snippet: This tutorial following the basic C++ course
-tags: [Basic C++]
+tags: [Modern C++]
 ---
 
 In C++, there are several ways to pass arguments to functions, each with its own characteristics and use cases:

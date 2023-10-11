@@ -1,9 +1,9 @@
 ---
 layout: post
 category: blog
-title: (Basic C++) 3. Classes in C++
+title: (Modern C++) 3. Classes in C++
 snippet: This tutorial following the basic C++ course
-tags: [Basic C++]
+tags: [Modern C++]
 ---
 # Class definition
 A class in C++ is a user-defined data type that contains data members and member functions, which can be accessed and used by creating an instance of that class. The data members can be variables (including other structures and classes), constants, and member functions, also known as methods. The member functions are used to manipulate the data members, and together, these data members and member functions define the properties and behavior of the objects in a class. The access to the members of a class is governed by the three access specifiers: __private__, __protected__, or __public__. By default, access to members of a C++ class is private. The private members are not accessible outside the class; they can be accessed only through methods of the class. The public members form an interface to the class and are accessible outside the class. Instances of a class data type are known as objects and can contain member variables, constants, member functions, and overloaded operators defined by the programmer.
