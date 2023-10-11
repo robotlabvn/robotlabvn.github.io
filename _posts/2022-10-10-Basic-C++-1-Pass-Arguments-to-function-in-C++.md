@@ -115,6 +115,11 @@ int main(){
 
 ```
 
+<div class="tip">
+<b>Note:</b> The pointer variable to get the memory address of a variable (used together with the __&__ **reference** operator). However, you can also use the pointer to get the value of the variable, by using the __*__ operator (the **dereference** operator)
+</div>
+
+
 # References
 1. https://www.quantstart.com/articles/Passing-By-Reference-To-Const-in-C/
 2. https://www.learncpp.com/cpp-tutorial/pass-by-const-lvalue-reference/
