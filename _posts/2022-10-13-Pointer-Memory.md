@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: '['Basic C++']' .4. Pointer and Memory
+title: (Basic C++) .4. Pointer and Memory
 snippet: This tutorial following the basic C++ course
 tags: [Basic C++]
 ---
