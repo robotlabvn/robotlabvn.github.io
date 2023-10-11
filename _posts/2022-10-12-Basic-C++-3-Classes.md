@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: Basic C++ .3. Classes
+title: Basic C++ .3. Classes in C++
 snippet: This tutorial following the basic C++ course
 tags: [Basic C++]
 ---
@@ -130,6 +130,89 @@ int main() {
 }
 ```
 In the above example, the __setData__ function sets the value of the __data__ member using the __this__ pointer and the dot operator. The __getData__ function returns the value of the __data__ member using the __this__ pointer and the arrow operator.
+
+# Special member function in C++
+
+In C++, special member functions are functions that the compiler automatically generates if they are used but not explicitly declared by the programmer. These functions are essential for managing the lifetime, construction, and destruction of objects. The main special member functions are:
+
+- **Default constructor:** A constructor that takes no arguments. The compiler generates it only if no other constructor is explicitly declared.
+  - Called after memory has been allocated for an object
+  - Initializes the object's data members, using the arguments to the call
+  - Can also be used to configure the object before use
+
+- **Destructor:** A function that is called when an object is destroyed. The compiler generates a default destructor if no destructor is explicitly declared.
+
+- **Copy constructor:** A constructor that creates a new object by copying the values from an existing object. The compiler generates a default copy constructor if no copy constructor is explicitly declared.
+
+- **Copy assignment operator:** An operator that assigns the values of one object to another object of the same type. The compiler generates a default copy assignment operator if no copy assignment operator is explicitly declared.
+
+- **Move constructor:** A constructor that creates a new object by "stealing" the resources (e.g., memory) from an existing object. The compiler generates a default move constructor if no move constructor is explicitly declared.
+
+- **Move assignment operator:** An operator that assigns the values of one object to another object by "stealing" the resources from the source object. The compiler generates a default move assignment operator if no move assignment operator is explicitly declared.
+
+___Example that demonstrates the use of special member functions:___ 
+
+special_function.cpp
+{:.filename}
+```c++
+#include <iostream>
+#include <string>
+#include <utility>
+
+class Person {
+  std::string name;
+
+public:
+  // Default constructor
+  Person() {
+    std::cout << "Default constructor called" << std::endl;
+  }
+
+  // Parameterized constructor
+  Person(const std::string& n) : name(n) {
+    std::cout << "Parameterized constructor called" << std::endl;
+  }
+
+  // Copy constructor
+  Person(const Person& other) : name(other.name) {
+    std::cout << "Copy constructor called" << std::endl;
+  }
+
+  // Move constructor
+  Person(Person&& other) noexcept : name(std::move(other.name)) {
+    std::cout << "Move constructor called" << std::endl;
+  }
+
+  // Copy assignment operator
+  Person& operator=(const Person& other) {
+    name = other.name;
+    std::cout << "Copy assignment operator called" << std::endl;
+    return *this;
+  }
+
+  // Move assignment operator
+  Person& operator=(Person&& other) noexcept {
+    name = std::move(other.name);
+    std::cout << "Move assignment operator called" << std::endl;
+    return *this;
+  }
+
+  // Destructor
+  ~Person() {
+    std::cout << "Destructor called" << std::endl;
+  }
+};
+
+int main() {
+  Person p1;  // Default constructor called
+  Person p2("Alice");  // Parameterized constructor called
+  Person p3 = p2;  // Copy constructor called
+  Person p4 = std::move(p3);  // Move constructor called
+  p1 = p4;  // Copy assignment operator called
+  p2 = std::move(p4);  // Move assignment operator called
+  return 0;
+}
+```
 
 # References
 1. https://en.wikipedia.org/wiki/C%2B%2B_classes
