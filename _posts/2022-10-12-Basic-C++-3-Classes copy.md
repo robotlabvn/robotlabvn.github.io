@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: [Basic C++] 3. Classes in C++
+title: Basic C++ .3. Classes in C++
 snippet: This tutorial following the basic C++ course
 tags: [Basic C++]
 ---

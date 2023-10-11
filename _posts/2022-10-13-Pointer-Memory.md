@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: [Basic C++] 4. Pointer and Memory
+title: '['Basic C++']' .4. Pointer and Memory
 snippet: This tutorial following the basic C++ course
 tags: [Basic C++]
 ---
@@ -16,7 +16,17 @@ Pointers are used extensively in C++ for various purposes, including:
 
 - **Iterating over elements in arrays or other data structures:** Pointers can be used to traverse and manipulate elements in arrays or other data structures.
 
+```c++
+// To create the pointer variable, we put a * after the type name
+int *p        // the type of p is pointer to int
 
+// To initialize a pointer variable, we assign an address to it 
+int i{1};     // i is a stack varible
+int *p1 = &i; // p1 is a pointer to int. Its value is the address of i.
+
+cout << p1 << endl; // Displays the address of i
+out << *p1 << endl; // Displays the value of i
+```
 
 ___Here's an example ```Pointer.cpp``` that demonstrates the class in C++ bellow:___ 
 
