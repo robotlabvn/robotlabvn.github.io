@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: \[Basic C++\] 4. Pointer and Memory
+title: [Basic C++] 4. Pointer and Memory
 snippet: This tutorial following the basic C++ course
 tags: [Basic C++]
 ---
@@ -81,3 +81,4 @@ Here are the key differences between stack and heap memory allocation:
 2. https://cplusplus.com/doc/tutorial/pointers/
 3. https://www.geeksforgeeks.org/cpp-pointers/
 4. https://learn.microsoft.com/en-us/cpp/cpp/pointers-cpp?view=msvc-170
+5. https://youtu.be/5OJRqkYbK-4
