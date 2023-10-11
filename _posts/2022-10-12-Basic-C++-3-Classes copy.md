@@ -100,7 +100,7 @@ int main() {
 ```
 # Dereferencing a pointer in C++ 
 
-Dereferencing a pointer in C++ allows you to access the value stored at a particular memory address. In the case of the __this__ pointer, dereferencing it gives you access to the members of the object it points to. This can be done by using the __*__ operator followed by the member access operator __->__ or the dot operator __.__.
+Dereferencing a pointer in C++ allows you to access the value stored at a particular memory address. In the case of the ```this``` pointer, dereferencing it gives you access to the members of the object it points to. This can be done by using the ```*``` operator followed by the member access operator ```->``` or the dot operator ```.```.
 
 ___Example of dereferencing the ```this``` pointer to access a member function and a data member___ 
 

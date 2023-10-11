@@ -92,8 +92,21 @@ Here are the key differences between stack and heap memory allocation:
 </ul>
 </div>
 
+# Memory Leak
+A memory leak occurs in C++ when a programmer dynamically allocates memory using the ```new``` keyword but forgets to deallocate it using the ```delete``` function or ```delete[]``` operator.
+. This can lead to a waste of memory, slow down the performance of the program, or even cause the program to crash. Memory leaks are especially problematic in C++ because the language does not have automatic garbage collection like some other programming languages.
 
+Here are some tips:
 
+- **Use smart pointers:** Smart pointers, such as std::unique_ptr and std::shared_ptr, automatically deallocate memory when they go out of scope, reducing the chances of memory leaks.
+
+- **Follow the RAII** (Resource Acquisition Is Initialization) principle: Allocate memory in the constructor of an object and deallocate it in the destructor. This way, memory is guaranteed to be released when the object goes out of scope.
+
+- **Be careful with arrays:** If you allocate memory for an array using the ```new[]``` operator, make sure to deallocate it using the ```delete[] ```operator. Using the wrong operator can lead to memory leaks or undefined behavior.
+
+- **Avoid using raw pointers:** Raw pointers require manual memory management and are more prone to memory leaks. Instead, use smart pointers or container classes like ```std::vector``` whenever possible.
+
+- **Use memory leak detection tools:** Tools like Valgrind, AddressSanitizer, and the CRT library in Visual Studio can help you identify and fix memory leaks in your C++ code
 
 # References
 1. https://www.w3schools.com/cpp/cpp_pointers.asp
@@ -101,3 +114,4 @@ Here are the key differences between stack and heap memory allocation:
 3. https://www.geeksforgeeks.org/cpp-pointers/
 4. https://learn.microsoft.com/en-us/cpp/cpp/pointers-cpp?view=msvc-170
 5. https://youtu.be/5OJRqkYbK-4
+6. https://www.geeksforgeeks.org/memory-leak-in-c-and-how-to-avoid-it/
