@@ -1,12 +1,13 @@
 ---
 layout: post
 category: blog
-title: (Modern C++) 5. Array, Vector and String
+title: Modern C++ 5. Array, Vector and String
 snippet: This tutorial following the basic C++ course
 tags: [Modern C++]
 ---
 # Array definition
 In modern C++, arrays can be created using fixed-size containers such as ```std::array``` or variable-sized containers such as ```std::vector```. ```std::array``` is a container that encapsulates fixed-size arrays and is part of the C++ Standard Library. It provides the same performance and accessibility as a C-style array, but with the benefits of a standard container, such as knowing its own size, supporting assignment, and random access iterators. 
+
 ___Here's an example of how to create and initialize a ```std::array```:___
 
 Array.cpp

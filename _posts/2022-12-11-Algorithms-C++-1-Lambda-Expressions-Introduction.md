@@ -79,6 +79,49 @@ int main() {
 }
 ```
 
+<div class="tip">
+<b>A Assignment:</b> Write a function that takes a vector of int as argument and uses a range-for loop to print out the elements of the vector. Write a program that calls this function. Check that your program compiles and runs correctly. Modify your program so that it sorts the elements in descending order, with the largest element first. For example, if the vector elements are 1, 2, 3, 4, 5, the result would be 5, 4, 3, 2, 1. Use a suitable standard algorithm with a lambda expression as predicate.
+Display the elements of the vector after sorting them. Check that your program still compiles and runs correctly.
+</div>
+
+___Example ```Assignment.cpp``` bellow:___ 
+
+Assigment.cpp
+{:.filename}
+```c++
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+void print_vec(vector<int>& vec){
+    for(int i=0; i < vec.size(); i++){
+		cout << vec[i] << " ";
+	};
+	cout <<endl; 
+}
+
+int main() {
+	vector<int> vec {3, 1, 4, 1, 5, 9};
+    //Before sorting
+    cout <<"Before sorting " << endl;
+	print_vec(vec);
+    // -> 3 1 4 1 5 9 
+
+	// Pass a lambda expression
+    sort(vec.begin(), vec.end(),
+							[](int a, int b) { return (a > b); }
+	);
+    
+    //Print vector elements
+    cout <<"After sorting " << endl;
+	print_vec(vec);
+	// -> 9 5 4 3 1 1 
+}
+
+```
 
 # References
 1. https://www.geeksforgeeks.org/lambda-expression-in-c/
