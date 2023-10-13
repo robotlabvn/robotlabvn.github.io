@@ -14,37 +14,39 @@ Concurrency in C++ refers to the execution of multiple tasks or operations simul
 
 C++ multithreading allows for concurrent execution of two or more parts of a program, maximizing CPU utilization. Each part of a multithreaded program is called a thread, which is a lightweight process within a process. Prior to C++11, developers had to use POSIX threads or the ```<pthreads>``` library for multithreading, which caused portability issues. C++11 introduced the std::thread class and related functions in the ```<thread>``` header, providing a standard language-provided feature set for multithreading. To create a thread in C++, you can use the ```std::thread``` class and pass a callable (an executable code) as an argument to its constructor. Once the ```std::thread``` object is created, a new thread is launched, and the code provided by the callable is executed
 
-___Example ```char_find.cpp``` bellow:___ 
+{% include image.html url="/assets/2023-1-1-Multithreading-C++/hardware_concurrency.png" description="Concurency" width="80%" %}
 
-char_find.cpp
+## History of C++ Concurrency
+C++11 was the first C++ standard to introduce concurrency, including threads, the C++ memory model, conditional variables, and atomic operations. C++11 and C++14 have the basic building blocks for creating concurrent and parallel programs. With C++17, we have the parallel algorithms from the Standard Template Library (STL), which means that most STL-based algorithms can be executed sequentially, parallel, or vectorized
+
+
+{% include image.html url="/assets/2023-1-1-Multithreading-C++/history_concurrency_C++.png" description="Concurency" width="80%" %}
+
+## Launching a Thread
+
+
+___Example ```thread_ex.cpp``` bellow:___ 
+
+thread_ex.cpp
 {:.filename}
 ```c++
 #include <iostream>
-#include <string>
-#include <algorithm>
+#include <thread>
 
-using namespace std;
+void threadFunction() {
+    std::cout << "This is a separate thread" << std::endl;
+}
 
 int main() {
-	string str{"Hello world"};
-	cout << "String: ";
-	
-	for (auto c : str)
-		cout << c << ",";
-	cout << "\n";
-	
-	auto res = find(cbegin(str), cend(str), 'l');          // Search string for first occurrence of 'l'
+    std::thread newThread(threadFunction);
 
-	// Check if we found it
-	if (res != cend(str)) {
-		 // Access the result
-		cout << "Found a matching element at index: " << res - str.cbegin() << endl;
-	}
-	
-	cout << "At this point in the string: ";
-	for (auto it = res; it != str.cend(); ++it)
-		cout << *it;
-	cout << endl;
+    std::cout << "This is the main thread" << std::endl;
+
+    newThread.join(); // Wait for the new thread to finish
+
+    std::cout << "All threads have completed their work" << std::endl;
+
+    return 0;
 }
 
 ```
