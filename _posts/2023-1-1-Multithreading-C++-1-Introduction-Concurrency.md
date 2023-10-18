@@ -266,6 +266,7 @@ int main() {
 	
 	thr.join();
 }
+// -> Hello, Thread!
 ```
 **An example passing by pointer using a member function as a thread's entry point ```std::thread t(func, &obj)```**
 thread_member_function.cpp
@@ -295,6 +296,7 @@ int main() {
 
 	thr.join();
 }
+// -> Hello, Member Function Thread!
 ```
 
 ### lvalue and rvalue
@@ -359,6 +361,7 @@ int main() {
 	// Verify that it has been modified
 	std::cout << "str is now " << str << '\n';
 }
+// -> str is now xyz
 ```
 
 ## Thread and lambda argument
