@@ -251,25 +251,20 @@ It's important to note that passing arguments by reference or pointer can lead t
 thread_args.cpp
 {:.filename}
 ```c++
-// Example of passing arguments to a thread function by reference
+// Example of passing an argument to a thread function
 #include <thread>
 #include <iostream>
-#include <string>
 
-// Thread entry point
-void hello(std::string& s) {
-	s = "xyz";
+// Callable object - thread entry point
+void hello(std::string str) {
+    std::cout << str << '\n';
 }
 
 int main() {
-	std::string str = "abc" ;
+	// hello() takes a string argument
+	std::thread thr(hello, "Hello, Thread!");
 	
-	// Wrap argument in a call to std::ref()
-	std::thread thr(hello, std::ref(str));
 	thr.join();
-	
-	// Verify that it has been modified
-	std::cout << "str is now " << str << '\n';
 }
 ```
 **An example passing by pointer using a member function as a thread's entry point ```std::thread t(func, &obj)```**
