@@ -332,6 +332,13 @@ int main() {
 	std::cout << (str.empty() ? "No" : "Yes") << ".\n";
 }
 ```
+Output
+{:.filename}
+```
+Starting thread
+Ownership of "moveable" transferred to thread
+Do I still have any data? No.
+```
 
 Passing an lvalue as an rvalue can cause issues when creating a thread, as the arguments are moved or copied by value. If the thread function expects an lvalue reference, it cannot be called with an rvalue reference. In this case, the argument needs to be wrapped in ```std::ref()``` to create a reference wrapper.
 
@@ -390,6 +397,7 @@ int main() {
 
 	std::cout << "Value of i is now " << i << '\n';
 }
+// -> Value of i is now 6
 ```
 
 **Example of using a lambda expression as a thread's entry point**
@@ -416,6 +424,7 @@ int main() {
 
 	thr.join();
 }
+// The sum if 2 and 3 is 5
 ```
 
 # References
