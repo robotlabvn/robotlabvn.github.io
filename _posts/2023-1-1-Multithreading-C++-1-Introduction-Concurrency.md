@@ -426,6 +426,27 @@ int main() {
 }
 // The sum if 2 and 3 is 5
 ```
+## Synchronization issues
+Synchronization issues can occur when running applications on multiprocessor systems due to assumptions that are valid only on single-processor systems. The following are some common synchronization issues that can occur on multiprocessor systems:
+
+- Priorities: A program with two threads, one with a higher priority than the other, will not relinquish control to the lower priority thread on a single-processor system because the scheduler gives preference to higher priority threads. On a multiprocessor system, both threads can run simultaneously, each on its processor.
+
+- Race conditions: Applications should synchronize access to data structures to avoid race conditions. Code that assumes that higher priority threads run without interference from lower priority threads will fail on multiprocessor systems.
+
+- Cache coherency problems: Multiprocessor systems with CPUs with local caches that are typically connected by bus can have fully separated cache hierarchy, which can lead to cache coherency problems.
+
+Example a scenario where two threads share a variable called "x" and how changes made to the variable by one thread may not be immediately visible to the other thread due to caching and synchronization issues. The following is a summary of the passage:
+
+{% include image.html url="/assets/2023-1-1-Multithreading-C++/Syn_Issue.png" description="Synchronization issues" width="80%" %}
+
+- The system has two cores, each with their Level 1 and Level 2 caches, a shared Level 3 cache, and main memory.
+- Two threads share a variable called "x" with an initial value of 5.
+- If the thread on core 1 changes the value of x to 7, it writes the value 7 to its store buffer, which is private to core 1.
+- The thread on core 2 may get the old value of x (5) from cache and perform some computation using the old value.
+- The store buffer on core 1 is eventually flushed, and the new value (7) enters the cache system, which updates all the other caches.
+- The new value is published, but it is too late for the thread on core 2, which has already used the old value (5).
+To avoid synchronization issues, applications should use synchronization mechanisms that rely on hardware-supplied synchronization, such as critical sections, SRW locks, and interlocked functions. But there are things in software you can use to achieve this **Mutexes and atomic variables**
+
 
 # References
 1. https://www.educative.io/blog/modern-multithreading-and-concurrency-in-cpp
