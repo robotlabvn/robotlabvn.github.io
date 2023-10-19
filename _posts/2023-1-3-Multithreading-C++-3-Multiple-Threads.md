@@ -126,6 +126,28 @@ Solution
 data_races.cpp
 {:.filename}
 ```c++
+#include <iostream>
+#include <thread>
+
+using namespace std;
+
+void print(int x){
+	for(int i =0; i <x ; i++){
+		cout<< i << endl;
+	}
+}
+int main(){
+	//Thread call
+	thread thr1(print, 10);
+	thread thr2(print, 20);
+	thread thr3(print, 30);
+	
+	// Wait for the tasks to complete
+	thr1.join();
+	thr2.join();
+	thr3.join();
+
+}
 ```
 
 # References
