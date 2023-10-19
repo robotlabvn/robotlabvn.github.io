@@ -149,6 +149,41 @@ int main(){
 
 }
 ```
+Another solution
+
+data_races.cpp
+{:.filename}
+```c++
+#include <iostream>
+#include <thread>
+#include <vector>
+
+using namespace std;
+
+int counter {0};
+
+void task() {
+	for (int i = 0; i < 100'000; ++i) ++counter;
+}
+
+int main() {
+	std::vector<std::thread> tasks;
+	for (int i = 0; i < 10; ++i) tasks.push_back(std::thread{task});
+	for (auto& t: tasks) t.join();
+	cout << counter << endl;
+}
+
+```
+
+# Data Race Consequences
+A data race in C++ occurs when at least two threads access a shared variable simultaneously, and at least one thread tries to modify the variable. Data races lead to undefined behavior, which means that all reasoning about the program makes no sense anymore. The consequences of a data race can be severe, and they can cause the breaking of invariants, blocking issues of threads, or lifetime issues of variables
+
+**Torn reads and writes** can occur when two threads access the same variable simultaneously, and at least one thread tries to modify the variable.
+
+### Solution for prevent the data races
+- Avoid sharing data between different threads
+- If unvoidable, synchronize the threads, impose an ordering on the threads how to access the data
+- This has the substantial cost: increase execution time and increase program complexity.
 
 # References
 1. https://www.modernescpp.com/index.php/race-condition-versus-data-race/
