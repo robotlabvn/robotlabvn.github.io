@@ -460,7 +460,7 @@ int main()
 ```
 
 ## Use RAII (Resource Acquisition Is Initialization)
-One way to ensure that an std::thread object is safely destroyed is to use RAII (Resource Acquisition Is Initialization) by creating a wrapper class that manages the thread object. The wrapper class can ensure that the thread is joined or detached before the object is destroyed. 
+One way to ensure that an ```std::thread``` object is safely destroyed is to use RAII (Resource Acquisition Is Initialization) by creating a wrapper class that manages the thread object. The wrapper class can ensure that the thread is joined or detached before the object is destroyed. 
 
 ```
 + RAII Solution
@@ -527,7 +527,12 @@ int main()
 	}
 }
 ```
-
+Ouput
+{:.filename}
+```
+Hello, Thread!
+Exception caught: std::exception
+```
 # References
 1. https://en.cppreference.com/w/cpp/thread/thread/native_handle
 2. https://cplusplus.com/reference/thread/thread/native_handle/
@@ -537,6 +542,7 @@ int main()
 6. https://en.cppreference.com/w/cpp/thread/get_id
 7. https://cplusplus.com/reference/thread/thread/id/
 8. Good book: C++ Concurrency in Action (Anthony Williams) 
+9. https://en.cppreference.com/w/cpp/language/raii
 
 
 
