@@ -181,9 +181,6 @@ A data race in C++ occurs when at least two threads access a shared variable sim
 
 <div class="tip">
 <b>Solution for prevent the data races:</b>
-
-You will have one or more executable files, dynamic-load libraries, or static libraries depending on the project configuration and build settings
-
 <ul>
 <li> <b>Avoid sharing data between different threads</b></li>
 <li> <b>If unvoidable, synchronize the threads</b> impose an ordering on the threads how to access the data</li>
