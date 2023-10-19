@@ -50,9 +50,7 @@ Hello from thread 2
 Hello from thread 3
 ```
 
-<div class="tip">
-<b> But using join() in 2 times is not elegant, we can try other ways bellow</b>
-</div>
+
 
 ## Data sharing threads
 Sharing data between threads is a common task in multithreading applications. When multiple threads access the same data, there is a risk of data races, which can lead to undefined behavior. To avoid data races, we need to synchronize access to shared data using mutexes, locks, or other synchronization primitives.
@@ -180,10 +178,19 @@ A data race in C++ occurs when at least two threads access a shared variable sim
 
 **Torn reads and writes** can occur when two threads access the same variable simultaneously, and at least one thread tries to modify the variable.
 
-### Solution for prevent the data races
-- Avoid sharing data between different threads
-- If unvoidable, synchronize the threads, impose an ordering on the threads how to access the data
-- This has the substantial cost: increase execution time and increase program complexity.
+
+<div class="tip">
+<b>Solution for prevent the data races:</b>
+
+You will have one or more executable files, dynamic-load libraries, or static libraries depending on the project configuration and build settings
+
+<ul>
+<li> <b>Avoid sharing data between different threads</b></li>
+<li> <b>If unvoidable, synchronize the threads</b> impose an ordering on the threads how to access the data</li>
+<li> <b>This has the substantial cost</b> increase execution time and increase program complexity.</li>
+
+</ul>
+</div>
 
 # References
 1. https://www.modernescpp.com/index.php/race-condition-versus-data-race/
