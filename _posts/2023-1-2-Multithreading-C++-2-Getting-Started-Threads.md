@@ -300,15 +300,15 @@ Finished
 
 There are several reasons why we need to use threads and exceptions in C++. Here are some of the main reasons:
 
-- To improve performance: Using threads can improve the performance of a program by allowing it to execute multiple tasks simultaneously.
+- **To improve performance:** Using threads can improve the performance of a program by allowing it to execute multiple tasks simultaneously.
 
-- To handle errors gracefully: When working with databases or APIs, it is common to encounter errors related to invalid queries. In such cases, it is important to handle the errors gracefully to prevent the program from crashing. One way to handle such errors is to use a try-catch block to catch any exceptions that may be thrown when executing the query.
+- **To handle errors gracefully:** When working with databases or APIs, it is common to encounter errors related to invalid queries. In such cases, it is important to handle the errors gracefully to prevent the program from crashing. One way to handle such errors is to use a try-catch block to catch any exceptions that may be thrown when executing the query.
 
-- To prevent program crashes: When an exception is thrown in a parent thread, it can cause the entire program to crash if not handled properly. By using a try-catch block to catch the exception, the program can continue running and the user can be notified of the error.
+- **To prevent program crashes:** When an exception is thrown in a parent thread, it can cause the entire program to crash if not handled properly. By using a try-catch block to catch the exception, the program can continue running and the user can be notified of the error.
 
-- To transport exceptions between threads: In some cases, it may be necessary to transport exceptions between threads. The C++ standard supports transporting an exception from one thread to another, enabling you to catch an exception in one thread and then make the exception appear to be thrown in a different thread.
+- **To transport exceptions between threads:** In some cases, it may be necessary to transport exceptions between threads. The C++ standard supports transporting an exception from one thread to another, enabling you to catch an exception in one thread and then make the exception appear to be thrown in a different thread.
 
-- To propagate exceptions across threads: If you need to catch an exception in a worker thread and re-throw it in the main thread that’s waiting for the worker to finish, you can use ```std::future```
+- **To propagate exceptions across threads:** If you need to catch an exception in a worker thread and re-throw it in the main thread that’s waiting for the worker to finish, you can use ```std::future```
 
 # III. Safely destroying an std::thread object
 To safely destroy an std::thread object in C++, here are some best practices to follow:
@@ -461,6 +461,18 @@ int main()
 
 ## Use RAII (Resource Acquisition Is Initialization)
 One way to ensure that an std::thread object is safely destroyed is to use RAII (Resource Acquisition Is Initialization) by creating a wrapper class that manages the thread object. The wrapper class can ensure that the thread is joined or detached before the object is destroyed. 
+
+```
++ RAII Solution
+	- Wrap the std::thread object inside a class
+	- the class's destructor calls join() on the std::thread object.
++ An std::thread object can only be joined once
++ The joinable() member function
+	- Return false
+	- If join() or detach() have already been called
+	- Or if the thread object is not associated with an execution thread
++ Returns true if we need to call join()
+```
 
 __Uses a wrapper class for std::thread__
 use_RAII__thread_guard.cpp
