@@ -290,7 +290,67 @@ int main() {
 	std::cout << "Finished\n";
 }
 ```
+Ouput
+{:.filename}
+```
+Exception caught: std::exception
+Hello, Thread!
+Finished
+```
+# III. Detaching a Thread
 
+```join()``` is used to wait for a thread to complete before continuing with the rest of the program, while ```detach()``` allows a thread to continue executing independently. If a ```std::thread``` object is destroyed without being joined or detached, the program will terminate. It is important to use ```join()``` or ```detach()``` to ensure that the executing thread completes its work before continuing in your code.
+
+__join():__
+
+- When join() is called, the calling thread will block until the thread of execution has completed.
+
+- join() is used to wait for a thread to complete before continuing with the rest of the program.
+
+- If a std::thread object is still joinable when it's destroyed, an exception will be thrown.
+
+- join() does not kill the thread; it waits until the thread's main function returns.
+
+
+
+__detach():__
+
+- When detach() is called, the thread of execution is "detached" from the thread object and is no longer represented by a thread object.
+
+- detach() allows a thread to continue executing independently, but you can no longer join the thread.
+
+- detach() is used for one-off independent tasks that you don't care about the result of.
+
+- If a std::thread object is destroyed without being joined or detached, the program will terminate
+
+{% include image.html url="/assets/2023-1-1-Multithreading-C++/detach.png" description="Detaching a Thread" width="80%" %}
+
+
+__Example of a detach__
+detach_thread.cpp
+{:.filename}
+```c++
+// std::thread and detach()
+#include <thread>
+#include <iostream>
+
+// Callable object - thread entry point
+void hello()
+{
+	std::cout << "Hello, Thread!\n";
+}
+
+int main()
+{
+	// Create an std::thread object
+	std::thread thr(hello);
+	
+	// Detach the child thread
+	thr.detach();
+	
+	// Continue executing without waiting for the child thread
+}
+```
 
 # References
 1. https://en.cppreference.com/w/cpp/thread/thread/native_handle
@@ -300,6 +360,7 @@ int main() {
 5. https://en.cppreference.com/w/cpp/thread/thread/id
 6. https://en.cppreference.com/w/cpp/thread/get_id
 7. https://cplusplus.com/reference/thread/thread/id/
+8. Good book: C++ Concurrency in Action (Anthony Williams) 
 
 
 
