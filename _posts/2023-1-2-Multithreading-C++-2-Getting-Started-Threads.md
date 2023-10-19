@@ -297,7 +297,32 @@ Exception caught: std::exception
 Hello, Thread!
 Finished
 ```
-# III. Detaching a Thread
+
+There are several reasons why we need to use threads and exceptions in C++. Here are some of the main reasons:
+
+- To improve performance: Using threads can improve the performance of a program by allowing it to execute multiple tasks simultaneously.
+
+- To handle errors gracefully: When working with databases or APIs, it is common to encounter errors related to invalid queries. In such cases, it is important to handle the errors gracefully to prevent the program from crashing. One way to handle such errors is to use a try-catch block to catch any exceptions that may be thrown when executing the query.
+
+- To prevent program crashes: When an exception is thrown in a parent thread, it can cause the entire program to crash if not handled properly. By using a try-catch block to catch the exception, the program can continue running and the user can be notified of the error.
+
+- To transport exceptions between threads: In some cases, it may be necessary to transport exceptions between threads. The C++ standard supports transporting an exception from one thread to another, enabling you to catch an exception in one thread and then make the exception appear to be thrown in a different thread.
+
+- To propagate exceptions across threads: If you need to catch an exception in a worker thread and re-throw it in the main thread that’s waiting for the worker to finish, you can use ```std::future```
+
+# III. Safely destroying an std::thread object
+To safely destroy an std::thread object in C++, here are some best practices to follow:
+
+- Call join() or detach(): Before destroying an std::thread object, it is important to ensure that the thread has completed its execution. This can be done by calling join() or detach() on the thread object. If a std::thread object is destroyed without being joined or detached, the program will terminate.
+
+- Use RAII: One way to ensure that an std::thread object is safely destroyed is to use RAII (Resource Acquisition Is Initialization) by creating a wrapper class that manages the thread object. The wrapper class can ensure that the thread is joined or detached before the object is destroyed.
+
+- Use a mutex: Operations on an std::thread object are not thread-safe themselves, so it is important to use a mutex to ensure that only one thread can access the object at a time.
+
+- Use a flag: To stop a thread gracefully, it is recommended to use a flag that is checked periodically by the thread. When the flag is set, the thread can exit gracefully.
+
+
+## detach()
 
 ```join()``` is used to wait for a thread to complete before continuing with the rest of the program, while ```detach()``` allows a thread to continue executing independently. If a ```std::thread``` object is destroyed without being joined or detached, the program will terminate. It is important to use ```join()``` or ```detach()``` to ensure that the executing thread completes its work before continuing in your code.
 
@@ -349,6 +374,145 @@ int main()
 	thr.detach();
 	
 	// Continue executing without waiting for the child thread
+}
+```
+To catch an exception thrown in a parent thread in C++, a **try-catch block** can be used. However, if the parent thread is waiting for a child thread to complete using join(), the exception may be thrown in both the parent and child threads. To handle this situation, the **try-catch block** should be placed around the join() method call. If an exception is thrown in a child thread, it will be propagated to the parent thread, and the parent thread will throw the same exception.
+
+__Safely destroying an std::thread object by join()__
+thread_except_safe.cpp
+{:.filename}
+```c++
+// Safely destroying an std::thread object
+// when an exception is thrown (verbose)
+#include <thread>
+#include <iostream>
+
+// Callable object - thread entry point
+void hello()
+{
+	std::cout << "Hello, Thread!\n";
+}
+
+int main()
+{
+	// Create an std::thread object
+	std::thread thr(hello);
+	
+	try {
+		// Code that might throw an exception
+		throw std::exception();
+
+		// No exception if we got here - call join() as usual
+		thr.join();
+	}
+	catch (std::exception& e) {
+		std::cout << "Exception caught: " << e.what() << '\n';
+		thr.join();                           // Call join() before thr's destructor is called
+	}
+} // Calls ~thr()
+```
+<div class="tip">
+<b> But using join() in 2 times is not elegant, we can try other ways bellow</b>
+</div>
+
+## std::jthread vs std::thread
+```std::jthread``` is a new class introduced in **C++20** that provides the same functionality as std::thread, but with some additional features. Here are some differences between ```std::jthread``` and std::thread:
+
+- **RAII:** ```std::jthread``` follows RAII (Resource Acquisition Is Initialization) by having its destructor call join(). This means that the thread is automatically joined when the ```std::jthread``` object is destroyed, ensuring that the thread has completed its execution before the object is destroyed.
+    
+- **Requesting thread interruption:** ```std::jthread``` provides a mechanism for requesting that a thread stop executing. This is done using the ```request_stop()``` method, which sets a flag that can be checked by the thread to determine whether it should stop executing.
+
+- **Thread safety:** ```std::jthread``` is thread-safe, meaning that it can be safely accessed by multiple threads at the same time.
+
+- **Ease of use:** ```std::jthread``` provides a simpler and more intuitive interface than ```std::thread``` making it easier to use and less prone to errors.
+
+__A std::jthread object is safely destroyed__
+jthread_except_safe.cpp
+{:.filename}
+```c++
+// A std::jthread object is safely destroyed
+// when an exception is thrown
+// Requires a compiler which supports C++20
+#include <thread>
+#include <iostream>
+
+// Callable object - thread entry point
+void hello()
+{
+	std::cout << "Hello, Thread!\n";
+}
+
+int main()
+{
+	try {
+		// Create an std::jthread object
+		std::jthread thr(hello);
+		
+		// Code that might throw an exception
+		throw std::exception();
+
+		// std::jthread's destructor will call join() if necessary
+	}
+	catch (std::exception& e) {
+		std::cout << "Exception caught: " << e.what() << '\n';
+	}
+}
+```
+
+## Use RAII (Resource Acquisition Is Initialization)
+One way to ensure that an std::thread object is safely destroyed is to use RAII (Resource Acquisition Is Initialization) by creating a wrapper class that manages the thread object. The wrapper class can ensure that the thread is joined or detached before the object is destroyed. 
+
+__Uses a wrapper class for std::thread__
+use_RAII__thread_guard.cpp
+{:.filename}
+```c++
+// Uses a wrapper class for std::thread
+// Ensures safe destruction when an exception is throw
+#include <thread>
+#include <iostream>
+
+class thread_guard {
+	std::thread thr;
+public:
+	// Constructor takes rvalue reference argument (std::thread is move-only)
+	explicit thread_guard(std::thread&& thr): thr(std::move(thr)) {
+	}
+
+	// Destructor - join the thread if necessary
+	~thread_guard()
+	{
+		if (thr.joinable())
+			thr.join();
+	}
+
+	thread_guard(const thread_guard&) = delete;       // Deleted copy operators prevent copying
+	thread_guard& operator=(const thread_guard&) = delete;
+
+	// The move assignment operator is not synthesized
+};
+
+// Callable object - thread entry point
+void hello()
+{
+	std::cout << "Hello, Thread!\n";
+}
+
+int main()
+{
+	try {
+		std::thread thr(hello);
+		thread_guard tguard{std::move(thr)};
+
+		//thread_guard tguard{std::thread(hello)};
+
+		// Code which might throw an exception
+		throw std::exception();
+
+	} // Calls ~thread_guard followed by ~thread
+
+	catch (std::exception& e) {
+		std::cout << "Exception caught: " << e.what() << '\n';
+	}
 }
 ```
 
