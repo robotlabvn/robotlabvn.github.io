@@ -17,47 +17,165 @@ To prevent data races in C++, critical sections can be protected using synchroni
 
 - **Thread-safe data** structures are data structures that are designed to be accessed by multiple threads simultaneously without causing data races
 
-# II. Mutex
+# II. Mutex (MUTual EXclusion )
+A mutex is a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads. A mutex is a lockable object that is designed to signal when critical sections of code need exclusive access, preventing other threads with the same access from modifying the shared data. In C++, a mutex is implemented as a class, ```std::mutex```, which provides two member functions: ```lock()``` and ```unlock()```. 
+
+- When a thread locks a mutex, no other thread can access the shared data until the mutex is unlocked. If a thread tries to lock a mutex that is already locked by another thread, the thread will block until the mutex is unlocked. 
+
+- Mutexes can be used to protect shared resources from simultaneous access by multiple threads or processes. Mutexes are used to prevent data races and ensure that only one thread can access the shared data at a time. Mutexes can be expensive to use, and it is essential to use them judiciously to avoid performance degradation. 
+
+- A thread locks the mutex when it enters the critical section.
+
+- A thread unlocks the mutex when it leaves the critical section.
+
+```
+Thread Synchroniztion with Mutex
+- Thread A locks the mutex
+- Thread A enters the critical section
+- Thread B, C,.. wait until they can lock the mutex
+- Thread A leaves the critical section
+- Thread A unlock the mutex
+- One of threads B,C,.. can now lock the mutex and enter the critical section.
+```
+## std::mutex Class
+The ```std::mutex ```class is a synchronization primitive in C++ that can be used to protect shared data from being simultaneously accessed by multiple threads. The class provides member functions, ```lock()```, ```try_lock()``` and ```unlock()```, which can be used to lock, tries to lock the mutex -> returns immediately if not successful and unlock the mutex, respectively.
 
 
-## Example of multiple threads in C++
+## Example of multiple threads with mutex in C++
 
-___Example ```multiple_threads.cpp``` bellow:___ 
+___Example ```unscramble.cpp``` bellow:___ 
 
-multiple_threads.cpp
+unscramble.cpp
 {:.filename}
 ```c++
-// Example of starting multiple threads
+// Use a mutex to avoid scrambled output
 #include <iostream>
+#include <mutex>
 #include <thread>
-#include <chrono>
+#include <string>
 
-void hello(int num)
+// Global mutex object
+std::mutex task_mutex;
+
+void task(const std::string& str)
 {
-	// Add a delay
-	std::this_thread::sleep_for(std::chrono::seconds(num));
-	std::cout << "Hello from thread " << num << '\n';
+	for (int i = 0; i < 5; ++i) {
+		// Lock the mutex before the critical section
+		task_mutex.lock();
+
+		// Start of critical section
+		std::cout << str[0] << str[1] << str[2] << std::endl;
+		// End of critical section
+
+		// Unlock the mutex after the critical section
+		task_mutex.unlock();
+	}
 }
 
-int main() {
-	// Start 3 threads
-	std::cout << "Starting 3 threads:\n";
-	std::thread thr1(hello, 1);
-	std::thread thr2(hello, 2);
-	std::thread thr3(hello, 3);
-	
-	// Wait for the threads to finish
+int main()
+{
+	std::thread thr1(task, "abc");
+	std::thread thr2(task, "def");
+	std::thread thr3(task, "xyz");
+
 	thr1.join();
 	thr2.join();
 	thr3.join();
 }
 ```
+
 Output
 {:.filename}
 ```
-Hello from thread 1
-Hello from thread 2
-Hello from thread 3
+abc
+abc
+abc
+abc
+abc
+abc
+def
+def
+def
+def
+def
+xyz
+xyz
+xyz
+xyz
+xyz
+```
+{% include image.html url="/assets/2023-1-1-Multithreading-C++/mutex.png" description="Mutex example from James" width="80%" %}
+
+## std::mutex::trylock()
+
+The ```std::mutex::try_lock()``` function is a member function of the std::mutex class in C++ that attempts to lock the mutex without blocking. The function returns immediately and tries to acquire the lock. If the lock is acquired successfully, the function returns true, and if the lock is not acquired, the function returns false. The ```std::mutex::try_lock()``` function can be used to avoid blocking when acquiring a lock on a mutex.
+
+```c++
+// Keep trying to get the lock
+while(!the_mutex.try_lock()){
+	// Could not lock the mutex
+	// Try again later
+	std::this_thread::sleep_for(100ms);
+}
+	// Finally locked the mutex
+	// Can now execute in the critical section
+```
+
+___Example try_lock() the mutex```try_lock_mutex.cpp``` bellow:___ 
+
+try_lock_mutex.cpp
+{:.filename}
+```c++
+// Example of calling try_lock() in a loop until the mutex is locked
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <chrono>
+
+using namespace std::literals;
+
+std::mutex the_mutex;
+
+void task1()
+{
+	std::cout << "Task1 trying to lock the mutex" << std::endl;
+	the_mutex.lock();
+	std::cout << "Task1 has locked the mutex" << std::endl;
+	std::this_thread::sleep_for(500ms);
+	std::cout << "Task1 unlocking the mutex" << std::endl;
+	the_mutex.unlock();
+}
+
+void task2()
+{
+	std::this_thread::sleep_for(100ms);
+	std::cout << "Task2 trying to lock the mutex" << std::endl;
+	while (!the_mutex.try_lock()) {
+		std::cout << "Task2 could not lock the mutex" << std::endl;
+		std::this_thread::sleep_for(100ms);
+	}
+	std::cout << "Task2 has locked the mutex" << std::endl;
+	the_mutex.unlock();
+}
+
+int main()
+{
+	std::thread thr1(task1);
+	std::thread thr2(task2);
+	
+	thr1.join();
+	thr2.join();
+}
+```
+Output
+{:.filename}
+```
+abc
+abc
+abc
+abc
+abc
+abc
 ```
 
 <div class="tip">
@@ -67,7 +185,8 @@ Hello from thread 3
 
 # References
 1. https://learn.microsoft.com/en-us/cpp/cppcx/wrl/criticalsection-class?view=msvc-170
-
+2. https://en.cppreference.com/w/cpp/thread/mutex/try_lock
+3. https://cplusplus.com/reference/mutex/mutex/try_lock/
 4. James Raynard, Learn Multithreading with Modern C++ Udemy.
 5. https://blog.andreiavram.ro/cpp-channel-thread-safe-container-share-data-threads/
 

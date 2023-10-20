@@ -68,6 +68,7 @@ To share data between threads in C++, the thread function must be able to access
 
 ## Data races
 A data race in C++ occurs when at **least two threads access a shared variable simultaneously, and at least one thread tries to modify the variable**. A race condition, on the other hand, is not necessarily bad and can be the reason for a data race. 
+
 {% include image.html url="/assets/2023-1-1-Multithreading-C++/data_race.png" description="Data Race" width="80%" %}
 
 However, a data race is an undefined behavior, and all reasoning about the program makes no sense anymore. When multiple threads access the same memory location concurrently, and at least one of the accesses is for writing, and the threads are not using any exclusive locks to control their accesses to that memory, the order of accesses is non-deterministic, and the computation may give different results from run to run depending on that order. The compiler and optimizer assume that there are no data races in the code and optimize it under that assumption, which may result in crashes or other completely surprising behavior. Debugging data races can be a real challenge and sometimes requires tools such as ThreadSanitizer or Concurrency Visualizer. To avoid data races, we need to synchronize access to shared data using mutexes, locks, or other synchronization primitives. Data races are a common problem in multithreaded programming, 
