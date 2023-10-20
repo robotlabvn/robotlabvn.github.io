@@ -92,7 +92,6 @@ abc
 abc
 abc
 abc
-abc
 def
 def
 def
@@ -170,12 +169,273 @@ int main()
 Output
 {:.filename}
 ```
-abc
-abc
-abc
-abc
-abc
-abc
+Task1 trying to lock the mutex
+Task1 has locked the mutex
+Task2 trying to lock the mutex
+Task2 could not lock the mutex
+Task2 could not lock the mutex
+Task2 could not lock the mutex
+Task2 could not lock the mutex
+Task1 unlocking the mutex
+Task2 has locked the mutex
+```
+
+# III. Internally Synchronized Class
+When multiple threads access the same memory location concurrently, and at least one of them modifies that memory location, we need to synchronize these accesses to prevent a data race. 
+
+- The containers in the C++ standard library need to be synchronized and we can lock a mutex before calling any of the member functions on a shared C++ library container to prevent a data race.
+
+- We can also write classes that provide their synchronization, where the class takes the responsibility for preventing the data race. One way to do that is to have a mutex as a data member, and the member functions of this class will lock the mutex before they access any of the class's internal data and then unlock it afterward.
+
+### Wrapper for std::vector
+
+```
++ std::vector acts as a memory location
+- We may need to lock a mutex before calling its member function
++ Alternatively, we could write an internally synchronized wrapper for it.
++ A class which
+	- Has an std::vector data member
+	- Has an std::mutex data member
+	- Member functions which lock the mutex before accessing the std::vector
+	- Then unlock the mutex after accessing it
++ An internally synchronized class
+```
+```c++
+//Very simplistic thread-safe vector class
+class Vector{
+	std::mutex mut;			// Mutex as private class data member
+	std::vector<int> vec;	// Shared data -mutex protects access to it
+	public:
+		void push_back(const int& i){
+			mut.lock(); 		//Lock the mutex
+			vec.push_back(i);	//Critical section
+			mut.unlock();		//Unlock the mutex
+		}
+	};
+```
+
+___Example A class which is internally without mutex bellow:___ 
+
+without_mutex.cpp
+{:.filename}
+```c++
+// A class which is internally synchronized
+// The member functions lock a mutex before they access a data member
+#include <thread>
+#include <mutex>
+#include <vector>
+#include <iostream>
+#include <chrono>
+
+using namespace std::literals;
+
+class Vector {
+	std::mutex mut;
+	std::vector<int> vec;
+public:
+	void push_back(const int& i)
+	{
+		//mut.lock();
+
+		// Start of critical section
+		vec.push_back(i);
+
+		// End of critical section
+		//mut.unlock();
+	}
+
+	void print() {
+		//mut.lock();
+
+		// Start of critical section
+		for (auto i : vec) {
+			std::cout << i << ", ";
+		}
+
+		// End of critical section
+		//mut.unlock();
+	}
+};
+
+void func(Vector& vec)
+{
+	for (int i = 0; i < 5; ++i) {
+		vec.push_back(i);
+		std::this_thread::sleep_for(50ms);
+		vec.print();
+	}
+}
+
+int main()
+{
+	Vector vec;
+
+	std::thread thr1(func, std::ref(vec));
+	std::thread thr2(func, std::ref(vec));
+	std::thread thr3(func, std::ref(vec));
+
+	thr1.join(); thr2.join(); thr3.join();
+}
+```
+
+Scramble Ouput
+{:.filename}
+```
+0, 0, 
+end print section
+0, 0, 
+0, 0, 1, 
+end print section
+end print section
+start print section
+0, 0, 1, 1, 1, 
+end print section
+start print section
+0, 0, 1, 1, 1, 2, 
+end print section
+start print section
+0, 0, 1, 1, 1, 2, 2, 
+end print section
+start print section
+0start print section, 
+0, 0, 1, 1, 1, 2, 2, 2, 
+0, end print section
+1, 1, 1, 2, 2, 2, 
+end print section
+start print section
+0, 0, 1073744080, 32544, 1, 2, 2, 2, 3, 
+end print section
+start print section
+0, 0, 1073744080, 32544, 1, 2, 2, 2, 3, 3, 
+end print section
+start print section
+0, 0, 1073744080, 32544, 1, 2, 2, 2, 3, 3, 4, 
+end print section
+start print section
+0, 0, 1073744080, 32544, 1, 2, 2, 2, 3, 3, 4, 4, 
+end print section
+start print section
+0, 0, 1073744080, 32544, 1, 2, 2, 2, 3, 3, 4, 4, 4, 
+end print section
+start print section
+start print section0, 0, 1073744080, 32544, 1, 2, 2, 2, 3, 3, 4, 4, 4, 
+end print section
+0, 0, 1073744080, 32544, 1, 2, 2, 2, 3, 3, 4, 4, 4, 
+end print section
+```
+
+___Example A class which is internally synchronize bellow:___ 
+
+internal_sync_class.cpp
+{:.filename}
+```c++
+// A class which is internally synchronized
+// The member functions lock a mutex before they access a data member
+#include <thread>
+#include <mutex>
+#include <vector>
+#include <iostream>
+#include <chrono>
+
+using namespace std::literals;
+
+class Vector {
+	std::mutex mut;
+	std::vector<int> vec;
+public:
+	void push_back(const int& i)
+	{
+		mut.lock();
+
+		// Start of critical section
+		vec.push_back(i);
+
+		// End of critical section
+		mut.unlock();
+	}
+
+	void print() {
+		mut.lock();
+
+		// Start of critical section
+		for (auto i : vec) {
+			std::cout << i << ", ";
+		}
+
+		// End of critical section
+		mut.unlock();
+	}
+};
+
+void func(Vector& vec)
+{
+	for (int i = 0; i < 5; ++i) {
+		vec.push_back(i);
+		std::this_thread::sleep_for(50ms);
+		vec.print();
+	}
+}
+
+int main()
+{
+	Vector vec;
+
+	std::thread thr1(func, std::ref(vec));
+	std::thread thr2(func, std::ref(vec));
+	std::thread thr3(func, std::ref(vec));
+
+	thr1.join(); thr2.join(); thr3.join();
+}
+```
+
+Stable Ouput
+{:.filename}
+```
+start print section
+0, 0, 0, 
+end print section
+start print section
+0, 0, 0, 
+end print section
+start print section
+0, 0, 0, 1, 1, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 
+end print section
+start print section
+0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 
+end print section
 ```
 
 <div class="tip">
