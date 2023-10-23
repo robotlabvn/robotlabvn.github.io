@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: (Multithreading C++) 4. Mutex and Multiple Threads working with Share data (Part 2)
+title: (Multithreading C++) 5. Mutex and Multiple Threads working with Share data (Part 2)
 snippet: This tutorial introduce the Multithreading C+
 tags: [Multithreading C++]
 ---
@@ -243,7 +243,7 @@ void read(){
 ```
 
 ## Share mutex
-__Example ```shared_mutex.cpp`` bellow:__
+__Example ```shared_mutex.cpp``` bellow:__
 
 shared_mutex.cpp
 {:.filename}
