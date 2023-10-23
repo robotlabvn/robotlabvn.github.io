@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: (Multithreading C++) 4. Multiple Threads working with Share data
+title: (Multithreading C++) 4. Mutex and Multiple Threads working with Share data 
 snippet: This tutorial introduce the Multithreading C+
 tags: [Multithreading C++]
 ---
@@ -324,7 +324,7 @@ end print section
 end print section
 ```
 
-___Example A class which is internally synchronize bellow:___ 
+__Example A class which is internally synchronize bellow:__
 
 internal_sync_class.cpp
 {:.filename}
@@ -437,12 +437,177 @@ start print section
 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 
 end print section
 ```
+# IV. Lock guard
+## Mutex problem with the exception is thrown 
+To protect a critical section, we can use a mutex or a lock. We lock the mutex before entering the critical section and unlock it afterwards. However, if an exception is thrown while the thread is in the critical section, the code will jump out of the try block into the catch block, and the code that follows will not be executed. This means that the unlock function is **NEVER** called, and the mutex is left in a locked state. 
+```c++
+try{
+	task_mutex.lock(); //Lock the mutex before the critical section
+	//Critical section thrown an exception
+
+	task_mutex.unlock(); // NEVER get called
+}
+catch(std::exeption&e ){
+ ....
+}
+// -> MUTEX will be left locked state -> Error: device or resource busy
+```
+So, when the exception is thrown, we have the stack unwinding process:
+
+- The destructors are called, for all objects in scope.
+
+- The program flow jumps into the catch handler.
+
+- The unlock() call is never executed, and 
+
+- The mutex remains in a locked state.
+
+When a thread locks a mutex, any other thread that wants to lock that mutex will wait indefinitely, causing the threads to be blocked. If any code has called join() on those blocked threads, such as the``` main() ``` function, then that code will also be blocked. As a result, the entire program will be blocked, and the threads will not be able to proceed. 
+
 
 <div class="tip">
-<b> But using join() in 2 times is not elegant, we can try other ways bellow</b>
+<b>Drawback of std::mutex:</b>
+<ul>
+<li> <b>Calling lock() requires corresponding call unlock() </b> If NOT the mutex remaining locked after the thread exits</li>
+
+<li> <b>Unlock must always be called, even if</b>There are multiple paths through the critical section, An exception thrown</li>
+
+<li> <b>Relies to the programmer to get it right</b> </li>
+
+<li> <b>Due to these reasons, we do not normally use std::mutex</b> </li>
+</ul>
 </div>
 
+## So what should we use? -> Mutex Wrapper Class
+A mutex wrapper class is a class that holds a mutex and an associated object, providing a convenient way to lock and unlock the mutex when accessing the object. the wrapper classes for mutexes in C++ provide the following benefits:
+- They have a mutex object as a private member and are defined in the same header as the mutex class
+- They use the RAII idiom to manage resources, where the resource is a mutex that is locked
+- The constructor acquires the resource by locking the mutex, and the destructor releases the resource by unlocking the mutex
+- Objects of this class are created on the stack, and when the object goes out of scope, the destructor is called, and the mutex is unlocked
+- This guarantees that objects are destroyed when the scope in which they were declared ends, and it is possible to acquire the resource in the constructor and release it in the destructor
+- This is even more useful in the presence of exceptions, whose unusual control flow is often the source of resources not being released under exceptional flows
 
+## std::lock_guard
+```std::lock_guard``` is a C++ class that provides a convenient RAII-style mechanism for owning a mutex for the duration of a scoped block. ```std::lock_guard``` is a useful tool for synchronizing access to shared resources in a multithreaded environment. It provides a convenient way to lock and unlock a mutex when accessing an object, ensuring that only one thread can access the object at a time. It is simple to use and has less likelihood for incorrect use than other mutex wrapper classes.
+
+__Example use std::lock_guard to avoid scrambled output:__
+
+lock_guard.cpp
+{:.filename}
+```c++
+// Use std::lock_guard to avoid scrambled output
+#include <iostream>
+#include <mutex>
+#include <thread>
+#include <chrono>
+#include <string>
+
+using namespace std::literals;
+
+std::mutex print_mutex;
+
+void task(std::string str)
+{
+	for (int i = 0; i < 5; ++i) {
+		try {
+			// Create an std::lock_guard object
+			// This calls print_mutex.lock()
+			std::lock_guard<std::mutex> lck_guard(print_mutex);
+
+			// Start of critical section
+			std::cout << str[0] << str[1] << str[2] << std::endl;
+
+			// Critical section throws an exception
+			throw std::exception();
+			// End of critical section
+
+			std::this_thread::sleep_for(50ms);
+		}  // Calls ~std::lock_guard
+		catch (std::exception& e) {
+			std::cout << "Exception caught: " << e.what() << '\n';
+		}
+	}
+}
+
+int main()
+{
+	std::thread thr1(task, "abc");
+	std::thread thr2(task, "def");
+	std::thread thr3(task, "xyz");
+
+	thr1.join(); thr2.join(); thr3.join();
+}
+```
+## std::unique_lock()
+In general, std::lock_guard is simpler and easier to use, while std::unique_lock is more flexible and provides more functionality. If the mutex needs to be locked for the entire scope of a block, std::lock_guard is preferred. If the mutex needs to be locked for only part of the scope of a block or if more advanced functionality is needed, std::unique_lock is preferred.
+
+- It is used to ensure that a mutex is locked for the duration of a critical section, and it is automatically released when the unique_lock object goes out of scope.
+
+- It is more flexible than ```std::lock_guard``` because it can be constructed with or without taking the mutex immediately, and it can adopt a current lock that is already locked by a thread.
+
+- It is useful for synchronizing access to shared resources in a multithreaded environment, and it can be used to avoid deadlocks and complexity that can arise from using too many mutexes.
+
+__Example use std::unique_lock() to avoid scrambled output:__
+
+unique_lock.cpp
+{:.filename}
+```c++
+// Use std::unique_lock to avoid scrambled output
+#include <iostream>
+#include <mutex>
+#include <thread>
+#include <chrono>
+#include <string>
+
+using namespace std::literals;
+
+std::mutex print_mutex;
+
+void task(std::string str)
+{
+    for (int i = 0; i < 5; ++i) {
+		// Create an std::unique_lock object
+        // This calls print_mutex.lock()
+        std::unique_lock<std::mutex> uniq_lck(print_mutex);
+		
+		// Start of critical section
+        std::cout << str[0] << str[1] << str[2] << std::endl;
+		// End of critical section
+		
+		// Unlock the mutex
+		uniq_lck.unlock();
+
+        std::this_thread::sleep_for(50ms);
+    } // Calls ~std::unique_lock
+}
+
+int main()
+{
+	std::thread thr1(task, "abc");
+	std::thread thr2(task, "def");
+	std::thread thr3(task, "xyz");
+	
+	thr1.join(); thr2.join(); thr3.join();
+}
+```
+
+The ```std::unique_lock``` class has several constructors that allow for different ways of locking a mutex. The second argument of the constructor is optional and specifies the locking strategy. Here are some of the available options:
+
+- ```std::defer_lock:``` The mutex is not locked on construction. The caller must lock the mutex manually using the lock() method.
+
+- ```std::try_to_lock:``` The mutex is locked if possible, but the constructor does not block if the mutex is already locked by another thread. If the mutex is not locked, it is locked by the constructor.
+
+- ```std::adopt_lock:``` The mutex is assumed to be already locked by the calling thread. The constructor does not lock the mutex, but instead adopts the lock.
+
+<div class="tip">
+<b>std::lock_guard vs std::unique_lock</b>
+<ul>
+<li> <b>std::unique_lock is much more flexible, but:</b> Slower and requires slighly more storage</li>
+
+<li> <b>Recommendation</b>use lock_guard to lock mutex for entire scope, unique_lock for unlock wihin the scope, use unique_lock if you need more extra features. </li>
+
+</ul>
+</div>
 # References
 1. https://learn.microsoft.com/en-us/cpp/cppcx/wrl/criticalsection-class?view=msvc-170
 2. https://en.cppreference.com/w/cpp/thread/mutex/try_lock
