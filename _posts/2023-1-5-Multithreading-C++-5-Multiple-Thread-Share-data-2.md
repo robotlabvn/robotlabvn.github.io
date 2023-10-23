@@ -315,6 +315,7 @@ int main()
 # IV. Shared Data Initialization
 Shared data can have different forms in a program:
 - Global variables can be accessed by any code in the program.
+
 ```c++
 // Global variable declaration
 int a = 5; //Can be accessed from other files by using the extern keyword.
@@ -325,6 +326,7 @@ void printGlobalVariable() {
 }
 
 ```
+
 - Static variables at namespace scope can be accessed by any code that can see their declaration.
 
 ```c++
