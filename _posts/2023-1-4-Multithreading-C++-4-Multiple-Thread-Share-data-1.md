@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: (Multithreading C++) 4. Mutex and Multiple Threads working with Share data 
+title: (Multithreading C++) 4. Mutex and Multiple Threads working with Share data (Part 1)
 snippet: This tutorial introduce the Multithreading C+
 tags: [Multithreading C++]
 ---
