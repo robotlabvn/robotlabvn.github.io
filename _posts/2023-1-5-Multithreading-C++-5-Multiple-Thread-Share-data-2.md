@@ -457,6 +457,77 @@ int main()
 }
 ```
 
+### C++11 Singleton Class -> Good practice
+
+cpp11_singleton.h
+{:.filename}
+```c++
+// Singleton class definition
+#ifndef SINGLETON_H
+#define SINGLETON_H
+
+#include <iostream>
+
+class Singleton {
+  public:
+	// The copy and move operators are deleted
+	Singleton(const Singleton&) = delete;
+	Singleton& operator=(const Singleton&) = delete;
+	Singleton(Singleton&&) = delete;
+	Singleton& operator=(Singleton&&) = delete;
+	
+	Singleton() { std::cout << "Initializing Singleton\n";}
+};
+
+// Function to obtain the Singleton object
+Singleton& get_Singleton();
+
+#endif //SINGLETON_H
+```
+
+cpp11_singleton.cc
+{:.filename}
+```c++
+// Singleton class implementation (Meyers Singleton)
+// Uses C++11's guarantees about initializing static variables
+#include "cpp11_singleton.h"
+
+// Function to obtain the Singleton object
+Singleton& get_Singleton()
+{
+    // Initialized by the first thread that executes this code
+	static Singleton single;
+	return single;
+}
+```
+
+cpp11_singleton_main.cc
+{:.filename}
+```c++
+// Test program for classic Singleton
+// Test program for Meyers Singleton
+#include "cpp11_singleton.h"
+#include <thread>
+#include <vector>
+
+void task()
+{
+	Singleton& single = get_Singleton();
+	std::cout << &single << std::endl;
+}
+
+int main()
+{
+	std::vector<std::thread> threads;
+	
+	for (int i = 0; i < 10; ++i)
+		threads.push_back(std::thread(task));
+	
+	for (auto& thr : threads)
+		thr.join();
+}
+```
+
 # References
 1. https://en.cppreference.com/w/cpp/thread/timed_mutex
 2. https://cplusplus.com/reference/mutex/timed_mutex/
