@@ -216,8 +216,8 @@ In a database system, multiple clients may need to read data from the same table
 In a database system, multiple threads may need to read data from the buffer while only one thread can write to it.
 
 # III.Shared Mutexes
-```std::shared_mutex``` is a C++ class that provides a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads. Here are some key points about std::shared_mutex:
-- It is defined in the <shared_mutex> header and is available since C++17.
+```std::shared_mutex``` is a C++ class that provides a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads. Here are some key points about ```std::shared_mutex```:
+- It is defined in the ```shared_mutex``` header and is available since C++17.
 
 - It is a type of mutex that allows multiple threads to share ownership of a mutex for non-exclusive access.
 It provides two levels of access: shared and exclusive. Multiple threads can acquire shared access, but only one thread can hold exclusive access.
@@ -313,7 +313,149 @@ int main()
 </div>
 
 # IV. Shared Data Initialization
+Shared data can have different forms in a program:
+- Global variables can be accessed by any code in the program.
+```c++
+// Global variable declaration
+int a = 5; //Can be accessed from other files by using the extern keyword.
 
+// Function to print the value of the global variable
+void printGlobalVariable() {
+  std::cout << "The value of the global variable is: " << a << std::endl;
+}
+
+```
+- Static variables at namespace scope can be accessed by any code that can see their declaration.
+
+```c++
+// Static variable declaration at namespace scope
+static int a = 5; // Cannot be accessed from other files.
+
+// Function to print the value of the static variable
+void printStaticVariable() {
+  std::cout << "The value of the static variable is: " << a << std::endl;
+}
+
+```
+
+- A class member declared static can be accessed by any code that calls its member functions.
+
+```c++
+class MyClass {
+  public:
+    static int staticVariable;
+    static void staticFunction() {
+      std::cout << "The value of the static variable is: " << staticVariable << std::endl;
+    }
+};
+
+int MyClass::staticVariable = 5;
+```
+
+- Local variables declared static can be accessed by any code that calls the function containing them.
+
+```c++
+void myFunction() {
+  // Declare a static local variable
+  static int count = 0;
+
+  // Increment the value of the static local variable
+  count++;
+
+  // Print the value of the static local variable
+  std::cout << "The value of the static local variable is: " << count << std::endl;
+}
+
+int main() {
+  // Call the function multiple times to see the effect of the static local variable
+  myFunction();
+}
+```
+
+Static local variables in C++11 have been standardized: 
+
+- Only one thread can initialize the variable, and if any other thread reaches that declaration, it will be blocked.
+- The second thread must wait until the first thread has finished initializing the variable, and then it will use the initial value that the first thread gave to it.
+- All threads will see this variable as having the same initial value, and the threads are all synchronized internally by the implementation, and there is no data race.
+- This only applies when initializing the static variable.
+- If we want to modify it later on, then it is just like any other shared data, and we have to protect it to prevent a data race.
+
+## Singleton Class
+The Singleton design pattern in C++ is a creational design pattern that ensures only one object of its kind exists and provides a single point of access to it for any other code. Singleton has almost the same pros and cons as global variables, and it can be recognized by a static creation method, which returns the same cached object.
+
+### Classical Singleton class -> has data race
+
+classic_singleton.h
+{:.filename}
+```c++
+// Singleton class definition
+#ifndef SINGLETON_H
+#define SINGLETON_H
+
+#include <iostream>
+
+class Singleton {
+	// Pointer to unique instance
+	static Singleton *single;
+	
+	// The constructor is private
+	Singleton() { std::cout << "Initializing Singleton" << std::endl;}
+public:
+	// The copy and move operators are deleted
+	Singleton(const Singleton&) = delete;
+	Singleton& operator=(const Singleton&) = delete;
+	Singleton(Singleton&&) = delete;
+	Singleton& operator=(Singleton&&) = delete;
+	
+	// Static member function to obtain the Singleton object
+	static Singleton* get_Singleton();
+};
+
+#endif //Singleton_H
+```
+
+classic_singleton.cc
+{:.filename}
+```c++
+// Classic Singleton class implementation
+#include "classic_singleton.h"
+
+// Static member function to obtain the Singleton object
+Singleton* Singleton::get_Singleton()
+{
+    if (single == nullptr)
+        single = new Singleton;
+    return single;
+}
+```
+
+classic_singleton_main.cc
+{:.filename}
+```c++
+// Test program for classic Singleton
+#include "classic_singleton.h"
+#include <thread>
+#include <vector>
+
+Singleton* Singleton::single = nullptr;
+
+void task()
+{
+	Singleton* single = Singleton::get_Singleton();
+	std::cout << single << std::endl;
+}
+
+int main()
+{
+	std::vector<std::thread> threads;
+	
+	for (int i = 0; i < 10; ++i)
+		threads.push_back(std::thread(task));
+	
+	for (auto& thr : threads)
+		thr.join();
+}
+```
 
 # References
 1. https://en.cppreference.com/w/cpp/thread/timed_mutex
@@ -324,6 +466,7 @@ int main()
 6. https://en.cppreference.com/w/cpp/chrono
 7. https://en.cppreference.com/w/cpp/thread/shared_mutex
 8. https://en.cppreference.com/w/cpp/thread/shared_mutex/lock
+9. https://refactoring.guru/design-patterns/singleton/cpp/example
 
 
 
