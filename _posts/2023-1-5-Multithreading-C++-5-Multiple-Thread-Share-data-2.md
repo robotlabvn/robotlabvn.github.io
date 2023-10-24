@@ -530,6 +530,78 @@ int main()
 }
 ```
 
+# V. Thread-local variable lifetimes
+## Thread-local variable
+In C++, thread-local variables are variables that have thread storage duration, meaning that each thread that accesses a thread-local variable has its own, independently initialized copy of the variable.
+```
+Global and namespace scope
+- Always constructed at or befor the first use in a translation unit
+- It is safe to use them in dynamic libraries (DLLs)
+
+Local variables
+- Initialized in the same way as static local variables
+
+In all cases
+- Destroyed when the thread completes its execution
+```
+
+## Example 
+We can make a random number engine thread-local, this ensures that each thread generates the same sequence -> Useful for testing.
+
+```c++
+//Thread-local random number engine
+std::thread_local mt19937 mt;
+void func()
+{
+	std::uniform_real_distribution<double>dist(0,1); //Double in range 0 to 1
+	for(int i =0; i <10; i++){						//Generate 10 numbers
+		std::out << dist(mt) << ", ";
+	}
+}
+```
+
+__Thread-local random number engine ```thread_local.cpp``` bellow:__
+
+thread_local.cpp
+{:.filename}
+```c++
+// Thread-local random number engine
+// Ensures that each thread generates the same sequence
+// (Useful for testing)
+#include <random>
+#include <thread>
+#include <iostream>
+
+// Thread-local random number engine
+thread_local std::mt19937 mt;
+
+void func()
+{
+	std::uniform_real_distribution<double> dist(0, 1);   // Doubles in the range 0 to 1
+
+	for (int i = 0; i < 10; ++i)                         // Generate 10 random numbers
+		std::cout << dist(mt) << ", ";
+}
+
+int main()
+{
+	std::cout << "Thread 1's random values:\n";
+	std::thread thr1(func);
+	thr1.join();
+
+	std::cout << "\nThread 2's random values:\n";
+	std::thread thr2(func);
+	thr2.join();
+	std::cout << '\n';
+}
+```
+
+# VI. Lazy Initialization
+Lazy initialization is a technique that delays the creation of an object or the calculation of a value until the first time it is needed. It is useful when the creation of the object is expensive, and you want to defer it as late as possible, or even skip it entirely.
+# VII. Double-checked Locking
+Double-checked locking is used to reduce the overhead of acquiring a lock by testing the locking criteria first and acquiring the lock only if the check indicates that locking is required. It is commonly used for lazy initialization, which is a tactic for delaying the object initialization until the first time it is accessed. In multi-threaded environments, initialization is usually not thread-safe, so locking is required to protect the critical section. Since only the first access requires locking, double-checked locking is used to avoid locking overhead of subsequent accesses
+
+
 # References
 1. https://en.cppreference.com/w/cpp/thread/timed_mutex
 2. https://cplusplus.com/reference/mutex/timed_mutex/
@@ -540,6 +612,8 @@ int main()
 7. https://en.cppreference.com/w/cpp/thread/shared_mutex
 8. https://en.cppreference.com/w/cpp/thread/shared_mutex/lock
 9. https://refactoring.guru/design-patterns/singleton/cpp/example
+10. https://en.wikipedia.org/wiki/Lazy_initialization
+
 
 
 
