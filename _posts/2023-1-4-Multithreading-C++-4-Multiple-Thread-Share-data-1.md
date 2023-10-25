@@ -538,6 +538,43 @@ int main()
 	thr1.join(); thr2.join(); thr3.join();
 }
 ```
+
+Output
+{:.filename}
+```
+abc
+Exception caught: std::exception
+def
+Exception caught: std::exception
+def
+Exception caught: std::exception
+def
+Exception caught: std::exception
+def
+Exception caught: std::exception
+def
+Exception caught: std::exception
+xyz
+Exception caught: std::exception
+abc
+Exception caught: std::exception
+xyz
+Exception caught: std::exception
+xyz
+Exception caught: std::exception
+xyz
+Exception caught: std::exception
+xyz
+Exception caught: std::exception
+abc
+Exception caught: std::exception
+abc
+Exception caught: std::exception
+abc
+Exception caught: std::exception
+```
+The exceptions are being caught and different threads are executing. Other threads are able to lock the mutex and perform their own critical section without scrambled output.
+
 ## std::unique_lock()
 In general, std::lock_guard is simpler and easier to use, while std::unique_lock is more flexible and provides more functionality. If the mutex needs to be locked for the entire scope of a block, std::lock_guard is preferred. If the mutex needs to be locked for only part of the scope of a block or if more advanced functionality is needed, std::unique_lock is preferred.
 
@@ -589,6 +626,26 @@ int main()
 	
 	thr1.join(); thr2.join(); thr3.join();
 }
+```
+
+Output
+{:.filename}
+```
+abc
+def
+xyz
+abc
+def
+xyz
+abc
+def
+xyz
+abc
+def
+xyz
+abc
+def
+xyz
 ```
 
 The ```std::unique_lock``` class has several constructors that allow for different ways of locking a mutex. The second argument of the constructor is optional and specifies the locking strategy. Here are some of the available options:
