@@ -1,13 +1,16 @@
 ---
 layout: post
 category: blog
-title: (Multithreading C++) 5. Mutex and Multiple Threads working with Share data (Part 3)
-snippet: This tutorial introduce the Multithreading C+
+title: (Multithreading C++) 6. Deadlock and Livelock
+snippet: This tutorial in series of Mutex and Multiple Threads working with Share data.
 tags: [Multithreading C++]
 ---
 
 # I. Deadlock
-**Deadlock is the second most problem in multi-threading code.**
+<div class="tip">
+<b>Deadlock is the second most problem in multi-threading code, after data races</b>
+</div>
+
 
 A mutual deadlock in C++ occurs when two or more threads are blocked and waiting for each other to release a resource. 
 Deadlocks can occur due to a wrong order of acquiring locks, which can be avoided by acquiring locks in an agreed order. It can happen by following reasons:
@@ -152,7 +155,7 @@ int main()
 ```
 
 # I. Deadlock Practical
-The Dining Philosophers problem is a classic problem in computer science that illustrates synchronization issues in a multi-threaded environment. The problem states that there are five philosophers sitting around a circular table, each with their own plate and a fork between each plate. The philosophers alternate between thinking and eating, and can only eat when they have both a left and right fork
+The Dining Philosophers problem is a classic problem in computer science that illustrates synchronization issues in a multi-threaded environment. The problem states that there are five philosophers sitting around a circular table, each with their own plate and a fork between each plate. The philosophers alternate between thinking and eating, and can only eat when they have both a left and right fork. After an individual philosopher finishes eating, he will put down both forks. The problem is how to design a regimen (a concurrent algorithm) such that no philosopher will starve; i.e., each can forever continue to alternate between eating and thinking, assuming that no philosopher can know when others may want to eat or think.
 
 {% include image.html url="/assets/2023-1-1-Multithreading-C++/dining_philosophers_problem.png" description="dining_philosophers_problem" width="80%" %}
 
