@@ -322,6 +322,46 @@ int main()
 }
 ```
 
+Ouput of dining_philosophers.cpp
+{:.filename}
+```
+Philosopher A's left fork is number 0
+Philosopher A's right fork is number 1
+Philosopher C's left fork is number 2
+Philosopher C's right fork is number 3
+Philosopher A is thinking...
+Philosopher C is thinking...
+Philosopher B's left fork is number 1
+Philosopher B's right fork is number 2
+Philosopher B is thinking...
+Philosopher D's left fork is number 3
+Philosopher D's right fork is number 4
+Philosopher D is thinking...
+Philosopher E's left fork is number 4
+Philosopher E's right fork is number 0
+Philosopher E is thinking...
+Philosopher C reaches for fork number 2
+Philosopher C picks up fork 2
+Philosopher B reaches for fork number 1
+Philosopher B picks up fork 1
+Philosopher C is thinking...
+Philosopher A reaches for fork number 0
+Philosopher A picks up fork 0
+Philosopher A is thinking...
+Philosopher D reaches for fork number 3
+Philosopher D picks up fork 3
+Philosopher B is thinking...
+Philosopher D is thinking...
+Philosopher E reaches for fork number 4
+Philosopher E picks up fork 4
+Philosopher E is thinking...
+Philosopher C reaches for fork number 3
+Philosopher A reaches for fork number 1
+Philosopher B reaches for fork number 2
+Philosopher D reaches for fork number 4
+Philosopher E reaches for fork number 0
+```
+
 ## std::scoped_lock
 Another solution is lock mutiple mutexes in a single operation. C++ provides library feature for this is ```std::scope_lock```. ```std::scoped_lock``` is a mutex wrapper that provides a convenient RAII-style mechanism for owning one or more mutexes for the duration of a scoped block.  ```std::scoped_lock ```can lock several mutexes at the same time, with a deadlock prevention mechanism, while ```std::lock_guard``` is limited to a single mutex.
 
@@ -427,6 +467,19 @@ int main() {
 }
 ```
 
+Ouput of adopt_lock.cpp
+{:.filename}
+```
+Thread A trying to lock mutexes 1 and 2...
+Thread B trying to lock mutexes 2 and 1...
+Thread A has locked mutexes 1 and 2
+Thread A has adopted the locks
+Thread A releasing mutexes 1 and 2...
+Thread B has locked mutexes 2 and 1
+Thread B has adopted the locks
+Thread B releasing mutexes 2 and 1...
+```
+
 ## std::defer_lock
 ```std::defer_lock``` is an option that can be used with ```std::unique_lock```to indicate that the mutex should not be locked upon construction of the ```std::unique_lock``` object. This is useful when you need to lock multiple mutexes in a specific order to avoid deadlock.
 
@@ -476,10 +529,22 @@ int main() {
 }
 ```
 
+Ouput of defer_lock.cpp
+{:.filename}
+```
+Thread A trying to lock mutexes 1 and 2...
+Thread A has locked mutexes 1 and 2
+Thread B trying to lock mutexes 2 and 1...
+Thread A releasing mutexes 1 and 2...
+Thread B has locked mutexes 2 and 1
+Thread B releasing mutexes 2 and 1...
+```
+
 ## std::try_lock
 ```std::try_lock```is a C++ function that attempts to lock multiple mutexes simultaneously without blocking. It is a non-blocking alternative to ```std::lock```, which blocks until all mutexes are locked. If ```std::try_lock``` is successful in locking all mutexes, it returns immediately -1 and the caller can proceed with the critical section. If ```std::try_lock``` fails to lock one or more mutexes, it releases any locks that it has acquired and returns a 0-based index of the first mutex that it failed to lock.
 
 __Example try_lock__
+
 try_lock.cpp
 {:.filename}
 ```c++
@@ -538,7 +603,15 @@ int main() {
 	thrA.join(); thrB.join();
 }
 ```
-
+Ouput of try_lock.cpp
+{:.filename}
+```
+Thread B trying to lock mutexes 2 and 1...
+Thread B has locked mutexes 2 and 1
+Thread A trying to lock mutexes 1 and 2...
+try_lock failed on mutex with index 0
+Thread B releasing mutexes 2 and 1...
+```
 <div class="tip">
 <b>Main points on avoiding deadlock:</b>
 <ul>
