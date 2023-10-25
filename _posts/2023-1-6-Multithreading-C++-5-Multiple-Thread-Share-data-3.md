@@ -154,7 +154,7 @@ int main()
 }
 ```
 
-# I. Deadlock Practical
+# II. Deadlock Practical
 The Dining Philosophers problem is a classic problem in computer science that illustrates synchronization issues in a multi-threaded environment. The problem states that there are five philosophers sitting around a circular table, each with their own plate and a fork between each plate. The philosophers alternate between thinking and eating, and can only eat when they have both a left and right fork. After an individual philosopher finishes eating, he will put down both forks. The problem is how to design a regimen (a concurrent algorithm) such that no philosopher will starve; i.e., each can forever continue to alternate between eating and thinking, assuming that no philosopher can know when others may want to eat or think.
 
 {% include image.html url="/assets/2023-1-1-Multithreading-C++/dining_philosophers_problem.png" description="dining_philosophers_problem" width="80%" %}
@@ -628,6 +628,590 @@ Thread B releasing mutexes 2 and 1...
 </ul>
 </div>
 
+# III. Deadlock Avoidance Practical
+
+## Solution for Dining Philosophers problems
+
+multiple_lock.cpp
+{:.filename}
+```c++
+// Dining philosophers problem (part 2a)
+//
+// 5 philosophers sit at a round table which has 5 forks on it.
+// A philosopher has a fork at each side of them.
+// A philosopher can only eat if they can pick up both forks.
+// If a philosopher picks up the fork on their right,
+// that prevents the next philosopher from picking up their left fork.
+//
+// The philosophers try to pick up both forks at the same time.
+// If they succeed, they can eat.
+// If not, both forks are available to their neighbours.
+//
+// All philosophers are able to eat.
+// No deadlock
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <vector>
+#include <string>
+#include <chrono>
+
+using namespace std::literals;
+
+// Some data about the problem
+constexpr int nforks = 5;
+constexpr int nphilosophers = nforks;
+std::string names[nphilosophers] = {"A", "B", "C", "D", "E"};
+
+// Keep track of how many times a philosopher is able to eat
+int mouthfuls[nphilosophers] = {0};
+
+// A philosopher who has not picked up both forks is thinking
+constexpr auto think_time = 2s;
+
+// A philosopher has picked up both forks is eating
+constexpr auto eat_time = 1s;
+
+// A philosopher who has picked up one fork will put it down again
+// if they cannot pick up the other fork they need
+constexpr auto time_out = think_time;
+
+// A mutex prevents more than one philosopher picking up the same fork
+// A philosopher thread can only pick up a fork if it can lock the corresponding mutex
+std::mutex fork_mutex[nforks];
+
+// Mutex to protect output
+std::mutex print_mutex;
+
+// Functions to display information about the 'nth' philosopher
+
+// Interactions with forks
+void print(int n, const std::string& str, int lfork, int rfork)
+{
+	std::lock_guard<std::mutex> print_lock(print_mutex);
+	std::cout << "Philosopher " << names[n] << str;
+	std::cout << lfork << " and " << rfork << '\n';
+}
+
+// The philosopher's state
+void print(int n, const std::string& str)
+{
+	std::lock_guard<std::mutex> print_lock(print_mutex);
+	std::cout << "Philosopher " << names[n] << str << '\n';
+}
+
+// Thread which represents a dining philosopher
+void dine(int phil_no)
+{
+	// Philosopher A has fork 0 on their left
+	// and fork 1 on their right
+	// Philosopher B has fork 1 on their left
+	// and fork 2 on their right
+	// ...
+	// Philosopher E has fork 4 on their left
+	// and fork 0 on their right
+	//
+	// Each philosopher must pick up their left fork first
+	int lfork = phil_no;
+	int rfork = (phil_no+1) % nforks;
+	
+	print(phil_no, "\'s forks are ", lfork, rfork);
+	print(phil_no, " is thinking...");
+
+	std::this_thread::sleep_for(think_time);
+
+	// Make an attempt to eat
+	print(phil_no, " reaches for forks ", lfork, rfork);
+
+	// Try to pick up both forks
+	std::lock(fork_mutex[lfork], fork_mutex[rfork]);
+	print(phil_no, " picks up fork ", lfork, rfork);
+
+	// Succeeded - this philosopher can now eat
+	print(phil_no, " is eating...");
+	++mouthfuls[phil_no];
+	
+	std::this_thread::sleep_for(eat_time);
+
+	print(phil_no, " puts down fork ", lfork, rfork);
+	print(phil_no, " is thinking...");
+
+	fork_mutex[lfork].unlock();
+	fork_mutex[rfork].unlock();
+	std::this_thread::sleep_for(think_time);
+}
+
+int main()
+{
+	// Start a separate thread for each philosopher
+	std::vector<std::thread> philos;
+
+	for (int i = 0; i < nphilosophers; ++i) {
+		philos.push_back(std::move(std::thread{dine, i}));
+	}
+
+	for (auto& philo: philos)
+		philo.join();
+
+	// How many times were the philosophers able to eat?
+	for (int i = 0; i < nphilosophers; ++i) {
+		std::cout << "Philosopher " << names[i];
+		std::cout << " had " << mouthfuls[i] << " mouthful\n";
+	}
+}
+```
+
+hierarchical.cpp
+{:.filename}
+```c++
+// Dining philosophers problem (part 2b)
+//
+// 5 philosophers sit at a round table which has 5 forks on it.
+// A philosopher has a fork at each side of them.
+// A philosopher can only eat if they can pick up both forks.
+// If a philosopher picks up the fork on their right,
+// that prevents the next philosopher from picking up their left fork.
+//
+// Each philosopher tries to pick up their lowest numbered fork first.
+// For philosopher E, this leaves their right fork free. This breaks
+// the deadlock and allows philosopher D to eat, followed by the others.
+//
+// All philosophers are able to eat.
+// No deadlock
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <vector>
+#include <string>
+#include <chrono>
+
+using namespace std::literals;
+
+// Some data about the problem
+constexpr int nforks = 5;
+constexpr int nphilosophers = nforks;
+std::string names[nphilosophers] ={"A", "B", "C", "D", "E"};
+
+// Keep track of how many times a philosopher is able to eat
+int mouthfuls[nphilosophers] ={0};
+
+// A philosopher who has not picked up both forks is thinking
+constexpr auto think_time = 2s;
+
+// A philosopher has picked up both forks is eating
+constexpr auto eat_time = 1s;
+
+// A philosopher who has picked up one fork will put it down again
+// if they cannot pick up the other fork they need
+constexpr auto time_out = think_time;
+
+// A mutex prevents more than one philosopher picking up the same fork
+// A philosopher thread can only pick up a fork if it can lock the corresponding mutex
+std::mutex fork_mutex[nforks];
+
+// Mutex to protect output
+std::mutex print_mutex;
+
+// Functions to display information about the 'nth' philosopher
+
+// Interactions with forks
+void print(int n, const std::string& str, int lfork, int rfork)
+{
+	std::lock_guard<std::mutex> print_lock(print_mutex);
+	std::cout << "Philosopher " << names[n] << str;
+	std::cout << lfork << " and " << rfork << '\n';
+}
+
+// Interactions with a fork
+void print(int n, const std::string& str, int forkno)
+{
+	std::lock_guard<std::mutex> print_lock(print_mutex);
+	std::cout << "Philosopher " << names[n] << str << forkno << '\n';
+}
+
+// The philosopher's state
+void print(int n, const std::string& str)
+{
+	std::lock_guard<std::mutex> print_lock(print_mutex);
+	std::cout << "Philosopher " << names[n] << str << '\n';
+}
+
+// Thread which represents a dining philosopher
+void dine(int phil_no)
+{
+	// Philosopher A has fork 0 on their left
+	// and fork 1 on their right
+	// Philosopher B has fork 1 on their left
+	// and fork 2 on their right
+	// ...
+	// Philosopher E has fork 4 on their left
+	// and fork 0 on their right
+	//
+	// Each philosopher must pick up their left fork first
+	int lfork = phil_no;
+	int rfork = (phil_no+1) % nforks;
+
+	if (lfork > rfork) {
+		std::swap(lfork, rfork);
+	}
+
+	print(phil_no, "\'s forks are ", lfork, rfork);
+	print(phil_no, " is thinking...");
+
+	std::this_thread::sleep_for(think_time);
+
+	// Make an attempt to eat
+	print(phil_no, " reaches for fork number ", lfork);
+
+	// Try to pick up the left fork
+	fork_mutex[lfork].lock();
+	print(phil_no, " picks up fork ", lfork);
+	print(phil_no, " is thinking...");
+
+	// Succeeded - now try to pick up the right fork
+	std::this_thread::sleep_for(think_time);
+
+	print(phil_no, " reaches for fork number ", rfork);
+
+	fork_mutex[rfork].lock();
+
+	// Succeeded - this philosopher can now eat
+	print(phil_no, " picks up fork ", rfork);
+	print(phil_no, " is eating...");
+	++mouthfuls[phil_no];
+
+	std::this_thread::sleep_for(eat_time);
+
+	print(phil_no, " puts down fork ", lfork);
+	print(phil_no, " puts down fork ", rfork);
+	print(phil_no, " is thinking...");
+
+	fork_mutex[lfork].unlock();
+	fork_mutex[rfork].unlock();
+	std::this_thread::sleep_for(think_time);
+}
+
+int main()
+{
+	// Start a separate thread for each philosopher
+	std::vector<std::thread> philos;
+
+	for (int i = 0; i < nphilosophers; ++i) {
+		philos.push_back(std::move(std::thread{dine, i}));
+	}
+
+	for (auto& philo: philos)
+		philo.join();
+
+	// How many times were the philosophers able to eat?
+	for (int i = 0; i < nphilosophers; ++i) {
+		std::cout << "Philosopher " << names[i];
+		std::cout << " had " << mouthfuls[i] << " mouthful\n";
+	}
+}
+```
+
+# IV.Livelock
+
+Livelock is a situation where a request for an exclusive lock is denied repeatedly, as many overlapping shared locks keep on interfering with each other. Livelocks are less common than deadlocks and starvation, but they can still cause problems in concurrent systems. To avoid livelocks, it is important to design processes and algorithms that can make progress despite changes in the state of other processes
+
+```
+A program cannot make progress
+- In deadlock, the threads are inactive
+- In livelock, the threads are still active
+
+Livelock can result from badly done deadlock avoidance
+- A thread can not get a lock
+- Instead of blocking indefinitely, it backs off and tries again.
+```
+
+livelock_example.cpp
+{:.filename}
+```c++
+// Livelock caused by poorly implemented deadlock avoidance
+// If the thread cannot get a lock, sleep and try again
+// However, all the threads wake up at the same time
+#include <thread>
+#include <mutex>
+#include <iostream>
+#include <string>
+#include <chrono>
+
+using namespace std::literals;
+
+std::mutex mut1, mut2;
+
+void funcA()
+{
+	std::this_thread::sleep_for(10ms);
+	bool locked = false;
+	while (!locked) {
+		std::lock_guard<std::mutex> lck_guard(mut1);  // Lock mut1
+		std::cout << "After you, Claude!\n";
+		std::this_thread::sleep_for(2s);
+		locked = mut2.try_lock();                           // Try to lock mut2
+	}
+	if (locked)
+		std::cout << "ThreadA has locked both mutexes\n";
+}
+
+void funcB() {
+	bool locked = false;
+	while (!locked) {
+		std::lock_guard<std::mutex> lk(mut2);         // Lock mut2
+		std::cout << "After you, Cecil!\n";
+		std::this_thread::sleep_for(2s);
+		locked = mut1.try_lock();                           // Try to lock mut1
+	}
+	if (locked)
+		std::cout << "ThreadB has locked both mutexes\n";
+}
+
+int main() {
+	std::thread thrA(funcA);
+	std::this_thread::sleep_for(10ms);
+	std::thread thrB(funcB);
+
+	thrA.join(); thrB.join();
+}
+```
+
+## Livelock Avoidance
+Try to avoid waiting for other threads when your thread holds a lock, because that thread may need your lock before it can proceed
+- Use ```std::scoped_lock``` or ```std::lock()```
+- Using thread priority, there is currently no way of setting the priority on a thread with the current C++ thread APIs. However, by using ```std::thread::native_handle```, one can get a handle to the underlying operating system thread and use native APIs for setting priorities
+
+- A high priority thread will run more often and lock the mutex first, the low priority thread will lock the mutex afterwards.
+
+```c++
+void funcA()
+{
+	std::scoped_lock scoped_lck(mut1, mut2);  //lock both mutexes
+}
+void funcB()
+{
+	std::scoped_lock scoped_lck(mut2, mut1);  //lock both mutexes
+}
+```
+
+no_livelock.cpp
+{:.filename}
+```c++
+// std::shared_lock and std::lock() avoid deadlock
+// when locking multiple mutexes. They also avoid livelock.
+#include <thread>
+#include <mutex>
+#include <iostream>
+#include <string>
+#include <chrono>	
+
+using namespace std::literals;
+
+std::mutex mut1, mut2;
+
+void funcA() {
+	std::this_thread::sleep_for(10ms);
+
+	std::cout << "After you, Claude!" << std::endl;
+	std::scoped_lock scoped_lck(mut1, mut2);		 // Lock both mutexes
+	std::this_thread::sleep_for(2s);
+	std::cout << "Thread A has locked both mutexes\n";
+}
+
+void funcB() {
+	std::cout << "After you, Cecil!\n";
+	std::scoped_lock scoped_lck(mut2, mut1);		 // Lock mutexes
+	std::this_thread::sleep_for(2s);
+	std::cout << "Thread B has locked both mutexes\n";
+}
+
+int main() {
+	std::thread thrA(funcA);
+	std::this_thread::sleep_for(10ms);
+	std::thread thrB(funcB);
+
+	thrA.join(); thrB.join();
+}
+```
+## Resource starvation 
+in C++ occurs when a process is perpetually denied necessary resources to process its work. This can be caused by the lack of computer resources or the existence of multiple processes that are competing for the same computer resources. Resource starvation can lead to a process freezing or being denied access to a shared resource.
+
+Here are some tips to avoid resource starvation in C++:
+
+- Lower the limits to a point where the application can run comfortably.
+
+- Avoid waiting for other threads when your thread holds a lock, because that thread may need your lock before it can proceed.
+
+- Avoid nested locks. If your thread already has a lock on a mutex, do not lock other mutexes.
+
+- If you do need to lock multiple mutexes, do it all in a single operation.
+
+- If your thread is inside a critical section, avoid calling functions unless you are absolutely certain that the function is not going to lock
+
+## Livelock Practical 
+
+<div class="tip">
+<b>Solution for Dining philosophers problem</b>
+<ul>
+<li> <b>Add randomness</b> Philosophers pick up and put down their forks at difference, reduces the probability of starvation, does not completely eliminate it</li>
+
+<li> <b>Provide a central arbitrator to coordinate the philosophers</b> Only  allows one philosopher to pick up a fork at a time, only one philosopher can eat at a time, reduces paraleelism  </li>
+
+<li> <b>Use a shared lock</b> In effect, a philosopher picks up both forks at the same time </li>
+
+</ul>
+</div>
+
+livelock_dining_philosopher.cpp
+{:.filename}
+```c++
+// Dining philosophers problem (part 3)
+//
+// 5 philosophers sit at a round table which has 5 forks on it.
+// A philosopher has a fork at each side of them.
+// A philosopher can only eat if they can pick up both forks.
+// If a philosopher picks up the fork on their right,
+// that prevents the next philosopher from picking up their left fork.
+//
+// All the philosophers pick up their left fork at the same time
+// They wait to pick up their right fork (which is also their neighbour's left fork)
+// If a philosopher cannot pick up the right fork, they put down the left fork
+// and go back to thinking.
+//
+// If all the philosophers pick up their left fork at the same time,
+// and put it down at the same time, they will still not be able to eat.
+// Livelock
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <vector>
+#include <string>
+#include <chrono>
+
+using namespace std::literals;
+
+// Some data about the problem
+constexpr int nforks = 5;
+constexpr int nphilosophers = nforks;
+std::string names[nphilosophers] ={"A", "B", "C", "D", "E"};
+
+// Keep track of how many times a philosopher is able to eat
+int mouthfuls[nphilosophers] ={0};
+
+// A philosopher who has not picked up both forks is thinking
+constexpr auto think_time = 2s;
+
+// A philosopher has picked up both forks is eating
+constexpr auto eat_time = 1s;
+
+// A philosopher who has picked up one fork will put it down again
+// if they cannot pick up the other fork they need
+constexpr auto time_out = think_time;
+
+// A mutex prevents more than one philosopher picking up the same fork
+// A philosopher thread can only pick up a fork if it can lock the corresponding mutex
+std::mutex fork_mutex[nforks];
+
+// Mutex to protect output
+std::mutex print_mutex;
+
+// Functions to display information about the 'nth' philosopher
+
+// Interactions with a fork
+void print(int n, const std::string& str, int forkno)
+{
+	std::lock_guard<std::mutex> print_lock(print_mutex);
+	std::cout << "Philosopher " << names[n] << str << forkno << '\n';
+}
+
+// The philosopher's state
+void print(int n, const std::string& str)
+{
+	std::lock_guard<std::mutex> print_lock(print_mutex);
+	std::cout << "Philosopher " << names[n] << str << '\n';
+}
+
+// Thread which represents a dining philosopher
+void dine(int phil_no)
+{
+	// Philosopher A has fork 0 on their left
+	// and fork 1 on their right
+	// Philosopher B has fork 1 on their left
+	// and fork 2 on their right
+	// ...
+	// Philosopher E has fork 4 on their left
+	// and fork 0 on their right
+	//
+	// Each philosopher must pick up their left fork first
+	int lfork = phil_no;
+	int rfork = (phil_no+1) % nforks;
+
+	print(phil_no, "\'s left fork is number ", lfork);
+	print(phil_no, "\'s right fork is number ", rfork);
+	print(phil_no, " is thinking...");
+
+	std::this_thread::sleep_for(think_time);
+
+	// Make an attempt to eat
+	print(phil_no, " reaches for fork number ", lfork);
+
+	// Try to pick up the left fork
+	bool locked = false;
+
+	while (!locked) {
+		fork_mutex[lfork].lock();
+		print(phil_no, " picks up fork ", lfork);
+		print(phil_no, " is thinking...");
+
+		// Succeeded - now try to pick up the right fork
+		std::this_thread::sleep_for(think_time);
+		print(phil_no, " reaches for fork number ", rfork);
+
+		locked = fork_mutex[rfork].try_lock();
+
+		if (!locked) {
+			print(phil_no, " puts down fork ", lfork);
+			std::this_thread::sleep_for(think_time);
+			fork_mutex[lfork].unlock();
+		}
+	}
+
+	// Succeeded - this philosopher can now eat
+	print(phil_no, " picks up fork ", rfork);
+	print(phil_no, " is eating...");
+	++mouthfuls[phil_no];
+
+	std::this_thread::sleep_for(eat_time);
+
+	print(phil_no, " puts down fork ", lfork);
+	print(phil_no, " puts down fork ", rfork);
+	print(phil_no, " is thinking...");
+
+	fork_mutex[lfork].unlock();
+	fork_mutex[rfork].unlock();
+	std::this_thread::sleep_for(think_time);
+}
+
+int main()
+{
+	// Start a separate thread for each philosopher
+	std::vector<std::thread> philos;
+
+	for (int i = 0; i < nphilosophers; ++i) {
+		philos.push_back(std::move(std::thread{dine, i}));
+	}
+
+	for (auto& philo: philos)
+		philo.join();
+
+	// How many times were the philosophers able to eat?
+	for (int i = 0; i < nphilosophers; ++i) {
+		std::cout << "Philosopher " << names[i];
+		std::cout << " had " << mouthfuls[i] << " mouthful(s)\n";
+	}
+}
+```
+
 # References
 1. https://vorbrodt.blog/2019/10/12/avoiding-deadlocks-the-c-way/
 2. https://www.technical-recipes.com/2015/creating-and-avoiding-deadlock-conditions-in-c/
@@ -635,8 +1219,8 @@ Thread B releasing mutexes 2 and 1...
 4. James Raynard, Learn Multithreading with Modern C++ Udemy.
 5. https://en.cppreference.com/w/cpp/thread/lock_tag
 6. https://cplusplus.com/reference/mutex/defer_lock/
-
-
+7. http://www.ccplusplus.com/2013/05/livelock-example.html
+8. https://en.wikipedia.org/wiki/Starvation_(computer_science)
 
 
 
