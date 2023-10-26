@@ -1370,7 +1370,7 @@ int main()
 ```
 
 Output
-dead_lock_avoidance.cpp
+livelock_philosopher.cpp
 {:.filename}
 ```
 Philosopher B's left fork is number 1
@@ -1402,6 +1402,7 @@ Philosopher E picks up fork 4
 Philosopher E is thinking...
 Philosopher D reaches for fork number 3
 Philosopher D picks 
+//livelock phylosopher -> countinue in forever the loop
 ```
 # References
 1. https://vorbrodt.blog/2019/10/12/avoiding-deadlocks-the-c-way/
