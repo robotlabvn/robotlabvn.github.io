@@ -95,63 +95,148 @@ while(!update_progress){
 
 - Thr fetcher thread can not set the flag
 
-## Example of try_lock_for in C++
+## Hot loop Avoidance
+- To avoid it, unlock the mutex inside the loop
 
-__Example ```try_lock_for``` bellow:__
+```
+std::unique_lock<std::mutex> data_lck(data_mutex);
 
-try_lock_for.cpp
+while(!updata_progress){
+	data_lck.unlock();
+	std::this_thread::sleep_for(10ms);
+	data_lck.lock();
+}
+```
+
+- Sleeping allows other threads to use the core
+
+- The fetcher thread can set the flag
+
+
+
+
+
+## Example threads coordination practical
+
+__Example ```progress_bar.cpp``` bellow:__
+
+progress_bar.cpp
 {:.filename}
 ```c++
-// Example of std::timed_mutex try_lock_for() member function
+// Simulation of a program which performs a download
+//
+// One thread featches the data
+// Another thread displays a progress bar
+// A third thread processes the data when the download is complete
+//
+// Implemented using bools to communicate between the threads
 #include <iostream>
-#include <thread>
 #include <mutex>
+#include <thread>
 #include <chrono>
+#include <string>
 
 using namespace std::literals;
 
-std::timed_mutex the_mutex;
+// Shared variable for the data being fetched
+std::string sdata;
 
-void task1()
+// Flags for thread communication
+bool update_progress = false;
+bool completed = false;
+
+// Mutexes to protect the shared variables
+std::mutex data_mutex;
+std::mutex completed_mutex;
+
+// Data fetching thread
+void fetch_data()
 {
-	std::cout << "Task1 trying to lock the mutex\n";
-	the_mutex.lock();
-	std::cout << "Task1 locks the mutex\n";
-	std::this_thread::sleep_for(5s);
-	std::cout << "Task1 unlocking the mutex\n";
-	the_mutex.unlock();
-}
+	for (int i = 0; i < 5; ++i) {
+		std::cout << "Fetcher thread waiting for data..." << std::endl;
+		std::this_thread::sleep_for(2s);
 
-void task2()
-{
-	std::this_thread::sleep_for(500ms);
-	std::cout << "Task2 trying to lock the mutex\n";
-
-	// Try for 1 second to lock the mutex
-	while (!the_mutex.try_lock_for(1s)) {
-		// Returned false
-		std::cout << "Task2 could not lock the mutex\n";
-
-		// Try again on the next iteration
+		// Update sdata, then notify the progress bar thread
+		std::lock_guard<std::mutex> data_lck(data_mutex);
+		sdata += "Block" + std::to_string(i+1);
+		std::cout << "sdata: " << sdata << std::endl;
+		update_progress = true;
 	}
 
-	// Returned true - the mutex is now locked
+	std::cout << "Fetch sdata has ended\n";
 
-	// Start of critical section
-	std::cout << "Task2 has locked the mutex\n";
-	// End of critical section
+	// Tell the progress bar thread to exit
+	// and wake up the processing thread
+	std::lock_guard<std::mutex> completed_lck(completed_mutex);
+	completed = true;
+}
 
-	the_mutex.unlock();
+// Progress bar thread
+void progress_bar()
+{
+	size_t len = 0;
+
+	while (true) {
+		std::cout << "Progress bar thread waiting for data..." << std::endl;
+
+		// Wait until there is some new data to display
+		std::unique_lock<std::mutex> data_lck(data_mutex);
+		while (!update_progress) {
+			data_lck.unlock();
+			std::this_thread::sleep_for(10ms);
+			data_lck.lock();
+		}
+
+		// Wake up and use the new value
+		len = sdata.size();
+
+		// Set the flag back to false
+		update_progress = false;
+		data_lck.unlock();
+
+		std::cout << "Received " << len << " bytes so far" << std::endl;
+
+		// Terminate when the download has finished
+		std::lock_guard<std::mutex> completed_lck(completed_mutex);
+		if (completed) {
+			std::cout << "Progress bar thread has ended" << std::endl;
+			break;
+		}
+	}
+}
+
+void process_data()
+{
+	std::cout << "Processing thread waiting for data..." << std::endl;
+
+	// Wait until the download is complete
+	std::unique_lock<std::mutex> completed_lck(completed_mutex);   // Acquire lock
+
+	while (!completed) {
+		completed_lck.unlock();
+		std::this_thread::sleep_for(10ms);
+		completed_lck.lock();
+	}
+
+	completed_lck.unlock();
+
+	std::lock_guard<std::mutex> data_lck(data_mutex);
+	std::cout << "Processing sdata: " << sdata << std::endl;
+
+	// Process the data...
 }
 
 int main()
 {
-	std::thread thr1(task1);
-	std::thread thr2(task2);
+	// Start the threads
+	std::thread fetcher(fetch_data);
+	std::thread prog(progress_bar);
+	std::thread processor(process_data);
 
-	thr1.join(); thr2.join();
+	fetcher.join();
+	prog.join();
+	processor.join();
 }
-
 ```
 
 
