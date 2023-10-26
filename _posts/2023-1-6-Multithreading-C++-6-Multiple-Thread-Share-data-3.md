@@ -90,6 +90,19 @@ int main()
 }
 ```
 
+Output
+dead_lock.cpp
+{:.filename}
+```
+Thread A trying to lock mutex 1...
+Thread A has locked mutex 1
+Thread B trying to lock mutex 2...
+Thread B has locked mutex 2
+Thread B trying to lock mutex 1...
+Thread A trying to lock mutex 2...
+// Deadlock --> Program is stuck
+```
+
 ## Deadlock avoidance
 
 <div class="tip">
@@ -152,6 +165,22 @@ int main()
 	
 	thrA.join(); thrB.join();
 }
+```
+
+Output
+dead_lock_avoidance.cpp
+{:.filename}
+```
+Thread A trying to lock mutex 1...
+Thread A has locked mutex 1
+Thread B trying to lock mutex 1...
+Thread A trying to lock mutex 2...
+Thread A has locked mutex 2
+Thread A releases all its locks
+Thread B has locked mutex 1
+Thread B trying to lock mutex 2...
+Thread B has locked mutex 2
+Thread B releases all its locks
 ```
 
 # II. Deadlock Practical
@@ -761,6 +790,52 @@ int main()
 }
 ```
 
+Output
+dead_lock_avoidance.cpp
+{:.filename}
+```
+Philosopher A's forks are 0 and 1
+Philosopher A is thinking...
+Philosopher B's forks are 1 and 2
+Philosopher B is thinking...
+Philosopher C's forks are 2 and 3
+Philosopher C is thinking...
+Philosopher E's forks are 4 and 0
+Philosopher E is thinking...
+Philosopher D's forks are 3 and 4
+Philosopher D is thinking...
+Philosopher A reaches for forks 0 and 1
+Philosopher A picks up fork 0 and 1
+Philosopher B reaches for forks 1 and 2
+Philosopher C reaches for forks 2 and 3
+Philosopher C picks up fork 2 and 3
+Philosopher C is eating...
+Philosopher E reaches for forks 4 and 0
+Philosopher A is eating...
+Philosopher D reaches for forks 3 and 4
+Philosopher C puts down fork 2 and 3
+Philosopher C is thinking...
+Philosopher A puts down fork 0 and 1
+Philosopher A is thinking...
+Philosopher D picks up fork 3 and 4
+Philosopher D is eating...
+Philosopher B picks up fork 1 and 2
+Philosopher B is eating...
+Philosopher D puts down fork 3 and 4
+Philosopher D is thinking...
+Philosopher B puts down fork 1 and 2
+Philosopher B is thinking...
+Philosopher E picks up fork 4 and 0
+Philosopher E is eating...
+Philosopher E puts down fork 4 and 0
+Philosopher E is thinking...
+Philosopher A had 1 mouthful
+Philosopher B had 1 mouthful
+Philosopher C had 1 mouthful
+Philosopher D had 1 mouthful
+Philosopher E had 1 mouthful
+```
+
 hierarchical.cpp
 {:.filename}
 ```c++
@@ -911,6 +986,72 @@ int main()
 }
 ```
 
+Output
+dead_lock_avoidance.cpp
+{:.filename}
+```
+Philosopher A's forks are 0 and 1
+Philosopher A is thinking...
+Philosopher B's forks are 1 and 2
+Philosopher B is thinking...
+Philosopher D's forks are 3 and 4
+Philosopher D is thinking...
+Philosopher E's forks are 0 and 4
+Philosopher E is thinking...
+Philosopher C's forks are 2 and 3
+Philosopher C is thinking...
+Philosopher A reaches for fork number 0
+Philosopher A picks up fork 0
+Philosopher A is thinking...
+Philosopher B reaches for fork number 1
+Philosopher B picks up fork 1
+Philosopher B is thinking...
+Philosopher E reaches for fork number 0
+Philosopher D reaches for fork number 3
+Philosopher D picks up fork 3
+Philosopher D is thinking...
+Philosopher C reaches for fork number 2
+Philosopher C picks up fork 2
+Philosopher C is thinking...
+Philosopher A reaches for fork number 1
+Philosopher B reaches for fork number 2
+Philosopher D reaches for fork number 4
+Philosopher D picks up fork 4
+Philosopher D is eating...
+Philosopher C reaches for fork number 3
+Philosopher D puts down fork 3
+Philosopher D puts down fork 4
+Philosopher D is thinking...
+Philosopher C picks up fork 3
+Philosopher C is eating...
+Philosopher C puts down fork 2
+Philosopher C puts down fork 3
+Philosopher C is thinking...
+Philosopher B picks up fork 2
+Philosopher B is eating...
+Philosopher B puts down fork 1
+Philosopher B puts down fork 2
+Philosopher B is thinking...
+Philosopher A picks up fork 1
+Philosopher A is eating...
+Philosopher A puts down fork 0
+Philosopher A puts down fork 1
+Philosopher A is thinking...
+Philosopher E picks up fork 0
+Philosopher E is thinking...
+Philosopher E reaches for fork number 4
+Philosopher E picks up fork 4
+Philosopher E is eating...
+Philosopher E puts down fork 0
+Philosopher E puts down fork 4
+Philosopher E is thinking...
+Philosopher A had 1 mouthful
+Philosopher B had 1 mouthful
+Philosopher C had 1 mouthful
+Philosopher D had 1 mouthful
+Philosopher E had 1 mouthful
+```
+
 # IV.Livelock
 
 Livelock is a situation where a request for an exclusive lock is denied repeatedly, as many overlapping shared locks keep on interfering with each other. Livelocks are less common than deadlocks and starvation, but they can still cause problems in concurrent systems. To avoid livelocks, it is important to design processes and algorithms that can make progress despite changes in the state of other processes
@@ -974,6 +1115,22 @@ int main() {
 
 	thrA.join(); thrB.join();
 }
+```
+
+Output
+dead_lock_avoidance.cpp
+{:.filename}
+```
+After you, Claude!
+After you, Cecil!
+After you, Claude!
+After you, Cecil!
+After you, Claude!
+After you, Cecil!
+After you, Claude!
+After you, Cecil!
+After you, Claude!
+After you, Cecil!
 ```
 
 ## Livelock Avoidance
@@ -1212,6 +1369,40 @@ int main()
 }
 ```
 
+Output
+dead_lock_avoidance.cpp
+{:.filename}
+```
+Philosopher B's left fork is number 1
+Philosopher B's right fork is number 2
+Philosopher B is thinking...
+Philosopher C's left fork is number 2
+Philosopher C's right fork is number 3
+Philosopher C is thinking...
+Philosopher D's left fork is number 3
+Philosopher E's left fork is number 4
+Philosopher E's right fork is number 0
+Philosopher D's right fork is number 4
+Philosopher A's left fork is number 0
+Philosopher A's right fork is number 1
+Philosopher A is thinking...
+Philosopher D is thinking...
+Philosopher E is thinking...
+Philosopher B reaches for fork number 1
+Philosopher B picks up fork 1
+Philosopher B is thinking...
+Philosopher C reaches for fork number 2
+Philosopher C picks up fork 2
+Philosopher C is thinking...
+Philosopher A reaches for fork number 0
+Philosopher A picks up fork 0
+Philosopher A is thinking...
+Philosopher E reaches for fork number 4
+Philosopher E picks up fork 4
+Philosopher E is thinking...
+Philosopher D reaches for fork number 3
+Philosopher D picks 
+```
 # References
 1. https://vorbrodt.blog/2019/10/12/avoiding-deadlocks-the-c-way/
 2. https://www.technical-recipes.com/2015/creating-and-avoiding-deadlock-conditions-in-c/
