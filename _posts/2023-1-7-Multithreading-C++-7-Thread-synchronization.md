@@ -239,7 +239,153 @@ int main()
 }
 ```
 
+In this example we can see this is not ideal: too many loops, too much explicit locking and unlocking, how do we choose the sleep suration.
 
+So the better solution:
+
+- Thread A indicates that it is waiting for something
+- Thread B does the "something"
+- Thread A is woken up and resumes
+
+# II. Condition Variable
+```std::condition_variable``` is a synchronization primitive in C++ that is used with a ```std::mutex``` to block one or more threads until another thread modifies a shared variable and notifies the waiting thread(s).
+
+Scenario:
+
+- Thread A indicates the condition variable it is waiting
+- Thread B notifies the condition variable when it updates the string
+- The condition variable wakes thread A up
+- Thread A then uses the string
+
+```std::condition_variable```:
+```
++ Defined in <condition_variable>
++ wait()
+	- Takes an argument of type std::unique_lock
+	- It unlocks its argument and blocks the thread until a notification is received
+
++ wait_for() and wait_until()
+	- Re-lock their argument if a notification is not received in time
+
++ notify_one()
+	- Wake up one of the waiting threads
+	- The scheduler decides which thread is woken up
+
++ notify_all()
+	-Wake up all the waiting threads
+```
+
+Scenario:
+```
++ Thread A locks the mutex 
+	- It calls the condition variable's wait() member function
+	- The condition variable unlocks the mutex
+	- The condition variable block this thread
+
++ Thread B locks the mutex
+	- It modifies the string and unlocks the mutex
+	- It calls notify_one()
+
++ The condition variable wakes thread A up
+	- The wait() call returns with the mutex locked
+	- Thread A resumes execution and uses the string
+```
+
+## Example condition variable 
+
+__Example ```condition_variable.cpp``` bellow:__
+
+condition_variable.cpp
+{:.filename}
+```c++
+// Condition variable example
+//
+// The reader thread waits for a notification
+// The writer thread modifies the shared variable "sdata"
+// The writer thread sends a notification
+// The reader thread receives the notification and resumes
+// The reader thread uses the new value of the shared data
+#include <iostream>
+#include <thread>
+#include <condition_variable>
+#include <string>
+#include <chrono>
+
+using namespace std::literals;
+
+// The shared data
+std::string sdata;
+
+// Mutex to protect critical sections
+std::mutex mut;
+
+// The condition variable
+std::condition_variable cond_var;
+
+// Waiting thread
+void reader()
+{
+	// Lock the mutex
+	std::cout << "Reader thread locking mutex\n";
+	std::unique_lock<std::mutex> uniq_lck(mut);
+	std::cout << "Reader thread has locked the mutex\n";
+
+	// Call wait()
+	// This will unlock the mutex and make this thread
+	// sleep until the condition variable wakes us up
+	std::cout << "Reader thread sleeping...\n";
+	cond_var.wait(uniq_lck);
+
+	// The condition variable has woken this thread up
+	// and locked the mutex
+	std::cout << "Reader thread wakes up\n";
+
+	// Display the new value of the string
+	std::cout << "Data is \"" << sdata << "\"\n";
+}
+
+// Notifying thread
+void writer()
+{
+	{
+		// Lock the mutex
+		std::cout << "Writer thread locking mutex\n";
+
+		// Lock the mutex
+		// This will not be explicitly unlocked
+		// std::lock_guard is sufficient
+		std::lock_guard<std::mutex> lck_guard(mut);
+		std::cout << "Writer thread has locked the mutex\n";
+
+		// Pretend to be busy...
+		std::this_thread::sleep_for(2s);
+
+		// Modify the string
+		std::cout << "Writer thread modifying data...\n";
+		sdata = "Populated";
+	}
+
+	// Notify the condition variable
+	std::cout << "Writer thread sends notification\n";
+	cond_var.notify_one();
+}
+
+int main()
+{
+	// Initialize the shared string
+	sdata = "Empty";
+
+	// Display its initial value
+	std::cout << "Data is \"" << sdata << "\"\n";
+
+	// Start the threads
+	std::thread read(reader);
+	std::thread write(writer);
+
+	write.join();
+	read.join();
+}
+```
 
 # References
 
