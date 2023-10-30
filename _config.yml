@@ -20,7 +20,7 @@ sass:
 
 navbar:
  - name: "Home"
-   link: "https://robotlab.vn"
+   link: "https://robotlabx.com"
  - name: "Blog"
    link: "/blog"
  - name: "Tutorial"
