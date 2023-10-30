@@ -8,9 +8,9 @@ url:
 baseurl:
 
 footer_url:
-footer_text: "Copyright © 2023 Robotlab.vn | Contact: robotlabvn@gmail.com"
+footer_text: "Copyright © 2023 RobotLabX.com | Contact: robotlabvn@gmail.com"
 
-profile-picture: assets/profile.jpg
+profile-picture: assets/robotlablogo.png
 favicon_location:
 
 permalink: /:categories/:year-:month-:day-:title/
