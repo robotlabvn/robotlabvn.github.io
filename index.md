@@ -5,7 +5,7 @@ Our blog is dedicated to individuals who are passionate about the field of robot
 {% include image.html url="/assets/RobotlabX_info.png" description="" width="100%" %}
 
 <div style="text-align:center">
-<a href="https://www.facebook.com/RobotLabX/" class="fa-brands fa-facebook-f fa-beat fa-xl" style="color: #204a87;"></a>
-<a href="https://www.youtube.com/@RobotLabX" class="fa-brands fa-youtube fa-beat fa-xl" style="color: #cc0000;"></a>
+<a href="https://www.facebook.com/RobotLabX/" class="fa-brands fa-facebook-f fa-beat fa-xl" style="color: #204a87;"></a> &nbsp;&nbsp;&nbsp;
+<a href="https://www.youtube.com/@RobotLabX" class="fa-brands fa-youtube fa-beat fa-xl" style="color: #cc0000;"></a> &nbsp;&nbsp;&nbsp;
 <a href="https://www.tiktok.com/@robotlabx.com" class="fa-brands fa-tiktok fa-beat fa-xl" style="color: #2e3436;"></a>
 </div>
