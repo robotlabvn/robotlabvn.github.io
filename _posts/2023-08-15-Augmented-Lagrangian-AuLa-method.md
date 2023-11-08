@@ -45,7 +45,7 @@ Where:
 
 ## Example Augmented Lagrangian (AuLa) method
 
-Suppose we seek to maximize the function $f(x,y)=x+y$ subject to the constraint that $x^2+y^2=1$. The function we seek to maximize is an unbounded plane, while the constraint is a unit circle. We want the maximum value of the circle, on the plane. We plot these two functions here. 
+Suppose we seek to maximize the function $$f(x,y)=x+y$$ subject to the constraint that $$x^2+y^2=1$$. The function we seek to maximize is an unbounded plane, while the constraint is a unit circle. We want the maximum value of the circle, on the plane. We plot these two functions here. 
 
 Example Snippet code of __AuLa__ in Python:
 AuLa.py
@@ -81,7 +81,7 @@ plt.show()
 {% include image.html url="/assets/2023-08-15-Augmented-Lagrangian-AuLa-method/AuLa1.png" description="Basic function" width="80%" %}
 
 ## 1. Construct the Lagrange multiplier augmented function.  
-To find the maximum, we construct the following function: $Λ(x,y;λ)=f(x,y)+λg(x,y)$ where $g(x,y)=x^2+y^2−1=0$, which is the constraint function. Since $g(x,y)=0$, we are not really changing the original function, provided that the constraint is met! 
+To find the maximum, we construct the following function: $$Λ(x,y;λ)=f(x,y)+λg(x,y)$$ where $$g(x,y)=x^2+y^2−1=0$$, which is the constraint function. Since $$g(x,y)=0$$, we are not really changing the original function, provided that the constraint is met! 
 
 ```python
 import numpy as np
@@ -94,7 +94,7 @@ def func(X):
 ```
 
 ## 2. Finding the partial derivatives
-The minima/maxima of the augmented function are located where all of the partial derivatives of the augmented function are equal to zero, i.e. $∂Λ/∂x=0, ∂Λ/∂y=0$, and $∂Λ/∂λ=0$
+The minima/maxima of the augmented function are located where all of the partial derivatives of the augmented function are equal to zero, i.e. $$∂Λ/∂x=0, ∂Λ/∂y=0$, and $∂Λ/∂λ=0$$
 
 . the process for solving this is usually to analytically evaluate the partial derivatives, and then solve the unconstrained resulting equations, which may be nonlinear.
 
