@@ -94,7 +94,7 @@ def func(X):
 ```
 
 ## 2. Finding the partial derivatives
-The minima/maxima of the augmented function are located where all of the partial derivatives of the augmented function are equal to zero, i.e. $$∂Λ/∂x=0, ∂Λ/∂y=0$, and $∂Λ/∂λ=0$$
+The minima/maxima of the augmented function are located where all of the partial derivatives of the augmented function are equal to zero, i.e. $$∂Λ/∂x=0, ∂Λ/∂y=0$$, and $$∂Λ/∂λ=0$$
 
 . the process for solving this is usually to analytically evaluate the partial derivatives, and then solve the unconstrained resulting equations, which may be nonlinear.
 
