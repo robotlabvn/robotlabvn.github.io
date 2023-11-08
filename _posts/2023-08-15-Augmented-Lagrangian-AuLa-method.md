@@ -4,12 +4,13 @@ category: blog
 title: Augmented Lagrangian (AuLa) method
 snippet: Explain the Augmented Lagrangian (AuLa) method in Python with visualization.
 tags: [python, math]
+katex: True
 ---
 
 The Augmented Lagrangian (AuLa) method is a class of algorithms used to solve constrained optimization problems. It is also known as the method of multipliers and has similarities to penalty methods. The method replaces a constrained optimization problem with a sequence of unconstrained subproblems, seeking a solution by introducing explicit Lagrangian multiplier estimates at each step.
 The AuLa method is useful for solving problems with equality and inequality constraints. It was originally called the method of multipliers for handling equality constraints and was later extended to handle inequality constraints. The method has been applied in various fields, including total variation denoising, compressed sensing, and computational mechanics.
 
-.The main steps of the AuLa method are as follows:
+The main steps of the AuLa method are as follows:
 
 - Choose initial values for the primal variables, dual variables, and penalty parameter.
 - Update the primal variables by minimizing the augmented Lagrangian function with respect to the primal variables, while keeping the dual variables and penalty parameter fixed.
@@ -20,6 +21,7 @@ The AuLa method is useful for solving problems with equality and inequality cons
 
 
 Here is a pseudo code for the Augmented Lagrangian (AuLa) method:
+
 ```
 1. Choose initial values for the primal variables x, dual variables λ, and penalty parameter ρ
 2. Set the iteration counter k = 0
