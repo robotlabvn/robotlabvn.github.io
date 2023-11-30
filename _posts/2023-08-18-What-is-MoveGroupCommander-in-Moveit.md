@@ -3,37 +3,37 @@ layout: post
 category: blog
 title: What is the MoveGroupCommander in Moveit
 snippet: Explain the MoveGroupCommander in Moveit and python code.
-tags: [robotics]
+tags: [robotics, ROS, python]
 ---
-The ```moveit_commander.MoveGroupCommander(group_name)``` is a class in the MoveIt! package for ROS (Robot Operating System) that provides a simple Python interface to a planning group, which is a group of joints on a robot. It can be used to plan and execute motions, set joint or pose goals, create motion plans, move the robot, add objects into the environment, and attach/detach objects from the robot. The group_name parameter specifies the name of the planning group that the MoveGroupCommander will interface with. [move_group_python_interface_tutorial](https://ros-planning.github.io/moveit_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html)
+The ```moveit_commander.MoveGroupCommander()``` is a class in the MoveIt! package for ROS (Robot Operating System) that provides a simple Python interface to a planning group, which is a group of joints on a robot. It can be used to plan and execute motions, set joint or pose goals, create motion plans, move the robot, add objects into the environment, and attach/detach objects from the robot. The group_name parameter specifies the name of the planning group that the MoveGroupCommander will interface with. [move_group_python_interface_tutorial](https://ros-planning.github.io/moveit_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html)
 
 
 
 ## How to use MoveGroupCommander
 To use MoveGroupCommander in MoveIt!, follow these steps:
-- 1. Create an instance of MoveGroupCommander: Instantiate the MoveGroupCommander class with the desired group name and robot description. For example:
+-  Create an instance of MoveGroupCommander: Instantiate the MoveGroupCommander class with the desired group name and robot description. For example:
 ```
 from moveit_commander.move_group import MoveGroupCommander
 move_group = MoveGroupCommander("my_robot_group", robot_description="robot_description")
 ```
-- 2.  Set the start state: Specify the initial joint values for the robot group using the set_start_state method. For example:
+- Set the start state: Specify the initial joint values for the robot group using the set_start_state method. For example:
 ```
 move_group.set_start_state(moveit_msgs.RobotState(joint_values=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
 ```
-- 3.  Plan a motion: Use the plan method to plan a motion for the robot group. For example:
+- Plan a motion: Use the plan method to plan a motion for the robot group. For example:
 ```
 move_group.plan()
 ```
-- 4. Execute the motion: Use the go method to execute the planned motion. For example:
+- Execute the motion: Use the go method to execute the planned motion. For example:
 ```
 move_group.go()
 ```
-- 5.  Attach an object to a link: Use the attach_object method to attach an object to a specific link. For example:
+- Attach an object to a link: Use the attach_object method to attach an object to a specific link. For example:
 ```
 move_group.attach_object("my_object", "my_robot_group/my_link")
 ```
 
--  6. Detach an object from a link: Use the detach_object method to detach an object from a specific link. For example:
+- Detach an object from a link: Use the detach_object method to detach an object from a specific link. For example:
 ```
 move_group.detach_object("my_object")
 ```
