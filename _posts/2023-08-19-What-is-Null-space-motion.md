@@ -18,6 +18,7 @@ Null space control refers to the ability of a robotic manipulator to move within
 
 ## Implementing null-space motion with Levenberg-Marquardt Inverse Kinematics
 Implementing null-space motion with Levenberg-Marquardt Inverse Kinematics (LM IK) involves several steps. Based on the available search results, I will provide a general outline for integrating null-space motion with LM IK for robotic control.
+
 **Initialize the robot's kinematic model and the Jacobian matrix**: Construct the robot's kinematic model and calculate the Jacobian matrix for the desired configuration.
 
 **Compute the Jacobian matrix for the robot's current configuration**: Update the Jacobian matrix based on the current robot configuration.
