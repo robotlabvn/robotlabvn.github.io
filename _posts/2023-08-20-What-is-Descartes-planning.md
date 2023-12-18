@@ -73,8 +73,7 @@ The advantages of Descartes' path planning over other planners include:
 These advantages position Descartes as a suitable choice for applications requiring efficient, repeatable, and scalable path planning in semi-constrained Cartesian environments, where real-time planning is not a necessity
 
     
-<iframe width="800" height="600" src="https://www.youtube.com/watch?v=IFZOyh4kpOQ">
-</iframe>
+{% include youtube.html id="IFZOyh4kpOQ" %}
 
 # References
 
