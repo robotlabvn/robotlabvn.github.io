@@ -71,7 +71,11 @@ The advantages of Descartes' path planning over other planners include:
 - Path Optimization and Collision Avoidance: Descartes offers path optimization, collision avoidance, and a plug-in architecture, making it suitable for various robotic applications.
 
 These advantages position Descartes as a suitable choice for applications requiring efficient, repeatable, and scalable path planning in semi-constrained Cartesian environments, where real-time planning is not a necessity
+
     
+<iframe width="800" height="600" src="https://www.youtube.com/watch?v=IFZOyh4kpOQ">
+</iframe>
+
 # References
 
 1. https://picknik.ai/cartesian%20planners/moveit/motion%20planning/2021/01/07/guide-to-cartesian-planners-in-moveit.html
