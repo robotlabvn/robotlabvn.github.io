@@ -9,6 +9,10 @@ tags: [robotics, ROS, python]
 
 The **Null space motion** in the context of robotics and linear algebra, refers to the motion of a robotic manipulator within the null space of its Jacobian matrix. The null space of a matrix is the set of all vectors that the matrix maps to the zero vector. In the context of robotics, the null space of the Jacobian is the set of joint velocity vectors that yield zero linear and angular velocities of the end-effector. This concept is often used to achieve both task objectives and obstacle avoidance in robotic motion control. The null space is particularly relevant for redundant manipulators, where the dimensionality of the null space is defined as ```n - r```, and ```n``` is the number of degrees of freedom (DOF) and ```r``` is the number of operational space variables necessary to specify a task.
 
+**Example video shows the null space motion**
+
+PseudoInverse (left), Pseudoinverse with the addition of null space motion (right).
+{% include youtube.html id="pT7kLRV3q28" %}
 
 ## How does null-space motion help in obstacle avoidance
 
@@ -34,6 +38,8 @@ Implementing null-space motion with Levenberg-Marquardt Inverse Kinematics (LM I
 **Implement the null-space motion control law**: Integrate the null-space motion control law into the robot's control system to achieve coordinated motion.
 
 **Iterate the null-space motion calculation and the primary task IK solution**: Continuously update the null-space motion and the primary task IK solution to achieve coordinated motion that satisfies both task constraints and obstacle avoidance.
+
+
 
 # References
 
