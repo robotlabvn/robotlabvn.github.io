@@ -26,7 +26,7 @@ Cartesian, specialized points)
 
 ## Key Features
 
-{% include image.html url="/assets/2023-08-19-What-is-Descartes-planning/Descartes_planning_2.gif" description=" Descartes is a ROS-Industrial project that performs path-planning on under-defined Cartesian trajectories " width="100%" %}
+{% include image.html url="/assets/2023-08-19-What-is-Descartes-planning/Descartes_planning_2.png" description=" Descartes is a ROS-Industrial project that performs path-planning on under-defined Cartesian trajectories " width="100%" %}
 
 
 Descartes, as a path planning library, is often compared to MoveIt. However, it differs from MoveIt in several key ways:
