@@ -39,6 +39,8 @@ Descartes, as a path planning library, is often compared to MoveIt. However, it 
 
 - **Offline Planning**: Similar to MoveIt, but different than other planners, Descartes is primarily focused on offline or sense/plan/act applications. Real-time planning is not a feature of Descartes. 
 
+{% include adsense.html %}
+
 ## Installation
 
 Install all ROS dependences
@@ -72,6 +74,7 @@ The advantages of Descartes' path planning over other planners include:
 
 These advantages position Descartes as a suitable choice for applications requiring efficient, repeatable, and scalable path planning in semi-constrained Cartesian environments, where real-time planning is not a necessity
 
+{% include adsense.html %}
     
 {% include youtube.html id="IFZOyh4kpOQ" %}
 
