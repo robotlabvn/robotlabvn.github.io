@@ -80,5 +80,7 @@ These advantages position Descartes as a suitable choice for applications requir
 
 # References
 
-1. https://picknik.ai/cartesian%20planners/moveit/motion%20planning/2021/01/07/guide-to-cartesian-planners-in-moveit.html
-2. http://wiki.ros.org/descartes
+1. [https://picknik.ai/cartesian%20planners/moveit/motion%20planning/2021/01/07/guide-to-cartesian-planners-in-moveit.html](https://picknik.ai/cartesian%20planners/moveit/motion%20planning/2021/01/07/guide-to-cartesian-planners-in-moveit.html)
+2. [http://wiki.ros.org/descartes](http://wiki.ros.org/descartes)
+
+{% include adsense.html %}
