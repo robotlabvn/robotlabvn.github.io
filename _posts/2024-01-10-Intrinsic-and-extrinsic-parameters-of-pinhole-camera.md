@@ -1,7 +1,7 @@
 ---
 layout: post
 category: blog
-title: what are intrinsic and extrinsic parameters of pinhole camera? and How to using it in camera calibration?
+title: What are intrinsic and extrinsic parameters of pinhole camera? and How to using it in camera calibration?
 snippet: Learn more about  intrinsic and extrinsic parameters and calibration camera
 tags: [robotics, math, vision]
 katex: True
@@ -119,7 +119,7 @@ X = X / X[3]
 
 ## References
 1. [https://www.mathworks.com/help/vision/ug/camera-calibration.html](https://www.mathworks.com/help/vision/ug/camera-calibration.html)
-2. [https://ksimek.github.io/perspective_camera_toy.html] (https://ksimek.github.io/perspective_camera_toy.html)
+2. [https://ksimek.github.io/perspective_camera_toy.html](https://ksimek.github.io/perspective_camera_toy.html)
 3. [https://www.cs.cmu.edu/~16385/s17/Slides/11.1_Camera_matrix.pdf](https://www.cs.cmu.edu/~16385/s17/Slides/11.1_Camera_matrix.pdf)
 4. [https://people.cs.rutgers.edu/~elgammal/classes/cs534/lectures/CameraCalibration-book-chapter.pdf](https://people.cs.rutgers.edu/~elgammal/classes/cs534/lectures/CameraCalibration-book-chapter.pdf)
 5. [https://www.dsi.unive.it/~bergamasco/teachingfiles/cvslides2019/13_pinhole_camera.pdf](https://www.dsi.unive.it/~bergamasco/teachingfiles/cvslides2019/13_pinhole_camera.pdf)
