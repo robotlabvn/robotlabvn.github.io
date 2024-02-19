@@ -3,7 +3,7 @@ layout: post
 category: blog
 title: what are intrinsic and extrinsic parameters of pinhole camera? and How to using it in camera calibration?
 snippet: Learn more about  intrinsic and extrinsic parameters and calibration camera
-tags: [robotics, math]
+tags: [robotics, math, vision]
 katex: True
 ---
 
