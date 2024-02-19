@@ -21,7 +21,6 @@ During robot motion, the robot controller receives a
 continuous stream of goal positions and velocities to track. This 
 specification of the robot's position as a function of time is called a **trajectory**. In some cases, the trajectory is completely determined by the task, such as when the end-effector needs to track a known moving object. In other cases, when the task is simply to move from one position to another in a given time, we have the freedom to design the trajectory to meet these constraints. This is the domain of **trajectory planning**. A trajectory should be a sufficiently smooth function of time and should respect any given limits on joint velocities, accelerations, or torques. We can consider a **trajectory** as the combination of a **path**, which is a purely geometric description of the sequence of configurations achieved by the robot, and a **time scaling** , which specifies the times when those configurations are reached. There are three cases to consider in trajectory planning:
 
-{% include adsense.html %}
 
 1. **Point-to-point straight-line trajectories** in both joint space and task space.
 2. **Trajectories passing through a sequence of timed via points**.

@@ -27,6 +27,10 @@ Sora is trained to predict the original "clean" patches from noisy patches, give
 
 Sora's capabilities include generating videos up to a minute long while maintaining visual quality and adherence to the user's prompt. The model has a deep understanding of language, enabling it to accurately interpret prompts and generate compelling characters that express vibrant emotions. However, it may struggle with accurately simulating the physics of a complex scene and understanding specific instances of cause and effect.
 
+## Demo SORA from OpenAI 
+
+{% include youtube.html id="HK6y8DAPN_0" %}
+
 ## References:
 1. [https://openai.com/sora](https://openai.com/sora)
 2. [https://openai.com/research/video-generation-models-as-world-simulators](https://openai.com/research/video-generation-models-as-world-simulators)
