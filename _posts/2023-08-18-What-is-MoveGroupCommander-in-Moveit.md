@@ -8,6 +8,9 @@ tags: [robotics, ROS, python]
 The ```moveit_commander.MoveGroupCommander()``` is a class in the MoveIt! package for ROS (Robot Operating System) that provides a simple Python interface to a planning group, which is a group of joints on a robot. It can be used to plan and execute motions, set joint or pose goals, create motion plans, move the robot, add objects into the environment, and attach/detach objects from the robot. The group_name parameter specifies the name of the planning group that the MoveGroupCommander will interface with. [move_group_python_interface_tutorial](https://ros-planning.github.io/moveit_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html)
 
 
+## Demo MoveGroupCommander for simple Pick Place with ROS for UR10e robot
+
+{% include youtube.html id="AS_NM3QjeUI" %}
 
 ## How to use MoveGroupCommander
 To use MoveGroupCommander in MoveIt!, follow these steps:
@@ -178,7 +181,9 @@ roscpp_shutdown()
 In this example, the set_planner_id method is used to set the planner to "RRTConnectkConfigDefault", which is an OMPL planner. The set_planning_time method is used to set the maximum time the planner is allowed to run. After setting the planner and planning time, the rest of the code is similar to using MoveGroupCommander without an OMPL planner.
 
 ## Here is an example code for using MoveGroupCommander.shift_pose_target() in MoveIt!:
+
 The ```moveit_commander.move_group.MoveGroupCommander.shift_pose_target()``` method is used to modify the position of the end effector along a specific axis and set the new pose as the pose target. However, it does not directly support shifting the pose in multiple axes in a single call. To achieve the desired effect of shifting the pose in both the X and Z axes, multiple calls to shift_pose_target() would be needed.
+
 MovegroupCommander_shift_pose_target.py
 {:.filename}
  ```python
@@ -370,5 +375,5 @@ moveit_commander.roscpp_shutdown()
 
 # References
 
-1. https://ros-planning.github.io/moveit_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html
-2. http://docs.ros.org/en/indigo/api/moveit_commander/html/classmoveit__commander_1_1move__group_1_1MoveGroupCommander.html#a51bc4850dbeecbe086a0d1e90c2981b6
+1. [move_group_python_interface_tutorial](https://ros-planning.github.io/moveit_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html)
+2. [MoveGroupCommanderClass](http://docs.ros.org/en/indigo/api/moveit_commander/html/classmoveit__commander_1_1move__group_1_1MoveGroupCommander.html#a51bc4850dbeecbe086a0d1e90c2981b6)
