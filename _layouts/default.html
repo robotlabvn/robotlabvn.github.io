@@ -14,14 +14,15 @@
        COLOR SYSTEM
        ------------------------------ */
     :root {
-        --primary: #0A1A2F;       /* Dark Blue */
-        --secondary: #D12B2B;     /* Red */
-        --text-dark: #000000;     /* Black */
-        --text-light: #ffffff;
-        --bg-light: #ffffff;
-        --bg-dark: #0d1117;       /* Deep dark (better than raw black) */
-        --card-dark: #111827;     /* Dark Blue-Gray */
-    }
+    --primary: #0A1A2F;
+    --secondary: #D12B2B;
+    --text-dark: #000000;
+    --text-light: #ffffff;
+    --bg-light: #ffffff;
+    --bg-dark: #0d1117;
+    --card-dark: #111827;
+}
+
 
     .dark {
         color-scheme: dark;
@@ -110,19 +111,34 @@
     }
 </style>
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class', // Enable dark mode via class
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#4f46e5', // Indigo-600 (Lab Blue)
-                        'secondary': '#10b981', // Emerald-500 (Highlight Green)
-                    },
+   <script>
+tailwind.config = {
+    darkMode: 'class',
+    theme: {
+        extend: {
+            colors: {
+                primary: '#0A1A2F',     // Dark Blue
+                secondary: '#D12B2B',   // Red
+                black: '#000000',
+                gray: {
+                    DEFAULT: '#6b7280',
+                    50: '#f9fafb',
+                    100: '#f3f4f6',
+                    200: '#e5e7eb',
+                    300: '#d1d5db',
+                    400: '#9ca3af',
+                    500: '#6b7280',
+                    600: '#4b5563',
+                    700: '#374151',
+                    800: '#1f2937',
+                    900: '#111827'
                 }
             }
         }
-    </script>
+    }
+}
+</script>
+
 </head>
 
 <body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 p-4 md:p-10">
@@ -425,148 +441,172 @@
 
 
         <!-- Robotics Projects -->
-        <section id="projects" class="mb-12">
-            <h2 class="text-4xl font-bold mb-8 text-gray-800 dark:text-gray-100 border-l-4 border-secondary pl-4">
-                Robotics Project Portfolio
-            </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+       <!-- Robotics Projects -->
+<section id="projects" class="mb-12">
+    <h2 class="text-4xl font-bold mb-8 text-gray-800 dark:text-gray-100 border-l-4 border-secondary pl-4">
+        Robotics Project Portfolio
+    </h2>
 
-                <!-- Project 1: Upper body humanoid robot design -->
-                <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
-                    <a href="images/fulls/Upper_full.JPG" class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700">
-                        <img src="https://placehold.co/800x400/4f46e5/ffffff?text=Humanoid+Upper+Body+CAD" alt="Upper body humanoid robot design" class="w-full h-full object-cover">
-                    </a>
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-bold mb-2 text-primary">Upper body humanoid robot design (14 DOF)</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">
-                            A 14 DOF upper body humanoid robot design, integrated with a 3D depth camera, suitable for 3D printing and laser cutting for research and educational purposes.
-                        </p>
-                    </div>
-                    <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
-                        <a href="https://grabcad.com/library/upper-body-humanoid-robot-1" class="link-icon">3D File (GrabCAD)</a>
-                    </div>
-                </article>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                <!-- Project 2: Autonomous Service Robot (Link is to YouTube, keeping as a link) -->
-                <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
-                    <a href="https://youtu.be/kqwAIAZnEu0" target="_blank" class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700 cursor-pointer relative group">
-                        <img src="https://placehold.co/800x400/10b981/ffffff?text=Autonomous+Service+Robot" alt="Autonomous Service Robot" class="w-full h-full object-cover">
-                    </a>
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-bold mb-2 text-primary">Autonomous Service Robot</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">
-                            A ROS-based mobile robot implemented with 2D Lidar and an embedded computer, designed for SLAM and Autonomous Navigation in service environments (restaurants, hospitals).
-                        </p>
-                    </div>
-                    <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
-                        <a href="https://youtu.be/kqwAIAZnEu0" class="link-icon">Video</a>
-                    </div>
-                </article>
-
-                <!-- Project 3: Docking and Locking for Electric bike -->
-                <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
-                    <a href="images/thumbs/Bosch_Docking_Locking_White_3.JPG" class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700">
-                        <img src="https://placehold.co/800x400/4f46e5/ffffff?text=E-Bike+Docking+Mechanism" alt="E-Bike Docking Mechanism" class="w-full h-full object-cover">
-                    </a>
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-bold mb-2 text-primary">Docking and Locking Mechanism for Electric Bike</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">
-                            Innovative design of a charger docking and locking mechanism for electric motorbikes, developed for the "Bosch Green Challenge project" (Awarded "Certification of Innovation Activities and Development").
-                        </p>
-                    </div>
-                    <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
-                        <a href="https://grabcad.com/library/docking-and-locking-pole-for-electric-bike-1" class="link-icon">3D File (GrabCAD)</a>
-                    </div>
-                </article>
-                
-                <!-- Project 4: Ant-like robot -->
-                <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
-                    <a href="images/fulls/Ant_full.JPG" class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700">
-                        <img src="https://placehold.co/800x400/10b981/ffffff?text=23-DOF+Ant-like+Robot" alt="Ant-like robot" class="w-full h-full object-cover">
-                    </a>
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-bold mb-2 text-primary">Ant-like Robot (23 DOF)</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">
-                            A 23-DOF, six-legged robot with 3 DOF per leg, utilizing servo actuators and a plastic frame, developed primarily for STEM education and complex gait analysis.
-                        </p>
-                    </div>
-                    <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
-                        <a href="https://grabcad.com/library/ant-like-robot-1" class="link-icon">3D File (GrabCAD)</a>
-                    </div>
-                </article>
-                
-                <!-- Project 5: RC Humanoid Robot (Link is to YouTube, keeping as a link) -->
-                <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
-                    <a href="https://youtu.be/RDtGJLPC5hI" target="_blank" class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700 cursor-pointer relative group">
-                        <img src="https://placehold.co/800x400/4f46e5/ffffff?text=RC+Humanoid+19-DOF" alt="RC Humanoid Robot with 19-DOF" class="w-full h-full object-cover">
-                    </a>
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-bold mb-2 text-primary">RC Humanoid Robot with 19-DOF</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">
-                            A fully remote-controlled humanoid model with 19 degrees of freedom, designed with manufacturing methods like 3D printing and laser cutting in mind, used for STEM teaching.
-                        </p>
-                    </div>
-                    <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
-                        <a href="https://grabcad.com/library/humanoid-rc-robot-1" class="link-icon">3D File (GrabCAD)</a>
-                        <a href="https://youtu.be/RDtGJLPC5hI" class="link-icon">Video</a>
-                    </div>
-                </article>
-                
+        <!-- Project 1: Upper body humanoid robot design -->
+        <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
+            <a href="images/fulls/Upper_full.JPG" class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700">
+                <img src="images/thumbs/Upper1.JPG"
+                     alt="Upper body humanoid robot design"
+                     class="w-full h-full object-cover">
+            </a>
+            <div class="p-6 flex-grow">
+                <h3 class="text-xl font-bold mb-2 text-primary">Upper body humanoid robot design (14 DOF)</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                    14DOF humanoid upper body robot (6-DOF head + 2× 4-DOF arms), integrated with a depth camera. Designed for 3D printing or laser cutting — for research & education.
+                </p>
             </div>
-        </section>
+            <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
+                <a href="https://grabcad.com/library/upper-body-humanoid-robot-1" class="link-icon">3D File (GrabCAD)</a>
+            </div>
+        </article>
+
+        <!-- Project 2: Autonomous Service Robot -->
+        <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
+            <a href="https://youtu.be/kqwAIAZnEu0" target="_blank"
+               class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700 cursor-pointer">
+                <img src="images/thumbs/Saviman_thumb.jpg"
+                     alt="Autonomous Service Robot"
+                     class="w-full h-full object-cover">
+            </a>
+            <div class="p-6 flex-grow">
+                <h3 class="text-xl font-bold mb-2 text-primary">Autonomous Service Robot</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                    ROS-based service robot using 2D Lidar, embedded computer, and multiple sensors. Supports indoor SLAM and autonomous navigation for restaurants, hotels, and hospitals.
+                </p>
+            </div>
+            <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
+                <a href="https://youtu.be/kqwAIAZnEu0" class="link-icon">Video</a>
+            </div>
+        </article>
+
+        <!-- Project 3: Docking and Locking for Electric Bike -->
+        <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
+            <a href="images/thumbs/Bosch_Docking_Locking_White_3.JPG"
+               class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700">
+                <img src="images/thumbs/Bosch_Docking_Locking_White_3.JPG"
+                     alt="Docking and Locking System"
+                     class="w-full h-full object-cover">
+            </a>
+            <div class="p-6 flex-grow">
+                <h3 class="text-xl font-bold mb-2 text-primary">Docking & Locking for Electric Bike</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                    Award-winning charger docking and locking system for electric motorbikes — developed for the Bosch Green Challenge. Recognized for innovation in industrial design.
+                </p>
+            </div>
+            <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
+                <a href="https://grabcad.com/library/docking-and-locking-pole-for-electric-bike-1"
+                   class="link-icon">3D File (GrabCAD)</a>
+            </div>
+        </article>
+
+        <!-- Project 4: Ant-like robot -->
+        <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
+            <a href="images/fulls/Ant_full.JPG"
+               class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700">
+                <img src="images/thumbs/Nice_Ant_robot.jpg"
+                     alt="Ant-like robot"
+                     class="w-full h-full object-cover">
+            </a>
+            <div class="p-6 flex-grow">
+                <h3 class="text-xl font-bold mb-2 text-primary">Ant-like Robot (23 DOF)</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                    A six-legged, 23-DOF biomimetic robot with 3 DOF per leg. Uses servo motors and a lightweight frame — ideal for STEM education and locomotion research.
+                </p>
+            </div>
+            <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
+                <a href="https://grabcad.com/library/ant-like-robot-1" class="link-icon">3D File (GrabCAD)</a>
+            </div>
+        </article>
+
+        <!-- Project 5: 19-DOF RC Humanoid -->
+        <article class="project-card bg-gray-50 dark:bg-gray-800 shadow-md">
+            <a href="https://youtu.be/RDtGJLPC5hI" target="_blank"
+               class="block overflow-hidden h-48 bg-gray-200 dark:bg-gray-700 cursor-pointer">
+                <img src="images/thumbs/Humanoid0.JPG"
+                     alt="RC Humanoid Robot 19 DOF"
+                     class="w-full h-full object-cover">
+            </a>
+            <div class="p-6 flex-grow">
+                <h3 class="text-xl font-bold mb-2 text-primary">RC Humanoid Robot (19 DOF)</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                    A remote-controlled 19-DOF humanoid built for mechanical engineering and robotics education. Designed to be easy to manufacture via 3D printing or laser cutting.
+                </p>
+            </div>
+            <div class="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
+                <a href="https://grabcad.com/library/humanoid-rc-robot-1" class="link-icon">3D File (GrabCAD)</a>
+                <a href="https://youtu.be/RDtGJLPC5hI" class="link-icon">Video</a>
+            </div>
+        </article>
+
+    </div>
+</section>
+
 
         <!-- Technical Capabilities -->
         <section id="capabilities" class="mb-12 p-8 bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-inner">
-            <h2 class="text-4xl font-bold mb-6 text-gray-800 dark:text-gray-100 border-l-4 border-secondary pl-4">
-                Technical Capabilities
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <!-- Programming Skills -->
-                <div>
-                    <h3 class="text-2xl font-semibold mb-3 text-primary">Programming & Frameworks</h3>
-                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-4">
-                        Core development in low-level and high-level languages for robotics and AI.
-                    </p>
-                    <p align="left">
-                        <!-- Using a common badge service to display skills -->
-                        <img src="https://skillicons.dev/icons?i=python,cpp,ros,pytorch,git,latex" alt="Skills: Python, C++, ROS, PyTorch, Git, LaTeX" class="w-full h-auto"/>
-                    </p>
-                </div>
-                
-                <!-- Lab Tutorials / Teaching -->
-                <div>
-                    <h3 class="text-2xl font-semibold mb-3 text-primary">Lab Tutorials & Curriculum</h3>
-                    <ul class="space-y-2 text-base text-gray-700 dark:text-gray-300 list-disc pl-5">
-                        <li>Robotics and Autonomous Systems (ROS, Pytorch)</li>
-                        <li>Embedded intelligent System (ROS, OpenCV) </li>
-                        <li>Microcontroller / Digital Signal Processing</li>
-                        <li>Robotics Workshop (CAD and PCB Design)</li>
-                    </ul>   
-                </div>
-                
-                <!-- Hand-on Hardware Experiments -->
-                <div>
-                    <h3 class="text-2xl font-semibold mb-3 text-primary">Hands-on Hardware Experience</h3>
-                    <ul class="space-y-2 text-base text-gray-700 dark:text-gray-300 list-disc pl-5">
-                        <li>**Robot Platforms:** UR10e, Kuka Youbot, Turtlebot 3, NAO, DJI Drone.</li>
-                        <li>**Sensors:** Velodyne VLP-16, IMU-Xsens Mti-30, Intel Realsense, SICK Lidar.</li>
-                        <li>**Embedded Computers:** Nvidia Jetson family, Raspi-Pi, NUC, Arduino.</li>
-                        <li>**Actuators:** Servo, Linear motors, and various motor drivers.</li>
-                    </ul>
-                </div>
-                
-            </div>
-            
-            <!-- PCB Design Showcase -->
-            <div class="mt-10">
-                <h3 class="text-2xl font-semibold mb-3 text-primary">PCB Design Showcase</h3>
-                <a href="images/fulls/PCB_Design.pdf" class="block overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                    <img src="https://placehold.co/1200x250/4f46e5/ffffff?text=Example+PCB+Design+Schematic" alt="PCB Design Example" class="w-full h-auto object-cover">
-                </a>
-            </div>
-            
-        </section>
+    <h2 class="text-4xl font-bold mb-6 text-gray-800 dark:text-gray-100 border-l-4 border-secondary pl-4">
+        Technical Capabilities
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Programming Skills -->
+        <div>
+            <h3 class="text-2xl font-semibold mb-3 text-primary">Programming & Frameworks</h3>
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-4">
+                Core development in low-level and high-level languages for robotics and AI.
+            </p>
+            <p align="left">
+                <img src="https://skillicons.dev/icons?i=python,cpp,ros,pytorch,git,latex"
+                     alt="Skills: Python, C++, ROS, PyTorch, Git, LaTeX"
+                     class="w-full h-auto"/>
+            </p>
+        </div>
+        
+        <!-- Lab Tutorials / Teaching -->
+        <div>
+            <h3 class="text-2xl font-semibold mb-3 text-primary">Lab Tutorials & Curriculum</h3>
+            <ul class="space-y-2 text-base text-gray-700 dark:text-gray-300 list-disc pl-5">
+                <li>Robotics and Autonomous Systems (ROS, Pytorch)</li>
+                <li>Embedded Intelligent System (ROS, OpenCV)</li>
+                <li>Microcontroller / Digital Signal Processing</li>
+                <li>Robotics Workshop (CAD and PCB Design)</li>
+            </ul>   
+        </div>
+        
+        <!-- Hands-on Hardware Experience -->
+        <div>
+            <h3 class="text-2xl font-semibold mb-3 text-primary">Hands-on Hardware Experience</h3>
+            <ul class="space-y-2 text-base text-gray-700 dark:text-gray-300 list-disc pl-5">
+                <li>Robot Platforms: UR10e, Kuka Youbot, Turtlebot 3, NAO, DJI Drone.</li>
+                <li>Sensors: Velodyne VLP-16, IMU-Xsens Mti-30, Intel Realsense, SICK Lidar.</li>
+                <li>Embedded Computers: Nvidia Jetson family, Raspberry Pi, NUC, Arduino.</li>
+                <li>Actuators: Servo motors, linear actuators, motor drivers.</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <!-- PCB Design Showcase -->
+    <div class="mt-10">
+        <h3 class="text-2xl font-semibold mb-3 text-primary">PCB Design Showcase</h3>
+        <a href="images/fulls/PCB_Design.pdf"
+           class="block overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+            <img src="https://placehold.co/1200x250/4f46e5/ffffff?text=Example+PCB+Design+Schematic"
+                 alt="PCB Design Example"
+                 class="w-full h-auto object-cover">
+        </a>
+    </div>
+
+</section>
+
 
 
     </div>
